@@ -1,0 +1,401 @@
+body{
+	margin:0;
+	background-image: url("../img/fondo.jpg");
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+}
+header{
+	background-color:rgba(55, 160, 163, 0.80);
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-position: top;
+	padding: 10px;
+
+}
+label {
+    font-weight: normal !important;
+}
+#logo{
+}
+#menu{
+}
+#menu a{
+	text-decoration: none;
+}
+
+.paginador{
+		background-color: red;
+}
+
+/*TERMINO ESTILOS MENU*/
+
+
+/*ESTILOS LOGIN*/
+.login{
+	background:  rgba(255, 255, 255, 0.6);
+	padding:20px;
+	border-radius:4px;
+	margin-top: 15%;
+}
+
+/*ESTILOS FILTROS*/
+#filtros{
+	margin-top: 10px;
+}
+.altoCampo{
+	height: 5px;
+}
+#filtrosGenerales,#divDdelitos,#divEdades,#divEquipos,#divCicatrizTatuajePiercing,#divZonas,#divEstatura,#divBotones{
+	background: rgba(255, 255, 255, 0.8);
+
+	border: 2px dotted transparent;
+	background-clip: padding-box;
+
+	border-radius: 5px;
+	overflow-x: hidden;
+
+	scrollbar:vertical;
+
+}
+::-webkit-scrollbar {
+      width: 5px;
+			height: 5px;
+}
+::-webkit-scrollbar-track {
+      background-color: rgb(255, 255, 255);
+}
+::-webkit-scrollbar-thumb {
+      background-color: rgba(96, 96, 96, 0.50);
+}
+
+
+#filtrosGenerales{
+	height: 360px;
+}
+
+#tablaFiltrosGenerales select{
+	width: 100%;
+}
+.radios{
+	width: 300px;
+}
+
+#divDdelitos{
+	height: 360px;
+	overflow-y: scroll;
+	overflow-x: scroll;
+}
+
+#divEdades{
+	height: 360px;
+}
+
+#divEquipos{
+	height: 360px;
+}
+
+#divCicatrizTatuajePiercing{
+	height: 150px;
+}
+
+#divCicatriz{
+	position: relative;
+	float:left;
+}
+#divTatuaje{
+	position: relative;
+	float:left;
+}
+#divPiercing{
+	position: relative;
+	float:left;
+}
+
+#divZonas{
+	height: 150px;
+}
+#divEstatura{
+	height: 150px;
+}
+#divBotones{
+	height: 150px;
+}
+
+#divBotones input[type="button"]{
+	display: block;
+	width: 100%;
+	height: 50px;
+	margin-top: 5%;
+}
+
+#resultadoBusqueda{
+	margin-top: 10px;
+}
+
+#cuadroSospechoso{
+	margin: 10px;
+	float:left;
+	width: 200px;
+	height: 200px;
+}
+
+
+.informacionSospechoso{
+	position: fixed;
+	z-index: 1000;
+	background: gray;
+	/*left: 37%;*/
+	top:35px;
+	border-radius: 5px;
+	box-shadow: 5px 5px 10px #272D5B;
+}
+
+#fotosInformacionSospechoso{
+	margin-top: 35px;
+	/*height: auto;
+	margin-top:5px;*/
+}
+
+#cuadroSospechosoEnInformacion{
+
+	background: gray;
+	border-radius: 5px;
+	box-shadow: 2px 2px 5px gray;
+	height: 350px;
+	width: 380px;
+	background-clip: padding-box;
+	border: 5px solid transparent;
+}
+
+
+/*ESTILOS MANTENEDOR SOSPECHOSOS*/
+.tablaLista{
+	background-color: white;
+}
+#divListadoSospechosos{
+	margin-top: 25px;
+}
+
+/*ESTILOS INGRESO*/
+#contenedorFormularios{
+		margin-top: 25px;
+}
+
+#tablaIngresoSospechoso,#tablaFotosIngreso,#divFotos,#divDdelitosIngreso,#divEstaturaIngreso,#divEdadesIngreso,#divEquiposIngreso,#divZonasIngreso,#divCicatrizTatuajePiercingIngreso,#divBotonGuardar{
+	background: rgba(255, 255, 255, 0.8);
+	background-clip: padding-box;
+  border: 2px solid transparent;
+	border-radius: 2px;
+	overflow-x: hidden;
+}
+#tablaIngresoSospechoso{
+	height: 580px;
+}
+#tablaIngresoSospechoso select{
+	width: 170px;
+}
+#tablaFotosIngreso{
+}
+
+#divFotos{
+	height: 580px;
+}
+
+#lista-imagenes{
+	margin:0px;
+	padding: 0px;
+}
+#lista-imagenes li{
+	width: 46%;
+	margin:10px 2%;
+	overflow: hidden;
+	height: 100px;
+	float: left;
+}
+#lista-imagenes li img{
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	max-height: 100%;
+	display: table;
+	margin:0 auto;
+
+}
+#lista-imagenes-old{
+	margin:0px;
+	padding: 0px;
+}
+#lista-imagenes-old li{
+	width: 46%;
+	margin:10px 2%;
+	overflow: hidden;
+	height: 100px;
+	float: left;
+}
+#lista-imagenes-old li img{
+	width: auto;
+	height: auto;
+	max-width: 100%;
+	max-height: 100%;
+	display: table;
+	margin:0 auto;
+
+}
+#divSuperiorSubirImagenes{
+	height: 290px;
+	overflow-y: hidden;
+}
+#divInferiorImagenesActuales{
+	height: 290px;
+	overflow-y: hidden;
+}
+
+#divDdelitosIngreso{
+	height: 580px;
+	overflow: scroll;
+}
+
+#divEstaturaIngreso{
+}
+
+#divEdadesIngreso{
+}
+
+#divEquiposIngreso{
+	height: 196.5px;
+	overflow: scroll;
+}
+
+#divZonasIngreso{
+	height: 196.5px;
+	overflow: scroll;
+}
+
+#divCicatrizTatuajePiercingIngreso{
+	height: 196.5px;
+	overflow: scroll;
+}
+
+#divCicatriz{
+	position: relative;
+	float:left;
+}
+#divTatuaje{
+	position: relative;
+	float:left;
+}
+#divPiercing{
+	position: relative;
+	float:left;
+}
+#divBotonGuardar{
+	height: 196.5px;
+	padding: 10px;
+}
+.botonGrabarSospechoso{
+	width: 100%;
+}
+
+
+
+
+/*cargando*/
+
+#cargando{
+	margin-left: 25rem;
+	margin-top: 15rem;
+}
+
+
+
+.atras{
+    position: fixed;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    z-index:1001;
+    -moz-opacity: 0.8;
+    opacity:.60;
+    filter: alpha(opacity=80);
+}
+.adelante {
+    position: fixed;
+    top: 25%;
+    left: 37%;
+    width: 25%;
+    height: 50%;
+    z-index:1002;
+    overflow: auto;
+        box-shadow: 0rem 0.2rem 0.2rem #0B3B24;
+    background-color: rgba(217,217,217,0.5);
+    border-radius: 0.4rem;
+    border-style: solid;
+    border-width: 0.1rem;
+    border-color: gray;
+    background: url("../../img/cargando.jpg");
+    background-size: cover;
+}
+
+#textoCargando{
+	position: fixed;
+	display: block;
+    text-align: center;
+    font-size: 5em;
+    display: none;
+}
+
+
+/*INFORMACION SOSPECHOSO*/
+#tablaInformacionSospechoso{
+	margin-top: 35px;
+}
+
+#cargando{
+	margin-top: 15rem;
+}
+
+
+
+.atras{
+    position: fixed;
+  /*  top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;*/
+    background-color: black;
+    z-index:1001;
+    -moz-opacity: 0.8;
+    opacity:.60;
+    filter: alpha(opacity=80);
+}
+.informacionSospechoso {
+	padding: 20px;
+
+  /*  top: 20%;
+    left: 5%;
+    width: 90%;*/
+    height: 63%;
+    z-index:2000;
+    overflow: auto;
+    box-shadow: 0rem 0.2rem 0.2rem #0B3B24;
+    border-radius: 0.4rem;
+    border-style: solid;
+    border-width: 0.1rem;
+    border-color: gray;
+    background: white;
+}
+
+#textoCargando{
+	position: fixed;
+	display: block;
+    text-align: center;
+    font-size: 5em;
+    display: none;
+}
+.botonCerrarInformacion{
+	position: fixed;
+	z-index: 2000;
+}

@@ -1,0 +1,154 @@
+.botonesMenuConfiguraciones{
+
+}
+#contenedorMenuConfiguraciones{
+  	margin-top: 25px;
+}
+#divContenidoConfiguraciones{
+padding: 5px;
+}
+
+/* ESTILOS MANTENEDOR USUARIOS */
+#contenedorMantenedorUsuario{
+  margin-top: 25px;
+  border-radius: 2px;
+	background: rgba(255, 255, 255, 0.6);
+}
+#divTablaNuevoUsuario{
+
+}
+#tablaNuevoUsuario{
+
+}
+.tablaMantenedorUsuarios{
+
+}
+.filasTablaAgregarNuevoUsuario{
+
+}
+
+
+/* ESTILOS MANTENEDOR DE GRUPOS*/
+#contenedorManetenedorGrupo{
+
+}
+
+
+/* ESTILOS DE MANTENEDOR DE PRIVILEGIOS DE GRUPO */
+#divContenidoGruposPrivilegio{
+
+}
+#contenedorPrivilegiosDeGrupo{
+
+}
+/* TODOS LOS PRIVILEGIOS */
+#contenedorTodosPrivilegios{
+
+}
+
+
+/* ESTILOS MANTENEDOR DE DEPARTAMENTOS*/
+#contenedorMantenedorDelitos{
+
+}
+#divTablaNuevoDepartamento{
+
+}
+#tablaNuevoDepartamento{
+
+}
+.tablaMantenedorDepartamento{
+
+}
+.filasTablaAgregarNuevoDepartamento{
+
+}
+
+/* ESTILOS MANTENEDOR SOLICITANTES */
+#divTablaNuevoSolicitante{
+	margin-top: 5rem;
+}
+#tablaNuevoSolicitante{
+	margin-left: 3.5rem;
+	margin-top: 5rem;
+	border-color: white;
+    border-style: solid;
+    border-width: 0.1rem;
+    border-radius: 0.4rem;
+}
+.tablaMantenedorSolicitantes{
+	margin-top: 1rem;
+	margin-left: 2rem;
+    border-color: white;
+    border-style: solid;
+    border-width: 0.1rem;
+    border-radius: 0.4rem;
+    box-shadow: 0rem 0.2rem 0.2rem #0B3B24;
+}
+.filasTablaAgregarNuevoSolicitante{
+	background-color: white;
+}
+
+
+/* ESTILOS MANTENEDOR DE HORAS*/
+#divTablaNuevaHora{
+	margin-top: 8rem;
+}
+#tablaNuevaHora{
+	margin-left: 4rem;
+	margin-top: 5rem;
+	border-color: white;
+    border-style: solid;
+    border-width: 0.1rem;
+    border-radius: 0.4rem;
+}
+.tablaMantenedorHoras{
+	margin-top: 1rem;
+	margin-left: 5rem;
+    border-color: white;
+    border-style: solid;
+    border-width: 0.1rem;
+    border-radius: 0.4rem;
+    box-shadow: 0rem 0.2rem 0.2rem #0B3B24;
+}
+.filasTablaAgregarNuevaHora{
+	background-color: white;
+}
+
+/* ESTILOS MANTENEDOR DE MOTIVOS*/
+#divTablaNuevoMotivo{
+
+}
+#tablaNuevoMotivo{
+
+}
+.tablaMantenedorMotivos{
+
+}
+.filasTablaAgregarNuevoMotivo{
+
+}
+
+/* ESTILOS MANTENEDOR DE HORAS*/
+#divTablaNuevaProfesion{
+
+}
+#tablaNuevaProfesion{
+
+}
+.tablaMantenedorProfesiones{
+
+}
+.filasTablaAgregarNuevaProfesion{
+
+}
+
+
+
+
+.camposTexto{
+    width: 100px;
+}
+.camposTextoPequeno{
+    width: 15px;
+}
