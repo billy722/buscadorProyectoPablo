@@ -21,7 +21,7 @@
 			<form name="formularioLogin">
 
           <div class="row">
-              <h3 class="text-primary text-center">Lolaaaalolaaaalolaaa</h3>
+              <h3 class="text-primary text-center">INGRESO</h3>
           </div>
           <div class="row">
               <input class="form-control" type="text" id="rut" onkeypress="return soloNumerosyK(event);" maxlength="12" onBlur="formatearRut(this.value)" placeholder="Ingrese su rut"/>
