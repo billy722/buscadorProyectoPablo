@@ -9,7 +9,7 @@ class Conexion{
     public function __construct(){
         $this->host='localhost';
        $this->user='root';
-        $this->pass='82537240Guitar';
+        $this->pass='';
         $this->database='pdisospechosos';
 
         $this->con= new mysqli($this->host,$this->user,$this->pass,$this->database);
@@ -23,11 +23,17 @@ class Conexion{
     }
     public function insertar($arg_consulta){
       //echo $arg_consulta;
-        if($this->con->query($arg_consulta)){
-           return true;
-        }else{
-          return false;
-        }
+
+          if ($this->con->query($arg_consulta)) {
+                return true;
+          }else{
+              echo "Lo sentimos, este sitio web está experimentando problemas.";
+              echo "Error: La ejecución de la consulta falló debido a: \n";
+              echo "Query: " . $arg_consulta . "\n";
+              echo "Errno: " . $this->con->errno . "\n";
+              echo "Error: " . $this->con->error . "\n";
+              exit;
+          }
 
     }
 

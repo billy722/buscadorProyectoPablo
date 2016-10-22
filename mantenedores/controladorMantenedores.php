@@ -16,6 +16,8 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                         $Usuario->setRun($_REQUEST['txt_runCrear']);
                         $Usuario->setDV("3");
                         $Usuario->setNombre($_REQUEST['txt_nombreCrear']);
+                          echo "apellido paterno: ".$_REQUEST['txt_apellidoPaternoCrear'];
+                          
                         $Usuario->setApellidoPaterno($_REQUEST['txt_apellidoPaternoCrear']);
                         $Usuario->setApellidoMaterno($_REQUEST['txt_apellidoMaternoCrear']);
                         $Usuario->setClave($_REQUEST['txt_clave1Crear']);
@@ -23,19 +25,19 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                         $Usuario->setCorreo($_REQUEST['txt_correoCrear']);
                         $Usuario->setGrupoUsuario($_REQUEST['select_tipoUsuarioCrear']);
                         $Usuario->setEstado("1");
-                        $Usuario->insertarModificarUsuario();  
+                        $Usuario->insertarModificarUsuario();
 
                         break;
 
                 case '2'://Eliminar USUARIOS
-                        
+
 
                         break;
                 case '3'://Listar USUARIOS
                         ?>
                         <table class="table">
                             <caption ></caption>
-                            <thead>     
+                            <thead>
                                       <th>Run</th>
                                       <th>Nombre</th>
                                       <th>Apellido P</th>
@@ -66,7 +68,7 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                                                                      echo'<td><span id="txt_descripcionGrupoUsuario'.$contadorFilas.'">'.$filas['descripcion_grupoUsuario'].'</span></td>';
                                                                      echo'<td><span id="txt_descripcionEstadoUsuario'.$contadorFilas.'">'.$filas['descripcion_estado'].'</span></td>';
                                                   //CAMPOS OCULTOS CON IDS
-                                                 
+
                                                 echo'<td>
                                                              <button type="button"  onclick="mostrarModalModificar('.$contadorFilas.')" data-toggle="modal" data-target="#ventanaModalModificar" class="btn btn-info">
                                                                 <span class="glyphicon glyphicon-pencil"></span>
@@ -105,7 +107,7 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
             break;
     case '2'://Mant delito
             require_once '../clases/Delito.php';
-            $Delito=new Delito(); 
+            $Delito=new Delito();
 
             switch($_REQUEST['func']){
               case '1': //Ingresar nuevo delito
@@ -118,8 +120,8 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                 $Delito->setDescripcionDelito($_REQUEST['txt_descripcionDelitoModificar']);
                 $Delito->setEstadoDelito($_REQUEST['cmb_estadoDelitoModificar']);
                 if($Delito->actualizarDelito()){
-                  echo "2";           
-                  
+                  echo "2";
+
                 }
               break;
               case '3'://Eliminar delito
@@ -135,7 +137,7 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
               ?>
                <table class="table">
                             <caption ></caption>
-                            <thead>     
+                            <thead>
                                 <th>Codigo</th>
                                 <th>Descripcion Delito</th>
                                 <th>Estado</th>
@@ -156,7 +158,7 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                                                 echo'<td><span id="txt_descripcionDelito'.$contadorFilas.'">'.$filas['descripcion_delito'].'</span></td>';
                                                 echo'<td><span id="txt_estadoDelito'.$contadorFilas.'">'.$filas['estado'].'</span></td>';
                                                   //CAMPOS OCULTOS CON IDS
-                                                 
+
                                                 echo'<td>
                                                              <button type="button"  onclick="mostrarModalModificar('.$contadorFilas.')" data-toggle="modal" data-target="#ventanaModalModificar" class="btn btn-info">
                                                                 <span class="glyphicon glyphicon-pencil"></span>
@@ -191,7 +193,7 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
             break;
 case '3'://Mant Poblacion
             require_once '../clases/Poblacion.php';
-            $Poblacion=new Poblacion(); 
+            $Poblacion=new Poblacion();
 
             switch($_REQUEST['func']){
               case '1': //Ingresar nueva poblacion
@@ -204,8 +206,8 @@ case '3'://Mant Poblacion
                 $Poblacion->setDescripcionPoblacion($_REQUEST['txt_descripcionPoblacionModificar']);
                 $Poblacion->setEstadoPoblacion($_REQUEST['cmb_estadoPoblacionModificar']);
                 if($Poblacion->actualizarPoblacion()){
-                  echo "2";           
-                  
+                  echo "2";
+
                 }
               break;
               case '3'://Eliminar Poblacion
@@ -221,7 +223,7 @@ case '3'://Mant Poblacion
               ?>
                <table class="table">
                             <caption ></caption>
-                            <thead>     
+                            <thead>
                                 <th>Codigo</th>
                                 <th>Descripcion Poblacion</th>
                                 <th>Estado</th>
@@ -242,7 +244,7 @@ case '3'://Mant Poblacion
                                                 echo'<td><span id="txt_descripcionPoblacion'.$contadorFilas.'">'.$filas['descripcion_poblacion'].'</span></td>';
                                                 echo'<td><span id="txt_estadoPoblacion'.$contadorFilas.'">'.$filas['estado'].'</span></td>';
                                                   //CAMPOS OCULTOS CON IDS
-                                                 
+
                                                 echo'<td>
                                                              <button type="button"  onclick="mostrarModalModificar('.$contadorFilas.')" data-toggle="modal" data-target="#ventanaModalModificar" class="btn btn-info">
                                                                 <span class="glyphicon glyphicon-pencil"></span>
@@ -277,7 +279,7 @@ case '3'://Mant Poblacion
             break;
             case '4'://Mant Equipos
             require_once '../clases/Equipo.php';
-            $Equipo=new Equipo(); 
+            $Equipo=new Equipo();
 
             switch($_REQUEST['func']){
               case '1': //Ingresar nuevo equipo
@@ -290,8 +292,8 @@ case '3'://Mant Poblacion
                 $Equipo->setDescripcionEquipo($_REQUEST['txt_descripcionEquipoModificar']);
                 $Equipo->setEstadoEquipo($_REQUEST['cmb_estadoEquipoModificar']);
                 if($Equipo->actualizarEquipo()){
-                  echo "2";           
-                  
+                  echo "2";
+
                 }
               break;
               case '3'://Eliminar equipo
@@ -307,7 +309,7 @@ case '3'://Mant Poblacion
               ?>
                <table class="table">
                             <caption ></caption>
-                            <thead>     
+                            <thead>
                                 <th>Codigo</th>
                                 <th>Descripcion Equipo</th>
                                 <th>Estado</th>
@@ -328,7 +330,7 @@ case '3'://Mant Poblacion
                                                 echo'<td><span id="txt_descripcionEquipo'.$contadorFilas.'">'.$filas['descripcion_equipo'].'</span></td>';
                                                 echo'<td><span id="txt_estadoEquipo'.$contadorFilas.'">'.$filas['estado'].'</span></td>';
                                                   //CAMPOS OCULTOS CON IDS
-                                                 
+
                                                 echo'<td>
                                                              <button type="button"  onclick="mostrarModalModificar('.$contadorFilas.')" data-toggle="modal" data-target="#ventanaModalModificar" class="btn btn-info">
                                                                 <span class="glyphicon glyphicon-pencil"></span>

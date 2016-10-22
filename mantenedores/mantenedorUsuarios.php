@@ -20,7 +20,7 @@ if(isset($_SESSION['run'])==false &&
  <div class="container col-xs-9" id="contenedorMantenedorUsuario">
 	<div class="row ">
             <h1 class="col-xs-4 text text-primary">Lista de Usuarios</h1>
-           
+
     </div>
     <div class="container col-xs-12">
            <div class="row">
@@ -44,10 +44,10 @@ if(isset($_SESSION['run'])==false &&
                     </div>
             </div>
 
-                <!--BOTON QUE ABRE MODAL DE CREAR NUEVO -->  
+                <!--BOTON QUE ABRE MODAL DE CREAR NUEVO -->
                 <div class="col-xs-4">
                     <button class="pull-right col-xs-4 btn btn-success" data-toggle="modal" data-target="#ventanaModalCrear">Nuevo</button>
-                </div>  
+                </div>
  		   </div>
  		   <div class="row">
                 <div id="contenedorMantenedor"></div><!-- DIV DONDE SE CARGA LA TABLA-->
@@ -97,7 +97,7 @@ var pagina;
                       <div class="form-group">
                   <label class="sr-only control-label col-lg-2" for="txt_runCrear">Run</label>
                   <div class="col-lg-3">
-                    <input  onBlur="validarRut();" required minlenght="12" title="Complete este campo" placeholder="Rut" class="form-control" id="txt_runCrear" name="txt_runCrear" type="text" >
+                    <input  required minlenght="12" title="Complete este campo" placeholder="Rut" class="form-control" id="txt_runCrear" name="txt_runCrear" type="text" >
                   </div>
             </div>
 
@@ -166,7 +166,7 @@ var pagina;
                     <input required title="Complete este campo" placeholder="Confirme Contraseña" id="txt_clave2Crear" name="txt_clave2Crear" type="password" class="form-control">
                   </div>
               </div>
-                     
+
                        <!-- BOTON QUE CIERRA MODAL-->
                   <div class="form-group">
                     <div class="col-lg-4 col-lg-offset-1">
@@ -210,7 +210,7 @@ var pagina;
 						<div class="form-group">
 									<label class="sr-only control-label col-lg-2" for="txt_run">Run</label>
 									<div class="col-lg-3">
-										<input  onBlur="validarRut();" required minlenght="12" title="Complete este campo" placeholder="Rut" class="form-control" id="txt_run" name="txt_run" type="text" >
+										<input  required minlenght="12" title="Complete este campo" placeholder="Rut" class="form-control" id="txt_run" name="txt_run" type="text" >
 									</div>
 						</div>
 
@@ -316,7 +316,7 @@ var pagina;
                           alert("INGRESADO CORRECTAMENTE");
                           cambiarPagina(1);
                         }else{
-                          alert("error");
+                          alert(resultado);
                         }}
             });
           }else{
@@ -325,23 +325,7 @@ var pagina;
             $("#divClave1").addClass("has-warning");
           }
     });
-        function validarRut(){
-        var rut= $("#txt_runCrear").val();
-        //alert(rut);
-        $.ajax({
-          url:"./controladorMantenedores.php?mant=1&func=4",
-          data:"txt_run="+rut,
-          success:function(respuesta){
-              if(respuesta=="1"){
-                  alert("RUT CORRECTO");
-              }else if(respuesta=="2"){
-                  alert("RUT INCORRECTO");
-              }else{
-                  alert(respuesta);
-              }
-          }
-        });
-    }
+
   </script>
 <?php
 cargarFooter();

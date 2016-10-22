@@ -28,10 +28,10 @@ class Usuario extends Conexion{
       $this->nombre= $arg_nombre;
   }
   public function setApellidoPaterno($arg_apellidoPaterno){
-    $this->$apellidoPaterno= $arg_apellidoPaterno;
+    $this->apellidoPaterno= $arg_apellidoPaterno;
   }
   public function setApellidoMaterno($arg_apellidoMaterno){
-    $this->$apellidoMaterno= $arg_apellidoMaterno;
+    $this->apellidoMaterno= $arg_apellidoMaterno;
   }
   public function setClave($arg_clave){
     $this->clave= $arg_clave;
@@ -88,7 +88,7 @@ class Usuario extends Conexion{
 
   public function insertarModificarUsuario(){
         $verificar;
-        $verificar=$this->ejecutarConsulta("call insertarModificarUsuario($this->run,'$this->dv','$this->nombre','$this->apellidoPaterno','$this->apellidoMaterno','$this->clave',$this->telefono,$this->correo,'$this->grupoUsuario',$this->estado)");
+        $verificar=$this->insertar("call insertarModificarUsuario($this->run,'$this->dv','$this->nombre','$this->apellidoPaterno','$this->apellidoMaterno','$this->clave','$this->telefono','$this->correo','$this->grupoUsuario',$this->estado)");
         if($verificar){
           echo "1";
         }else{
