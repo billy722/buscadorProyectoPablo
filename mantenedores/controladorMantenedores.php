@@ -13,8 +13,8 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                         $posicionGuion= strpos($campoRut,"-");
                         $rut= substr($campoRut,0,$posicionGuion);
                         $dv= substr($campoRut,$posicionGuion+1,$posicionGuion+1);
-                        $Usuario->setRun($_REQUEST['txt_runCrear']);
-                        $Usuario->setDV("3");
+                        $Usuario->setRun($rut);
+                        $Usuario->setDV($dv);
                         $Usuario->setNombre($_REQUEST['txt_nombreCrear']);
                           echo "apellido paterno: ".$_REQUEST['txt_apellidoPaternoCrear'];
                           
