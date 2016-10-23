@@ -97,7 +97,7 @@ var pagina;
                       <div class="form-group">
                   <label class="sr-only control-label col-lg-2" for="txt_runCrear">Run</label>
                   <div class="col-lg-3">
-                    <input  required minlenght="12" title="Complete este campo" placeholder="Rut" class="form-control" id="txt_runCrear" name="txt_runCrear" type="text" >
+                    <input  required minlenght="12" title="Complete este campo" placeholder="Ej.12123456-7" class="form-control" id="txt_runCrear" name="txt_runCrear" type="text" >
                   </div>
             </div>
 
@@ -320,9 +320,10 @@ var pagina;
                         }}
             });
           }else{
-            $("#mensaje").html('<p class="text-danger" >Contraseñas no coinciden</p>');
-            $("#divClave2").addClass("has-warning");
-            $("#divClave1").addClass("has-warning");
+            //alert("claves no coinciden");
+          $("#mensaje").html('<p class="text-danger" >Contraseñas no coinciden</p>');
+          $("#divClave2").addClass("has-warning");
+          $("#divClave1").addClass("has-warning");
           }
     });
 

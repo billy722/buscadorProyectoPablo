@@ -16,8 +16,6 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                         $Usuario->setRun($rut);
                         $Usuario->setDV($dv);
                         $Usuario->setNombre($_REQUEST['txt_nombreCrear']);
-                          echo "apellido paterno: ".$_REQUEST['txt_apellidoPaternoCrear'];
-                          
                         $Usuario->setApellidoPaterno($_REQUEST['txt_apellidoPaternoCrear']);
                         $Usuario->setApellidoMaterno($_REQUEST['txt_apellidoMaternoCrear']);
                         $Usuario->setClave($_REQUEST['txt_clave1Crear']);
