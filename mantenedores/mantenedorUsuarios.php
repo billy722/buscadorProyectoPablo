@@ -190,7 +190,7 @@ var pagina;
 					$("#txt_apellidoMaterno").val($("#txt_apellidoMaterno"+fila).html());
 					$("#txt_correo").val($("#txt_correo"+fila).html());
 					$("#txt_telefono").val($("#txt_telefono"+fila).html());
-					$("#txt_privilegios").val($("#txt_telefono"+fila).html());
+
 		 	}
 
 		</script>
@@ -208,73 +208,59 @@ var pagina;
 					<form class="form-horizontal" name="formulario" id="formulario" action="">
 
 						<div class="form-group">
-									<label class="sr-only control-label col-lg-2" for="txt_run">Run</label>
+									<label class="sr-only control-label col-lg-2" for="txt_runModificar">Run</label>
 									<div class="col-lg-3">
-										<input  required minlenght="12" title="Complete este campo" placeholder="Rut" class="form-control" id="txt_run" name="txt_run" type="text" >
+										<input  required minlenght="12" title="Complete este campo" placeholder="Rut" class="form-control" id="txt_runModificar" name="txt_runModificar" type="text" >
 									</div>
 						</div>
 
 						<div class="form-group">
-									<label class="sr-only control-label col-lg-2" for="txt_nombre">Nombres</label>
+									<label class="sr-only control-label col-lg-2" for="txt_nombreModificar">Nombre</label>
 									<div class="col-lg-3">
-										<input required title="Complete este campo" placeholder="Nombre" id="txt_nombre" name="txt_nombre" type="text" class="form-control">
+										<input required title="Complete este campo" placeholder="Nombre" id="txt_nombreModificar" name="txt_nombreModificar" type="text" class="form-control">
 									</div>
 						</div>
 
 						<div class="form-group">
-									<label class="sr-only control-label col-lg-2" for="txt_apellidoPaterno">Apellido Paterno</label>
+									<label class="sr-only control-label col-lg-2" for="txt_apellidoPaternoModificar">Apellido Paterno</label>
 									<div class="col-lg-3">
-										<input required title="Complete este campo" placeholder="Apellido" id="txt_apellidoPaterno" name="txt_apellidoPaterno" type="text" class="form-control">
+										<input required title="Complete este campo" placeholder="Apellido Paterno" id="txt_apellidoPaternoModificar" name="txt_apellidoPaternoModificar" type="text" class="form-control">
 									</div>
 						</div>
 
 						<div class="form-group">
-									<label class="sr-only control-label col-lg-2" for="txt_apellidoMaterno">Apellido Materno</label>
+									<label class="sr-only control-label col-lg-2" for="txt_apellidoMaternoModificar">Apellido Materno</label>
 									<div class="col-lg-3">
-										<input required title="Complete este campo" placeholder="Apellido" id="txt_apellidoMaterno" name="txt_apellidoMaterno" type="text" class="form-control">
+										<input required title="Complete este campo" placeholder="Apellido Materno" id="txt_apellidoMaternoModificar" name="txt_apellidoMaternoModificar" type="text" class="form-control">
 									</div>
 						</div>
 
 						<div class="form-group">
-									<label class="sr-only control-label col-lg-2" for="txt_correo">Correo</label>
+									<label class="sr-only control-label col-lg-2" for="txt_correoModificar">Correo</label>
 									<div class="col-lg-3">
-										<input required title="Complete este campo" placeholder="Correo" id="txt_correo" name="txt_correo" type="text" class="form-control">
+										<input required title="Complete este campo" placeholder="Correo" id="txt_correoModificar" name="txt_correoModificar" type="text" class="form-control">
 									</div>
 						</div>
 
 						<div class="form-group">
-									<label class="sr-only control-label col-lg-2" for="txt_telefono">Telefono</label>
+									<label class="sr-only control-label col-lg-2" for="txt_telefonoModificar">Telefono</label>
 									<div class="col-lg-3">
-										<input required title="Complete este campo" placeholder="Correo" id="txt_telefono" name="txt_telefono" type="text" class="form-control">
+										<input required title="Complete este campo" placeholder="Correo" id="txt_telefonoModificar" name="txt_telefonoModificar" type="text" class="form-control">
 									</div>
 						</div>
 
-						<div class="form-group">
-									<label class="sr-only control-label col-lg-2" for="txt_privilegios">Privilegios</label>
-									<div class="col-lg-3">
-										<input required title="Complete este campo" placeholder="Correo" id="txt_privilegios" name="txt_privilegios" type="text" class="form-control">
-									</div>
-						</div>
-
-
-						<div id="divClave" class="form-group">
-									<label class="sr-only control-label col-lg-2" for="txt_clave_actual">Contraseña</label>
-									<div class="col-lg-3">
-										<input required title="Complete este campo" placeholder="Contraseña Actual" id="txt_clave_actual" name="txt_clave_actual" type="password" class="form-control">
-									</div>
-						</div>
 
 						<div id="divClave1" class="form-group">
-									<label class="sr-only control-label col-lg-2" for="txt_clave1">Contraseña</label>
+									<label class="sr-only control-label col-lg-2" for="txt_clave1Modificar">Contraseña</label>
 									<div class="col-lg-3">
-										<input required title="Complete este campo" placeholder="Contraseña" id="txt_clave1" name="txt_clave1" type="password" class="form-control">
+										<input required title="Complete este campo" placeholder="Contraseña" id="txt_clave1Modificar" name="txt_clave1Modificar" type="password" class="form-control">
 									</div>
 						</div>
 
 							<div id="divClave2" class="form-group">
-									<label class="sr-only control-label col-lg-2" for="txt_clave2">Repita Contraseña</label>
+									<label class="sr-only control-label col-lg-2" for="txt_clave2Modificar">Repita Contraseña</label>
 									<div class="col-lg-3">
-										<input required title="Complete este campo" placeholder="Confirme Contraseña" id="txt_clave2" name="txt_clave2" type="password" class="form-control">
+										<input required title="Complete este campo" placeholder="Confirme Contraseña" id="txt_clave2Modificar" name="txt_clave2Modificar" type="password" class="form-control">
 									</div>
 							</div>
 
