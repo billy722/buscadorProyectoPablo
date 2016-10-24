@@ -76,6 +76,7 @@ class Conexion{
 
 
     public function consultaExistencia($arg_consulta){
+      //echo $arg_consulta;
       $resultado= $this->con->query($arg_consulta);
 
         if (!$resultado) {
@@ -94,6 +95,18 @@ class Conexion{
         }
     }
 
+    public function limpiarTexto($arg_campoTexto){
+        $resultado= filter_var($arg_campoTexto, FILTER_SANITIZE_STRING);
+        return $resultado;
+    }
+    public function limpiarNumeroEntero($arg_numero){
+      $resultado= filter_var($arg_numero, FILTER_SANITIZE_NUMBER_INT);
+      return $resultado;
+    }
+    public function limpiarCorreo($arg_correo){
+      $resultado= filter_var($arg_correo,FILTER_SANITIZE_EMAIL);
+      return $resultado;
+    }
 
     public function BuscarFiltarRegistros($arg_tabla,$arg_campoBuscar,$arg_palabraBuscar,$arg_pagina,$arg_cantidadRegistros){
       $consulta="";
@@ -120,6 +133,8 @@ class Conexion{
 
         return $devuelve;
     }
+
+
 /*
         public function BuscarFiltarRegistros($arg_tabla,$arg_campoBuscar,$arg_palabraBuscar,$arg_pagina,$arg_cantidadRegistros,$arg_adicionales){
       $consulta="";

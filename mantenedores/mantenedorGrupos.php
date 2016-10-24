@@ -1,19 +1,21 @@
-<?php require_once'../principal/comun.php'; ?>
+<?php
+session_start();
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-      <?php cargarHead(); ?>
+if(isset($_SESSION['run'])==false &&
+   isset($_SESSION['nombre'])==false &&
+   isset($_SESSION['idDepartamento'])==false &&
+   isset($_SESSION['descripcionDepartamento'])==false){
 
-</head>
-<body>
+          header("location: ../index.php");
 
-  <?php
-  headerCabecera();
-  cargarMenuMantenedores();
-cargarMenuMantenedores();
-  ?>
-  <div class="container col-xs-9">
+}else{
+
+    include("../principal/comun.php");
+    conectarBD();
+    cargarEncabezado();
+    cargarMenuMantenedores();
+?>
+<div class="container col-xs-9">
 
   <!--INICIO PARTE SUPERIOR MANTENEDOR -->
     <div class="row ">
@@ -77,8 +79,8 @@ var pagina;
 
 
       $.ajax({
-        url:"mantenedores.php",
-        data:"mantenedor=3&grupoM=3&buscar="+busqueda+"&pag="+pagina+"&cantidadReg="+$("#cmb_cantidadRegistros").val(),
+        url:"controladorMantenedores.php",
+        data:"mant=5&func=3&buscar="+busqueda+"&pag="+pagina+"&cantidadReg="+$("#cmb_cantidadRegistros").val(),
         success:function(respuesta){
               $("#contenedorMantenedor").html(respuesta);
         }
@@ -107,7 +109,7 @@ var pagina;
                       <div class="form-group">
                             <label class=" control-label col-lg-2" for="txt_descripcionCrear">Nombre</label>
                             <div class="col-lg-5">
-                              <input type="text" required title="Complete este campo" placeholder="Nombre" id="txt_descripcionCrear" name="txt_descripcionCrear" type="text" class="form-control">
+                              <input type="text"  title="Complete este campo" placeholder="Nombre" id="txt_descripcionCrear" name="txt_descripcionCrear" type="text" class="form-control">
                             </div>
                       </div>
                     <hr>
@@ -123,8 +125,8 @@ var pagina;
 
                               foreach($lista as $columnasC){
                                echo '<div class="row">';
-                                  echo'<input type="checkbox" id="chb_privilegioCrear'.$columnasC['idprivilegio'].'" name="chb_privilegioCrear'.$columnasC['idprivilegio'].'">';
-                                  echo'<label for="chb_privilegioCrear'.$columnasC['idprivilegio'].'" value="'.$columnasC['idprivilegio'].'">'.$columnasC['privilegio'].'</label>';
+                                  echo'<input type="checkbox" id="chb_privilegioCrear'.$columnasC['id_privilegios'].'" name="chb_privilegioCrear'.$columnasC['id_privilegios'].'">';
+                                  echo'<label for="chb_privilegioCrear'.$columnasC['id_privilegios'].'" value="'.$columnasC['id_privilegios'].'">'.$columnasC['descripcion_privilegios'].'</label>';
                                echo '</div>';
                               }
 
@@ -161,8 +163,8 @@ var pagina;
           	//	$("#txt_nombreGrupo").val($("#txt_nombreGrupo"+fila).html());
               //alert("entro aqui");
                     $.ajax({
-                        url:"./mantenedores.php",
-                        data:"mantenedor=3&grupoM=5&id="+id,
+                        url:"controladorMantenedores.php",
+                        data:"mant=5&func=5&id="+id,
                         beforeSend:function(){
                                 $("#divPrivilegiosGrupo").html("Cargando...");
                         },
@@ -213,14 +215,22 @@ var pagina;
       swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowOutsideClick:false,showCancelButton: false,closeOnConfirm: false});
 
                     $.ajax({
-                        url:"./mantenedores.php?mantenedor=3&grupoM=1",
+                        url:"controladorMantenedores.php?mant=5&func=1",
                         data: $("#formularioCreacion").serialize(),
                         success:function(resultado){
+                          //$("#error").html(resultado);
                               if(resultado=="2"){
                                       swal("Operacion exitosa!", "Agregado Correctamente", "success");
                                       limpiarCamposCrear();
                                       cambiarPagina(1);
-                              }else{
+                              }
+                              else if(resultado=="3"){
+                                sweetAlert("No permitido.", "Otro grupo ya utiliza el nombre que ha ingresado", "warning");
+                              }
+                              else if(resultado=="4"){
+                                sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
+                              }
+                              else{
                                 sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
                                  // alert(resultado);
                                  // $("#error").html(resultado);
@@ -233,16 +243,26 @@ var pagina;
               event.preventDefault();
 
       //alert cargando
-      swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowOutsideClick:false,showCancelButton: false,closeOnConfirm: false});
+    //  swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowOutsideClick:false,showCancelButton: false,closeOnConfirm: false});
 
                     $.ajax({
-                        url:"./mantenedores.php?mantenedor=3&grupoM=2",
+                        url:"controladorMantenedores.php?mant=5&func=2",
                         data: $("#formularioModificacion").serialize(),
                         success:function(resultado){
+
+                            //alert(resultado);
+                            $("#error").html(resultado);
                               if(resultado=="2"){
                                       swal("Operacion exitosa!", "Modificado Correctamente", "success");
                                       cambiarPagina(1);
-                              }else{
+                              }
+                              else if(resultado=="3"){
+                                sweetAlert("No permitido.", "Otro grupo ya utiliza el nombre que ha ingresado", "warning");
+                              }
+                              else if(resultado=="4"){
+                                sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
+                              }
+                              else{
                                 sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
                                  // alert(resultado);
                                  // $("#error").html(resultado);
@@ -257,8 +277,8 @@ var pagina;
       swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowOutsideClick:false,showCancelButton: false,closeOnConfirm: false});
 
                  $.ajax({
-                  url:"mantenedores.php",
-                  data:"mantenedor=9&usuariosM=4&id="+id,
+                  url:"controladorMantenedores.php",
+                  data:"mant=5&func=4&id="+id,
                   error:function(error){
                       alert(error);
                   },
@@ -276,3 +296,8 @@ var pagina;
 </body>
 
 </html>
+
+<?php
+
+}
+?>

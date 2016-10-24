@@ -36,19 +36,19 @@ public function __construct(){
   }
 
   public function consultaPrivilegiosDeGrupo(){
-     $grupos=$this->registros('select privilegio_idprivilegio as id from grupo_privilegio where grupo_idgrupo='.$this->_idGrupo);
+     $grupos=$this->registros('select id_privilegio as id from tb_grupoprivilegio where id_grupoUsuario='.$this->_idGrupo);
      return $grupos;
   }
 
     //Funcion ingresar datos a la tabla region de la base de datos
   public function insertarGrupo(){
-        $resultado= $this->registros("select max(idgrupo)+1 as ultimoId from grupo");
+        $resultado= $this->registros("select max(id_grupoUsuario)+1 as ultimoId from tb_grupousuario");
         $ultimoId= $resultado[0]['ultimoId'];
         //echo "el ultimo id es: ".$ultimoId;
         if($ultimoId==null){
             $ultimoId=1;
         }
-                $verificar= $this->insertar('INSERT INTO `grupo` (`idgrupo`,`grupo`) VALUES ('.$ultimoId.',\''.$this->_grupo.'\');');
+                $verificar= $this->insertar('INSERT INTO `tb_grupousuario` (`id_grupoUsuario`,`descripcion_grupoUsuario`) VALUES ('.$ultimoId.',\''.$this->_grupo.'\');');
 
                 if($verificar){
                       return $ultimoId;
@@ -58,8 +58,8 @@ public function __construct(){
   }
 
   public function asignarPrivilegioAlGrupo($arg_idPrivilegio){
-    $consulta="insert into grupo_privilegio(grupo_idgrupo,privilegio_idprivilegio)
-          values(".$this->_idGrupo.",".$arg_idPrivilegio.");";
+    $consulta="insert into tb_grupoprivilegio(id_privilegio,id_grupoUsuario)
+          values(".$arg_idPrivilegio.",".$this->_idGrupo.");";
 
      if($this->insertar($consulta)){
        return true;
@@ -69,17 +69,21 @@ public function __construct(){
   }
 
   public function eliminarPrivilegiosDeGrupo(){
-      $consulta="delete from grupo_privilegio where grupo_idgrupo=".$this->_idGrupo;
+      $consulta="delete from tb_grupoprivilegio where id_grupoUsuario=".$this->_idGrupo.";";
 
      if($this->insertar($consulta)){
+<<<<<<< HEAD
        return true;
+=======
+         return true;
+>>>>>>> origin/master
      }else{
-       echo "ERROR AL eliminar PRIVILEGIOs de grupo: ".$consulta;
+         echo "ERROR AL eliminar PRIVILEGIOS de grupo: ".$consulta;
      }
   }
 
   public function actualizar(){
-    $consulta='UPDATE grupo SET grupo=\''.$this->_grupo.'\' WHERE idgrupo='.$this->_idGrupo;
+    $consulta='UPDATE tb_grupousuario SET descripcion_grupoUsuario=\''.$this->_grupo.'\' WHERE id_grupoUsuario='.$this->_idGrupo;
 
      if($this->insertar($consulta)){
        return true;
@@ -88,9 +92,28 @@ public function __construct(){
      }
   }
   // Funcion eliminar datos de la tabla region
+<<<<<<< HEAD
   public function eliminar(){
     $grupos=$this->insertar('DELETE FROM `grupo` WHERE `idGrupo`='.$this->_idGrupo.';');
     return $grupos;
+=======
+  public function eliminarGrupo(){
+    $region=$this->insertar('DELETE FROM `tb_grupousuario` WHERE `id_grupoUsuario`='.$this->_idGrupo.';');
+    return $region;
+>>>>>>> origin/master
+  }
+
+  public function comprobarNombre(){
+    $consulta;
+    if($this->_idGrupo=="" || $this->_idGrupo==null){
+          $consulta="select descripcion_grupoUsuario from tb_grupousuario where descripcion_grupoUsuario='".$this->_grupo."' ;";
+    }else{
+
+    $consulta="select descripcion_grupoUsuario from tb_grupousuario where descripcion_grupoUsuario='".$this->_grupo."' and id_grupoUsuario<>".$this->_idGrupo.";";
+    }
+
+     $resultado= $this->consultaExistencia($consulta);
+     return $resultado;
   }
 }
 ?>
