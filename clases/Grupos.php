@@ -72,11 +72,7 @@ public function __construct(){
       $consulta="delete from tb_grupoprivilegio where id_grupoUsuario=".$this->_idGrupo.";";
 
      if($this->insertar($consulta)){
-<<<<<<< HEAD
-       return true;
-=======
          return true;
->>>>>>> origin/master
      }else{
          echo "ERROR AL eliminar PRIVILEGIOS de grupo: ".$consulta;
      }
@@ -92,15 +88,9 @@ public function __construct(){
      }
   }
   // Funcion eliminar datos de la tabla region
-<<<<<<< HEAD
-  public function eliminar(){
-    $grupos=$this->insertar('DELETE FROM `grupo` WHERE `idGrupo`='.$this->_idGrupo.';');
-    return $grupos;
-=======
   public function eliminarGrupo(){
     $region=$this->insertar('DELETE FROM `tb_grupousuario` WHERE `id_grupoUsuario`='.$this->_idGrupo.';');
     return $region;
->>>>>>> origin/master
   }
 
   public function comprobarNombre(){
