@@ -27,7 +27,7 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
 
                         break;
 
-                case '2'://Eliminar USUARIOS
+                case '2'://Modificar Usuario
 
 
                         break;
@@ -63,7 +63,8 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                                                                      echo'<td><span id="txt_apellidoMaterno'.$contadorFilas.'">'.$filas['apellidoMaterno'].'</span></td>';
                                                                      echo'<td><span id="txt_correo'.$contadorFilas.'">'.$filas['correo'].'</span></td>';
                                                                      echo'<td><span id="txt_telefono'.$contadorFilas.'">'.$filas['telefono'].'</span></td>';
-                                                                     echo'<td><span id="txt_descripcionGrupoUsuario'.$contadorFilas.'">'.$filas['descripcion_grupoUsuario'].'</span></td>';
+                                                                     echo'<td><span id="txt_descripcionGrupoUsuario'.$contadorFilas.'">'.$filas['descripcion_grupoUsuario'].'</span>
+                                                                     <input type="hidden" id="txt_idgrupoGrupoUsuario'.$contadorFilas.'"></td>';
                                                                      echo'<td><span id="txt_descripcionEstadoUsuario'.$contadorFilas.'">'.$filas['descripcion_estado'].'</span></td>';
                                                   //CAMPOS OCULTOS CON IDS
 
