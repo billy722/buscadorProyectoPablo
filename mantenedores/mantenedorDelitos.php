@@ -13,12 +13,11 @@ if(isset($_SESSION['run'])==false &&
     include("../principal/comun.php");
     conectarBD();
     cargarEncabezado();
-
-  cargarMenuMantenedores();
+    cargarMenuMantenedores();
 ?>
 
 <div class="container">
- <div class="container col-xs-9" id="contenedorMantenedorUsuario">
+ <div class="container col-xs-12" id="contenedorMantenedorUsuario">
 	<div class="row ">
             <h1 class="col-xs-4 text text-primary">Delitos</h1>
 
@@ -29,14 +28,14 @@ if(isset($_SESSION['run'])==false &&
                 <div class="col-xs-4">
                   <div class="input-group">
                     <span class="input-group-addon "></span>
-                    <input placeholder="Buscar" onKeyUp="listarTabla()" id="txt_buscar" type="text" class="form-control">
+                    <input placeholder="Buscar" onKeyUp="cambiarPagina(1)" id="txt_buscar" type="text" class="form-control">
            		  </div>
     			</div>
 			<div class="col-xs-4">
 
                     <label class="control-label col-xs-3" for="cmb_cantidadRegistros">Mostrar</label>
                     <div class="col-xs-6">
-                        <select onChange="listarTabla()" name="cmb_cantidadRegistros" class="form-control" id="cmb_cantidadRegistros">
+                        <select onChange="cambiarPagina(1)" name="cmb_cantidadRegistros" class="form-control" id="cmb_cantidadRegistros">
                           <option value="3">3</option>
                           <option value="10">10</option>
                           <option value="20">20</option>

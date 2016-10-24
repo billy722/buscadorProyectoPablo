@@ -13,13 +13,14 @@ if(isset($_SESSION['run'])==false &&
     include("../principal/comun.php");
     conectarBD();
     cargarEncabezado();
+    cargarMenuMantenedores();
 
 ?>
 <div class="container">
- <div class="container col-xs-9" id="contenedorMantenedorUsuario">
+ <div class="container col-xs-12" id="contenedorMantenedorUsuario">
 	<div class="row ">
             <h1 class="col-xs-4 text text-primary">Equipos de futbol</h1>
-           
+
     </div>
     <div class="container col-xs-12">
            <div class="row">
@@ -27,14 +28,14 @@ if(isset($_SESSION['run'])==false &&
                 <div class="col-xs-4">
                   <div class="input-group">
                     <span class="input-group-addon "></span>
-                    <input placeholder="Buscar" onKeyUp="listarTabla()" id="txt_buscar" type="text" class="form-control">
+                    <input placeholder="Buscar" onKeyUp="cambiarPagina(1)" id="txt_buscar" type="text" class="form-control">
            		  </div>
     			</div>
 			<div class="col-xs-4">
 
                     <label class="control-label col-xs-3" for="cmb_cantidadRegistros">Mostrar</label>
                     <div class="col-xs-6">
-                        <select onChange="listarTabla()" name="cmb_cantidadRegistros" class="form-control" id="cmb_cantidadRegistros">
+                        <select onChange="cambiarPagina(1)" name="cmb_cantidadRegistros" class="form-control" id="cmb_cantidadRegistros">
                           <option value="3">3</option>
                           <option value="10">10</option>
                           <option value="20">20</option>
@@ -43,10 +44,10 @@ if(isset($_SESSION['run'])==false &&
                     </div>
             </div>
 
-                <!--BOTON QUE ABRE MODAL DE CREAR NUEVO -->  
+                <!--BOTON QUE ABRE MODAL DE CREAR NUEVO -->
                 <div class="col-xs-4">
                     <button class="pull-right col-xs-4 btn btn-success" data-toggle="modal" data-target="#ventanaModalCrear">Nuevo</button>
-                </div>  
+                </div>
  		   </div>
  		   <div class="row">
                 <div id="contenedorMantenedor"></div><!-- DIV DONDE SE CARGA LA TABLA-->
@@ -99,7 +100,7 @@ var pagina;
                               <input required title="Complete este campo" placeholder="Descripcion Equipo" class="form-control" id="txt_descripcionEquipoCrear" name="txt_descripcionEquipoCrear" type="text" >
 
                             </div>
-                      </div>                      
+                      </div>
                        <!-- BOTON QUE CIERRA MODAL-->
                   <div class="form-group">
                     <div class="col-lg-4 col-lg-offset-1">
@@ -117,7 +118,7 @@ var pagina;
             </div>
           </div>
         </div>
-      
+
 
       <script>
               function mostrarModalModificar(fila){//carga los datos de la fila a editar, en el modal
@@ -125,7 +126,7 @@ var pagina;
               $("#txt_idEquipoModificar").val($("#txt_idEquipo"+fila).html());
               $("#txt_descripcionEquipoModificar").val($("#txt_descripcionEquipo"+fila).html());
               $("#cmb_estadoEquipoModificar").val($("#txt_estadoEquipo"+fila).html());
-              
+
             }
       </script>
 
@@ -168,7 +169,7 @@ var pagina;
                                ?>
                           </select>
                       </div>
-                </div>                    
+                </div>
                   <!-- BOTON QUE CIERRA MODAL-->
                   <div class="form-group">
                     <div class="col-lg-4 col-lg-offset-1">
@@ -200,7 +201,7 @@ var pagina;
                           alert("INGRESADO CORRECTAMENTE");
                           cambiarPagina(1);
                         }
-                        
+
                     });
             });
 
@@ -227,8 +228,8 @@ var pagina;
                   url:"controladorMantenedores.php",
                   data:"mant=4&func=3&id="+id,
                   success:function(respuesta){
-                          if(respuesta=="2"){ 
-                          alert("ELIMINADO CORRECTAMENTE");                          
+                          if(respuesta=="2"){
+                          alert("ELIMINADO CORRECTAMENTE");
                               cambiarPagina(1);
                           }else{
                               alert("error al eliminar: "+respuesta);

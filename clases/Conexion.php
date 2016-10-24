@@ -109,17 +109,25 @@ class Conexion{
     }
 
     public function BuscarFiltarRegistros($arg_tabla,$arg_campoBuscar,$arg_palabraBuscar,$arg_pagina,$arg_cantidadRegistros){
+      $arg_palabraBuscar=$this->limpiarTexto($arg_palabraBuscar);
+
       $consulta="";
+      $consultaCantidad;
+
       $cantidadRegistros = $arg_cantidadRegistros;
       $inicio = ($arg_pagina > 1 ) ? ($arg_pagina * $cantidadRegistros - $cantidadRegistros) : 0;
-        if(trim($arg_palabraBuscar)!='_'){
+
+        if($arg_palabraBuscar!=''){
           $consulta="select sql_calc_found_rows * from ".$arg_tabla." where ".$arg_campoBuscar." like '%".$arg_palabraBuscar."%' limit ".$inicio.",".$cantidadRegistros;
+          $consultaCantidad="select * from ".$arg_tabla." where ".$arg_campoBuscar." like '%".$arg_palabraBuscar."%' ";
+
         }else{
           $consulta="select sql_calc_found_rows * from ".$arg_tabla." limit ".$inicio.",".$cantidadRegistros;
+          $consultaCantidad="select * from ".$arg_tabla;
         }
         //echo $consulta;
         $resultado=$this->registros($consulta);
-        $cantidad= $this->cantidadRegistros("select * from ".$arg_tabla);
+        $cantidad= $this->cantidadRegistros($consultaCantidad);
 
             $cantidad= ($cantidad/$arg_cantidadRegistros);
             $cantidad= ceil($cantidad);
