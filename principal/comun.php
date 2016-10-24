@@ -67,12 +67,12 @@ function cargarEncabezado(){
 function cargarMenuMantenedores(){
 
 		echo'<div class="btn-group col-xs-12">
-						<a class="btn btn-warning col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorUsuarios.php" ><strong>Usuarios</strong></a>
-						<a class="btn btn-warning col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorGrupos.php" ><strong>Privilegios</strong></a>
-						<a class="btn btn-warning col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorDelitos.php" ><strong>Delitos</strong></a>
-						<a class="btn btn-warning col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="" ><strong>Zonas</strong></a>
-						<a class="btn btn-warning col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorPoblacion.php" ><strong>Poblaciones</strong></a>
-						<a class="btn btn-warning col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorEquipos.php" ><strong>Equipos</strong></a>
+						<a class="btn btn-info col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorUsuarios.php" ><strong>Usuarios</strong></a>
+						<a class="btn btn-info col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorGrupos.php" ><strong>Privilegios</strong></a>
+						<a class="btn btn-info col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorDelitos.php" ><strong>Delitos</strong></a>
+						<a class="btn btn-info col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorZonas.php" ><strong>Zonas</strong></a>
+						<a class="btn btn-info col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorPoblacion.php" ><strong>Poblaciones</strong></a>
+						<a class="btn btn-info col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorEquipos.php" ><strong>Equipos</strong></a>
 			</div>
 	';
 }
