@@ -1,4 +1,4 @@
-<?php 
+<?php
 include_once '../clases/Conexion.php';
 
 class Grupos extends Conexion{
@@ -55,14 +55,14 @@ public function __construct(){
                 }else{
                     echo "fallo al ingresar grupo";
                 }
-  }  
+  }
 
   public function asignarPrivilegioAlGrupo($arg_idPrivilegio){
     $consulta="insert into grupo_privilegio(grupo_idgrupo,privilegio_idprivilegio)
           values(".$this->_idGrupo.",".$arg_idPrivilegio.");";
 
      if($this->insertar($consulta)){
-       return true;  
+       return true;
      }else{
        echo "ERROR AL ASIGNAR PRIVILEGIO: ".$consulta;
      }
@@ -72,7 +72,7 @@ public function __construct(){
       $consulta="delete from grupo_privilegio where grupo_idgrupo=".$this->_idGrupo;
 
      if($this->insertar($consulta)){
-       return true;  
+       return true;
      }else{
        echo "ERROR AL eliminar PRIVILEGIOs de grupo: ".$consulta;
      }
@@ -82,15 +82,15 @@ public function __construct(){
     $consulta='UPDATE grupo SET grupo=\''.$this->_grupo.'\' WHERE idgrupo='.$this->_idGrupo;
 
      if($this->insertar($consulta)){
-       return true;  
+       return true;
      }else{
        echo "ERROR AL ASIGNAR PRIVILEGIO: ".$consulta;
      }
-  }  
+  }
   // Funcion eliminar datos de la tabla region
   public function eliminar(){
-    $region=$this->insertar('DELETE FROM `grupo` WHERE `idGrupo`='.$this->_idGrupo.';');
-    return $region;
+    $grupos=$this->insertar('DELETE FROM `grupo` WHERE `idGrupo`='.$this->_idGrupo.';');
+    return $grupos;
   }
 }
 ?>
