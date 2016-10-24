@@ -11,7 +11,7 @@ class Privilegio extends Conexion{
   }
 
  public function listarPrivilegios(){
-    $region=$this->registros('select * from privilegio');
+    $region=$this->registros('select * from tb_privilegios');
     return $region;
  }
 

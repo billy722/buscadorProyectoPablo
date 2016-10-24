@@ -275,7 +275,7 @@ case '3'://Mant Poblacion
 
             }
             break;
-            case '4'://Mant Equipos
+  case '4'://Mant Equipos
             require_once '../clases/Equipo.php';
             $Equipo=new Equipo();
 
@@ -361,6 +361,188 @@ case '3'://Mant Poblacion
 
             }
             break;
+
+case "5"://MANTENEDOR GRUPOS DE USUARIOS
+
+require_once '../clases/Grupos.php';
+$Grupo = new Grupos();
+
+      switch($_REQUEST['func']){
+
+            case '1': //mantenedor Ingresar GRUPO
+
+            if($_REQUEST['txt_descripcionCrear']==""){
+                  echo "4";//hay campos vacios
+
+            }else{//los campos no estan vacios
+
+                        //limpia variables de comillas
+                        $nombreGrupo=$Grupo->limpiarTexto($_REQUEST['txt_descripcionCrear']);
+
+                            $Grupo->setGrupo($nombreGrupo);
+
+                            if($Grupo->comprobarNombre()==false){//comprueba nombre de usuario
+
+                                    $idGrupoIngresado= $Grupo->insertarGrupo();
+                                    $Grupo->setIdGrupo($idGrupoIngresado);
+
+                                    require_once '../clases/Privilegio.php';
+                                    $Privilegio= new Privilegio();
+                                    $listaPrivilegios= $Privilegio->listarPrivilegios();
+
+                                    foreach($listaPrivilegios as $columna){
+                                            $priv='chb_privilegioCrear'.$columna['id_privilegios'];
+                                            //echo "id texto privilegio: ".$priv;
+
+                                            if(isset($_REQUEST[$priv])){
+                                                   $Grupo->asignarPrivilegioAlGrupo($columna['id_privilegios']);
+                                            }
+                                    }
+                                    echo "2";//CORRECTO
+
+                            }else{
+                                echo "3";//EL NOMBRE INGRESADO YA EXISTE
+                            }
+
+            }
+            break;
+            case '2': //Mantenedor modificar - GRUPO
+                    //echo "id recibido: ".$_REQUEST['txt_idGrupo'];
+
+                  if($_REQUEST['txt_idGrupo']=="" or $_REQUEST['txt_nombreGrupo']==""){
+                        echo "4";//hay campos vacios
+
+                  }else{//los campos no estan vacios
+
+                          //limpia variables de comillas y asigna
+                          $idGrupo=$Grupo->limpiarNumeroEntero($_REQUEST['txt_idGrupo']);
+                          $nombreGrupo=$Grupo->limpiarTexto($_REQUEST['txt_nombreGrupo']);
+
+                          $Grupo->setIdGrupo($idGrupo);
+                          $Grupo->setGrupo($nombreGrupo);
+
+                          if($Grupo->comprobarNombre()==false){//comprueba nombre de usuario
+
+                              $Grupo->actualizar();
+                              $Grupo->eliminarPrivilegiosDeGrupo();
+
+                              require_once '../clases/Privilegio.php';
+                              $Privilegio= new Privilegio();
+                              $listaPrivilegios= $Privilegio->listarPrivilegios();
+
+                              foreach($listaPrivilegios as $columna){
+                                      $priv='chb_privilegio'.$columna['id_privilegios'];
+                                      //echo "id texto privilegio: ".$priv;
+
+                                      if(isset($_REQUEST[$priv])){
+                                             $Grupo->asignarPrivilegioAlGrupo($columna['id_privilegios']);
+                                      }
+                              }
+                              echo "2";//todo correcto
+                          }
+                          else{
+                            echo "3";//nombre ya existe
+                          }
+                      }
+
+                break;
+            case '3'://Listar registro en la tabla con paginador - GRUPO
+             echo'<table class="table">
+                <thead>
+                    <th>Nombre Grupo</th>
+                    <th></th>
+                    <th></th>
+                </thead>
+             ';
+                     $retorno = $Grupo->BuscarFiltarRegistros("tb_grupousuario","descripcion_grupoUsuario",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg']);
+
+                      $contadorFilas=0;
+                      foreach($retorno[0][0] as $column){
+                        $contadorFilas++;
+
+                      echo '<tr>
+                              <td><span id="txt_nombreGrupo'.$contadorFilas.'" >'.$column['descripcion_grupoUsuario'].'</span></td>
+                           <td>
+                                <button type="button"  onclick="mostrarModalModificar('.$column['id_grupoUsuario'].')" data-toggle="modal" data-target="#ventanaModalModificar" class="btn btn-info">
+                                  <span class="glyphicon glyphicon-pencil"></span>
+                                </button>
+                            </td>
+                            <td>
+                                  <button class="btn btn-danger" onclick="eliminar(\''.$column['id_grupoUsuario'].'\')">
+                                    <span class="glyphicon glyphicon-trash"></span>
+                                  </button>
+                              </td>
+                        </tr>';
+
+                         }
+                          echo'<tr>
+                            <td colspan="7">
+                              <center>';
+                                echo $retorno[0][1];
+                            echo'</center>
+                            </td>
+                          </tr>
+                       </tbody>
+                    </table>';
+
+            break;
+
+            case '4'://mostrar info para actualizar editar - GRUPO
+                 $Grupo->setIdGrupo($_REQUEST['id']);
+                 $Grupo->eliminarGrupo();
+            break;
+
+            case '5'://carga informacion del formulario modificar
+
+               $Grupo->setIdGrupo($_REQUEST['id']);
+               $resultado= $Grupo->consultaUnGrupo();
+               $privilegiosACtuales= $Grupo->consultaPrivilegiosDeGrupo();
+
+            echo'
+                                        <!-- CAMPO 1 DEL MODAL-->
+
+                <!--campos ocultos para guardar -->
+                <input type="hidden" id="txt_idGrupo" name="txt_idGrupo" value="'.$resultado[0]['id_grupoUsuario'].'" >
+
+                  <div class="form-group">
+                        <label class="sr-only control-label col-lg-2" for="txt_nombreGrupo">Nombre</label>
+                        <div class="col-lg-5">
+                          <input type="text" value="'.$resultado[0]['descripcion_grupoUsuario'].'" required title="Complete este campo" placeholder="Nombre" id="txt_nombreGrupo" name="txt_nombreGrupo" type="text" class="form-control">
+                        </div>
+                  </div>
+                <hr>';
+
+
+             echo '<!-- CAMPO 2 DEL MODAL-->
+                  <div class="form-group">
+                      <label class="control-label col-lg-2" for="">Privilegios</label>
+                      <div class="col-lg-5">';
+
+                          require_once '../clases/Privilegio.php';
+                          $Privilegio= new Privilegio();
+                          $lista= $Privilegio->listarPrivilegios();
+
+                          foreach($lista as $columnasC){
+                           echo '<div class="row">';
+
+                                    echo'<input type="checkbox"';
+                                    foreach($privilegiosACtuales as $priActual){
+                                            if($priActual['id']==$columnasC['id_privilegios']){
+                                                echo' checked ';
+                                            }
+                                    }
+                                    echo 'id="chb_privilegio'.$columnasC['id_privilegios'].'" name="chb_privilegio'.$columnasC['id_privilegios'].'">';
+
+                              echo'<label for="chb_privilegio'.$columnasC['id_privilegios'].'" value="'.$columnasC['id_privilegios'].'">'.$columnasC['descripcion_privilegios'].'</label>';
+                           echo '</div>';
+                          }
+
+              echo' </div>
+                </div>';
+
+            break;
+      }
+break;
 }
 
 

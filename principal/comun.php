@@ -23,6 +23,10 @@ function cargarEncabezado(){
 		<script type="text/javascript" src="../js/funciones.js"></script>
 		<script type="text/javascript" src="../js/scriptsConfiguraciones.js"></script>
 		<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+
+		<link rel="stylesheet" href="../sweetalert/sweet-alert.css">
+		<script src="../sweetalert/sweet-alert.min.js"></script>
+
 	</head>
 	<body>
 	<header class="fixed-nav">
