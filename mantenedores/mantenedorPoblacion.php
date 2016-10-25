@@ -125,7 +125,7 @@ var pagina;
 
               $("#txt_idPoblacionModificar").val($("#txt_idPoblacion"+fila).html());
               $("#txt_descripcionPoblacionModificar").val($("#txt_descripcionPoblacion"+fila).html());
-              $("#cmb_estadoPoblacionModificar").val($("#txt_estadoPoblacion"+fila).html());
+              $("#cmb_estadoPoblacionModificar").val($("#txt_idEstado"+fila).val());
 
             }
       </script>
@@ -194,11 +194,13 @@ var pagina;
 <script>
            $("#formularioCreacion").submit(function(){//ENVIA FORMULARIO DE CREACION DE REGISTRO
               event.preventDefault();
-                    $.ajax({
+              swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowOutsideClick:false,showCancelButton: false,closeOnConfirm: false});
+                        $.ajax({
                         url:"./controladorMantenedores.php?mant=3&func=1",
                         data: $("#formularioCreacion").serialize(),
                         success:function(resultado){
-                          alert("INGRESADO CORRECTAMENTE");
+                          //alert("INGRESADO CORRECTAMENTE");
+                          swal("Operacion exitosa!", "Agregado Correctamente", "success");
                           cambiarPagina(1);
                         }
 
@@ -207,12 +209,14 @@ var pagina;
 
             $("#formularioModificacion").submit(function(){//ENVIA FORMULARIO DE MODIFICACION DE REGISTRO
               event.preventDefault();
-                    $.ajax({
+              swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowOutsideClick:false,showCancelButton: false,closeOnConfirm: false});
+                        $.ajax({
                         url:"./controladorMantenedores.php?mant=3&func=2",
                         data: $("#formularioModificacion").serialize(),
                         success:function(resultado){
                               if(resultado=="2"){
-                                      alert("MODIFICADO CORRECTAMENTE");
+                                      //alert("MODIFICADO CORRECTAMENTE");
+                                      swal("Operacion exitosa!", "Modificado Correctamente", "success");
                                       cambiarPagina(1);
                               }else{
                                   alert(resultado);
@@ -224,12 +228,14 @@ var pagina;
 
           function eliminar(id){
             event.preventDefault();
+            swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowOutsideClick:false,showCancelButton: false,closeOnConfirm: false});
                  $.ajax({
                   url:"controladorMantenedores.php",
                   data:"mant=3&func=3&id="+id,
                   success:function(respuesta){
                           if(respuesta=="2"){
-                          alert("ELIMINADO CORRECTAMENTE");
+                          //alert("ELIMINADO CORRECTAMENTE");
+                          swal("Operacion exitosa!", "Eliminado Correctamente", "success");
                               cambiarPagina(1);
                           }else{
                               alert("error al eliminar: "+respuesta);

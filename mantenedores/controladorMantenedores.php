@@ -173,7 +173,7 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                             <tbody>
 
                                          <?php
-                                          $retorno= $Delito->BuscarFiltarRegistros("tb_delito","descripcion_delito",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg']);
+                                          $retorno= $Delito->BuscarFiltarRegistros("vistadelitos","descripcion_delito",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg']);
                                           $listado=$retorno[0][0];
 
 
@@ -182,7 +182,8 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                                                $contadorFilas++;
                                                 echo'<tr><td><span id="txt_idDelito'.$contadorFilas.'">'.$filas['id_delito'].'</span></td>';
                                                 echo'<td><span id="txt_descripcionDelito'.$contadorFilas.'">'.$filas['descripcion_delito'].'</span></td>';
-                                                echo'<td><span id="txt_estadoDelito'.$contadorFilas.'">'.$filas['estado'].'</span></td>';
+                                                echo'<td><span id="txt_estadoDelito'.$contadorFilas.'">'.$filas['descripcion_estado'].'</span>
+                                                <input type="hidden" id="txt_idEstado'.$contadorFilas.'" value="'.$filas['estado'].'"></td>';
                                                   //CAMPOS OCULTOS CON IDS
 
                                                 echo'<td>
@@ -259,7 +260,7 @@ case '3'://Mant Poblacion
                             <tbody>
 
                                          <?php
-                                          $retorno= $Poblacion->BuscarFiltarRegistros("tb_poblacion","descripcion_poblacion",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg']);
+                                          $retorno= $Poblacion->BuscarFiltarRegistros("vistapoblaciones","descripcion_poblacion",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg']);
                                           $listado=$retorno[0][0];
 
 
@@ -268,7 +269,8 @@ case '3'://Mant Poblacion
                                                $contadorFilas++;
                                                 echo'<td><span id="txt_idPoblacion'.$contadorFilas.'">'.$filas['id_poblacion'].'</span></td>';
                                                 echo'<td><span id="txt_descripcionPoblacion'.$contadorFilas.'">'.$filas['descripcion_poblacion'].'</span></td>';
-                                                echo'<td><span id="txt_estadoPoblacion'.$contadorFilas.'">'.$filas['estado'].'</span></td>';
+                                                echo'<td><span id="txt_estadoPoblacion'.$contadorFilas.'">'.$filas['descripcion_estado'].'</span>
+                                                <input type="hidden" id="txt_idEstado'.$contadorFilas.'" value="'.$filas['estado'].'"></td>';
                                                   //CAMPOS OCULTOS CON IDS
 
                                                 echo'<td>
@@ -345,7 +347,7 @@ case '3'://Mant Poblacion
                             <tbody>
 
                                          <?php
-                                          $retorno= $Equipo->BuscarFiltarRegistros("tb_equipofutbol","descripcion_equipo",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg']);
+                                          $retorno= $Equipo->BuscarFiltarRegistros("vistaequipos","descripcion_equipo",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg']);
                                           $listado=$retorno[0][0];
 
 
@@ -354,7 +356,8 @@ case '3'://Mant Poblacion
                                                $contadorFilas++;
                                                 echo'<td><span id="txt_idEquipo'.$contadorFilas.'">'.$filas['id_equipo'].'</span></td>';
                                                 echo'<td><span id="txt_descripcionEquipo'.$contadorFilas.'">'.$filas['descripcion_equipo'].'</span></td>';
-                                                echo'<td><span id="txt_estadoEquipo'.$contadorFilas.'">'.$filas['estado'].'</span></td>';
+                                                echo'<td><span id="txt_estadoEquipo'.$contadorFilas.'">'.$filas['descripcion_estado'].'</span>
+                                                <input type="hidden" id="txt_idEstado'.$contadorFilas.'" value="'.$filas['estado'].'"></td>';
                                                   //CAMPOS OCULTOS CON IDS
 
                                                 echo'<td>
