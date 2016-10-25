@@ -354,7 +354,7 @@ var pagina;
                 url:"./controladorMantenedores.php?mant=1&func=2",
                 data: $("#formularioModificacion").serialize(),
                 success:function(resultado){
-                      if(resultado=="2"){
+                      if(resultado=="1"){
                               alert("MODIFICADO CORRECTAMENTE");
                               cambiarPagina(1);
                       }else{

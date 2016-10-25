@@ -33,7 +33,7 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                 $rut= substr($campoRut,0,$posicionGuion);
                 $dv= substr($campoRut,$posicionGuion+1,$posicionGuion+1);
                 $Usuario->setRun($rut);
-              //  $Usuario->setDV($dv);
+                $Usuario->setDV($dv);
                 $Usuario->setNombre($_REQUEST['txt_nombreModificar']);
                 $Usuario->setApellidoPaterno($_REQUEST['txt_apellidoPaternoModificar']);
                 $Usuario->setApellidoMaterno($_REQUEST['txt_apellidoMaternoModificar']);
