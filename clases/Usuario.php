@@ -96,6 +96,17 @@ class Usuario extends Conexion{
         }
 
   }
+  public function eliminarUsuario(){
+    $verificar;
+
+    $verificar= $this->insertar("delete from tb_usuarios where run=".$this->run.";");
+
+                if($verificar){
+                      return true;
+                }else{
+                    echo "fallo al eliminar el Usuario";
+                }
+  }
 
 
 }

@@ -116,7 +116,17 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                           $Usuario->validarRut($_REQUEST['txt_run']);
                           break;
                         case '5'://eliminar Usuario
+                        $campoRut=$_REQUEST['run'];
+                        $posicionGuion= strpos($campoRut,"-");
+                        $rut= substr($campoRut,0,$posicionGuion);
+                        $dv= substr($campoRut,$posicionGuion+1,$posicionGuion+1);
+                        $Usuario->setRun($rut);
 
+                        $verificarExito= $Usuario->eliminarUsuario();
+
+                        if($verificarExito==true){
+                              echo "2";
+                        }
                             break;
             }
 

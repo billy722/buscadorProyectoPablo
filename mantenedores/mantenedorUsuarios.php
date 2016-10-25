@@ -288,14 +288,14 @@ var pagina;
 						<div id="divClave1" class="form-group">
 									<label class="sr-only control-label col-lg-2" for="txt_clave1Modificar">Contraseña</label>
 									<div class="col-lg-3">
-										<input required title="Complete este campo" placeholder="Contraseña" id="txt_clave1Modificar" name="txt_clave1Modificar" type="password" class="form-control">
+										<input title="Complete este campo" placeholder="Contraseña" id="txt_clave1Modificar" name="txt_clave1Modificar" type="password" class="form-control">
 									</div>
 						</div>
 
 							<div id="divClave2" class="form-group">
 									<label class="sr-only control-label col-lg-2" for="txt_clave2Modificar">Repita Contraseña</label>
 									<div class="col-lg-3">
-										<input required title="Complete este campo" placeholder="Confirme Contraseña" id="txt_clave2Modificar" name="txt_clave2Modificar" type="password" class="form-control">
+										<input title="Complete este campo" placeholder="Confirme Contraseña" id="txt_clave2Modificar" name="txt_clave2Modificar" type="password" class="form-control">
 									</div>
 							</div>
 
@@ -328,17 +328,18 @@ var pagina;
 
         var clave1= $("#txt_clave1Crear").val();
         var clave2= $("#txt_clave2Crear").val();
-
+swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowOutsideClick:false,showCancelButton: false,closeOnConfirm: false});
         if(clave1==clave2){
             $.ajax({
                 url:"./controladorMantenedores.php?mant=1&func=1",
                 data: $("#formularioCreacion").serialize(),
                 success:function(resultado){
                   if(resultado=="1"){
-                          alert("INGRESADO CORRECTAMENTE");
+                          swal("Operacion exitosa!", "Agregado Correctamente", "success");
                           cambiarPagina(1);
                         }else{
-                          alert(resultado);
+                          //alert(resultado);
+                          sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
                         }}
             });
           }else{
@@ -350,12 +351,14 @@ var pagina;
     });
     $("#formularioModificacion").submit(function(){//ENVIA FORMULARIO DE MODIFICACION DE REGISTRO
       event.preventDefault();
+      swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowOutsideClick:false,showCancelButton: false,closeOnConfirm: false});
             $.ajax({
                 url:"./controladorMantenedores.php?mant=1&func=2",
                 data: $("#formularioModificacion").serialize(),
                 success:function(resultado){
                       if(resultado=="1"){
-                              alert("MODIFICADO CORRECTAMENTE");
+                              //alert("MODIFICADO CORRECTAMENTE");
+                              swal("Operacion exitosa!", "Modificado Correctamente", "success");
                               cambiarPagina(1);
                       }else{
                           alert(resultado);
@@ -364,6 +367,24 @@ var pagina;
                 }
             });
     });
+
+    function eliminar(run){
+      event.preventDefault();
+      swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowOutsideClick:false,showCancelButton: false,closeOnConfirm: false});
+           $.ajax({
+            url:"./controladorMantenedores.php",
+            data:"mant=1&func=5&run="+run,
+            success:function(respuesta){
+                    if(respuesta=="2"){
+                    //alert("ELIMINADO CORRECTAMENTE");
+                    swal("Operacion exitosa!", "Eliminado Correctamente", "success");
+                        cambiarPagina(1);
+                    }else{
+                        alert("error al eliminar: "+respuesta);
+                    }
+            }
+          });
+      }
 
   </script>
 <?php
