@@ -566,7 +566,7 @@ break;
 case "6"://MANTENEDOR ZONAS
 
 require_once '../clases/Zonas.php';
-$Grupo = new Grupos();
+$Zonas = new Zonas();
 
       switch($_REQUEST['func']){
 
@@ -578,25 +578,25 @@ $Grupo = new Grupos();
             }else{//los campos no estan vacios
 
                         //limpia variables de comillas
-                        $nombreGrupo=$Grupo->limpiarTexto($_REQUEST['txt_descripcionCrear']);
+                        $nombreZona=$Zonas->limpiarTexto($_REQUEST['txt_descripcionCrear']);
 
-                            $Grupo->setGrupo($nombreGrupo);
+                            $Zonas->setZona($nombreZona);
 
-                            if($Grupo->comprobarNombre()==false){//comprueba nombre de usuario
+                            if($Zonas->comprobarNombre()==false){//comprueba nombre de usuario
 
-                                    $idGrupoIngresado= $Grupo->insertarGrupo();
-                                    $Grupo->setIdGrupo($idGrupoIngresado);
+                                    $idZonaIngresada= $Zonas->insertarZona();
+                                    $Zonas->setIdZona($idZonaIngresada);
 
-                                    require_once '../clases/Privilegio.php';
-                                    $Privilegio= new Privilegio();
-                                    $listaPrivilegios= $Privilegio->listarPrivilegios();
+                                    require_once '../clases/Poblacion.php';
+                                    $Poblacion= new Poblacion();
+                                    $listaPoblaciones= $Poblacion->listarPoblacion();
 
-                                    foreach($listaPrivilegios as $columna){
-                                            $priv='chb_privilegioCrear'.$columna['id_privilegios'];
-                                            //echo "id texto privilegio: ".$priv;
+                                    foreach($listaPoblaciones as $columna){
+                                            $pob='chb_poblacionCrear'.$columna['id_poblacion'];
+                                            //echo "id texto privilegio: ".$pob;
 
-                                            if(isset($_REQUEST[$priv])){
-                                                   $Grupo->asignarPrivilegioAlGrupo($columna['id_privilegios']);
+                                            if(isset($_REQUEST[$pob])){
+                                                   $Zonas->asignarPoblacionAZona($columna['id_poblacion']);
                                             }
                                     }
                                     echo "2";//CORRECTO
@@ -655,7 +655,7 @@ $Grupo = new Grupos();
                     <th></th>
                 </thead>
              ';
-                     $retorno = $Grupo->BuscarFiltarRegistros("tb_zona","descripcion_zona",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg']);
+                     $retorno = $Zonas->BuscarFiltarRegistros("tb_zona","descripcion_zona",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg']);
 
                       $contadorFilas=0;
                       foreach($retorno[0][0] as $column){
@@ -695,20 +695,20 @@ $Grupo = new Grupos();
 
             case '5'://carga informacion del formulario modificar
 
-               $Grupo->setIdGrupo($_REQUEST['id']);
-               $resultado= $Grupo->consultaUnGrupo();
-               $privilegiosACtuales= $Grupo->consultaPrivilegiosDeGrupo();
+               $Zonas->setIdZona($_REQUEST['id']);
+               $resultado= $Zonas->consultaUnaZona();
+               $privilegiosACtuales= $Zonas->consultaPoblacionesDeZona();
 
             echo'
                                         <!-- CAMPO 1 DEL MODAL-->
 
                 <!--campos ocultos para guardar -->
-                <input type="hidden" id="txt_idGrupo" name="txt_idGrupo" value="'.$resultado[0]['id_grupoUsuario'].'" >
+                <input type="hidden" id="txt_idZonas" name="txt_idZonas" value="'.$resultado[0]['id_zona'].'" >
 
                   <div class="form-group">
-                        <label class="sr-only control-label col-lg-2" for="txt_nombreGrupo">Nombre</label>
+                        <label class="sr-only control-label col-lg-2" for="txt_nombreZonas">Nombre</label>
                         <div class="col-lg-5">
-                          <input type="text" value="'.$resultado[0]['descripcion_grupoUsuario'].'" required title="Complete este campo" placeholder="Nombre" id="txt_nombreGrupo" name="txt_nombreGrupo" type="text" class="form-control">
+                          <input type="text" value="'.$resultado[0]['descripcion_zona'].'" required title="Complete este campo" placeholder="Nombre" id="txt_nombreZonas" name="txt_nombreZonas" type="text" class="form-control">
                         </div>
                   </div>
                 <hr>';
@@ -716,7 +716,7 @@ $Grupo = new Grupos();
 
              echo '<!-- CAMPO 2 DEL MODAL-->
                   <div class="form-group">
-                      <label class="control-label col-lg-2" for="">Privilegios</label>
+                      <label class="control-label col-lg-2" for="">Poblaciones</label>
                       <div class="col-lg-5">';
 
                           require_once '../clases/Poblacion.php';
@@ -732,9 +732,9 @@ $Grupo = new Grupos();
                                                 echo' checked ';
                                             }
                                     }
-                                    echo 'id="chb_privilegio'.$columnasC['id_poblacion'].'" name="chb_privilegio'.$columnasC['id_poblacion'].'">';
+                                    echo 'id="chb_poblacion'.$columnasC['id_poblacion'].'" name="chb_poblacion'.$columnasC['id_poblacion'].'">';
 
-                              echo'<label for="chb_privilegio'.$columnasC['id_poblacion'].'" value="'.$columnasC['id_poblacion'].'">'.$columnasC['descripcion_poblacion'].'</label>';
+                              echo'<label for="chb_poblacion'.$columnasC['id_poblacion'].'" value="'.$columnasC['id_poblacion'].'">'.$columnasC['descripcion_poblacion'].'</label>';
                            echo '</div>';
                           }
 

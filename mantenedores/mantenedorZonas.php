@@ -218,7 +218,7 @@ var pagina;
                         url:"controladorMantenedores.php?mant=6&func=1",
                         data: $("#formularioCreacion").serialize(),
                         success:function(resultado){
-                          //$("#error").html(resultado);
+                          $("#error").html(resultado);
                               if(resultado=="2"){
                                       swal("Operacion exitosa!", "Agregado Correctamente", "success");
                                       limpiarCamposCrear();
