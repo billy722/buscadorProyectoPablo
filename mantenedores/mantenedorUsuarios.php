@@ -182,14 +182,16 @@ var pagina;
           </div>
 </div>
 		<script>
-			 function mostrarModal(fila){
+			 function mostrarModalModificar(fila){
 
-			 		$("#txt_run").val($("#txt_run"+fila).html());
-			 		$("#txt_nombre").val($("#txt_nombre"+fila).html());
-					$("#txt_apellidoPaterno").val($("#txt_apellidoPaterno"+fila).html());
-					$("#txt_apellidoMaterno").val($("#txt_apellidoMaterno"+fila).html());
-					$("#txt_correo").val($("#txt_correo"+fila).html());
-					$("#txt_telefono").val($("#txt_telefono"+fila).html());
+			 		$("#txt_runModificar").val($("#txt_run"+fila).html());
+			 		$("#txt_nombreModificar").val($("#txt_nombre"+fila).html());
+					$("#txt_apellidoPaternoModificar").val($("#txt_apellidoPaterno"+fila).html());
+					$("#txt_apellidoMaternoModificar").val($("#txt_apellidoMaterno"+fila).html());
+					$("#txt_correoModificar").val($("#txt_correo"+fila).html());
+					$("#txt_telefonoModificar").val($("#txt_telefono"+fila).html());
+          $("#select_tipoUsuarioModificar").val($("#txt_idGrupoUsuario"+fila).val());
+          $("#select_estadoUsuarioModificar").val($("#txt_idEstadoUsuario"+fila).val());
 
 		 	}
 
@@ -201,16 +203,16 @@ var pagina;
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">Modal Header</h4>
+					<h4 class="modal-title">Modificar Usuario</h4>
 				</div>
 				<div id="modbody" class="modal-body">
 
-					<form class="form-horizontal" name="formulario" id="formulario" action="">
+					<form class="form-horizontal" name="formularioModificacion" id="formularioModificacion" action="">
 
 						<div class="form-group">
 									<label class="sr-only control-label col-lg-2" for="txt_runModificar">Run</label>
 									<div class="col-lg-3">
-										<input  required minlenght="12" title="Complete este campo" placeholder="Rut" class="form-control" id="txt_runModificar" name="txt_runModificar" type="text" >
+										<input  required minlenght="12" readonly title="Complete este campo" placeholder="Run" class="form-control" id="txt_runModificar" name="txt_runModificar" type="text" >
 									</div>
 						</div>
 
@@ -245,11 +247,44 @@ var pagina;
 						<div class="form-group">
 									<label class="sr-only control-label col-lg-2" for="txt_telefonoModificar">Telefono</label>
 									<div class="col-lg-3">
-										<input required title="Complete este campo" placeholder="Correo" id="txt_telefonoModificar" name="txt_telefonoModificar" type="text" class="form-control">
+										<input required title="Complete este campo" placeholder="Telefono" id="txt_telefonoModificar" name="txt_telefonoModificar" type="text" class="form-control">
 									</div>
 						</div>
 
+            <div class="form-group">
+                              <label class="sr-only control-label col-lg-2" for="select_tipoUsuarioModificar">Tipo Usuario</label>
+                              <div class="col-lg-3">
+                                  <select class="form-control" name="select_tipoUsuarioModificar" id="select_tipoUsuarioModificar">
+                                      <?php
+                                          require_once '../clases/Grupos.php';
+                                          $Tipo= new Grupos();
+                                          $listaTipo= $Tipo->listarGrupos();
 
+                                          foreach($listaTipo as $columnaEstado) {
+                                              echo'<option value="'.$columnaEstado['id_grupoUsuario'].'">'.$columnaEstado['descripcion_grupoUsuario'].'</option>';
+                                          }
+
+                                       ?>
+                                  </select>
+                      </div>
+              </div>
+              <div class="form-group">
+                  <label class="sr-only control-label col-lg-2" for="select_estadoUsuarioModificar">Estado Usuario</label>
+                  <div class="col-lg-3">
+                      <select class="form-control" name="select_estadoUsuarioModificar" id="select_estadoUsuarioModificar">
+                          <?php
+                              require_once '../clases/Estado.php';
+                              $Estado= new Estado();
+                              $listaEstado= $Estado->listarEstado();
+
+                              foreach($listaEstado as $columnaEstado) {
+                                  echo'<option value="'.$columnaEstado['id_estado'].'">'.$columnaEstado['descripcion_estado'].'</option>';
+                              }
+
+                           ?>
+                      </select>
+                  </div>
+            </div>
 						<div id="divClave1" class="form-group">
 									<label class="sr-only control-label col-lg-2" for="txt_clave1Modificar">Contraseña</label>
 									<div class="col-lg-3">
@@ -272,7 +307,7 @@ var pagina;
 
 							<div class="form-group">
 								<div class="col-lg-4 col-lg-offset-1">
-									<input required type="submit" onclick="crearUsuario()" class="btn btn-success pull-right" value="Guardar">
+									<input required type="submit" data-toggle="modal" data-target="#ventanaModalModificar" class="btn btn-success pull-right" value="Guardar">
 								</div>
 							</div>
 						</form>
@@ -285,6 +320,7 @@ var pagina;
 			</div>
 		</div>
 	</div>
+
   <script type="text/javascript">
 
   $("#formularioCreacion").submit(function(){
@@ -311,6 +347,22 @@ var pagina;
           $("#divClave2").addClass("has-warning");
           $("#divClave1").addClass("has-warning");
           }
+    });
+    $("#formularioModificacion").submit(function(){//ENVIA FORMULARIO DE MODIFICACION DE REGISTRO
+      event.preventDefault();
+            $.ajax({
+                url:"./controladorMantenedores.php?mant=1&func=2",
+                data: $("#formularioModificacion").serialize(),
+                success:function(resultado){
+                      if(resultado=="2"){
+                              alert("MODIFICADO CORRECTAMENTE");
+                              cambiarPagina(1);
+                      }else{
+                          alert(resultado);
+                          $("#error").html(resultado);
+                      }
+                }
+            });
     });
 
   </script>

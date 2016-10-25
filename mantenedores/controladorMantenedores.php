@@ -28,7 +28,21 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                         break;
 
                 case '2'://Modificar Usuario
-
+                $campoRut=$_REQUEST['txt_runModificar'];
+                $posicionGuion= strpos($campoRut,"-");
+                $rut= substr($campoRut,0,$posicionGuion);
+                $dv= substr($campoRut,$posicionGuion+1,$posicionGuion+1);
+                $Usuario->setRun($rut);
+              //  $Usuario->setDV($dv);
+                $Usuario->setNombre($_REQUEST['txt_nombreModificar']);
+                $Usuario->setApellidoPaterno($_REQUEST['txt_apellidoPaternoModificar']);
+                $Usuario->setApellidoMaterno($_REQUEST['txt_apellidoMaternoModificar']);
+                $Usuario->setClave($_REQUEST['txt_clave1Modificar']);
+                $Usuario->setTelefono($_REQUEST['txt_telefonoModificar']);
+                $Usuario->setCorreo($_REQUEST['txt_correoModificar']);
+                $Usuario->setGrupoUsuario($_REQUEST['select_tipoUsuarioModificar']);
+                $Usuario->setEstado($_REQUEST['select_estadoUsuarioModificar']);
+                $Usuario->insertarModificarUsuario();
 
                         break;
                 case '3'://Listar USUARIOS
@@ -64,8 +78,9 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                                                                      echo'<td><span id="txt_correo'.$contadorFilas.'">'.$filas['correo'].'</span></td>';
                                                                      echo'<td><span id="txt_telefono'.$contadorFilas.'">'.$filas['telefono'].'</span></td>';
                                                                      echo'<td><span id="txt_descripcionGrupoUsuario'.$contadorFilas.'">'.$filas['descripcion_grupoUsuario'].'</span>
-                                                                     <input type="hidden" id="txt_idgrupoGrupoUsuario'.$contadorFilas.'"></td>';
-                                                                     echo'<td><span id="txt_descripcionEstadoUsuario'.$contadorFilas.'">'.$filas['descripcion_estado'].'</span></td>';
+                                                                     <input type="hidden" id="txt_idGrupoUsuario'.$contadorFilas.'" value="'.$filas['id_grupoUsuario'].'"></td>';
+                                                                     echo'<td><span id="txt_descripcionEstadoUsuario'.$contadorFilas.'">'.$filas['descripcion_estado'].'</span>
+                                                                     <input type="hidden" id="txt_idEstadoUsuario'.$contadorFilas.'" value="'.$filas['id_estado'].'"></td>';
                                                   //CAMPOS OCULTOS CON IDS
 
                                                 echo'<td>
@@ -100,7 +115,9 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                         case '4'://validad rut
                           $Usuario->validarRut($_REQUEST['txt_run']);
                           break;
+                        case '5'://eliminar Usuario
 
+                            break;
             }
 
             break;
