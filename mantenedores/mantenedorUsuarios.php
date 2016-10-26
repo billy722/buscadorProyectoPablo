@@ -344,9 +344,7 @@ swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowO
             });
           }else{
             //alert("claves no coinciden");
-          $("#mensaje").html('<p class="text-danger" >Contraseñas no coinciden</p>');
-          $("#divClave2").addClass("has-warning");
-          $("#divClave1").addClass("has-warning");
+          sweetAlert("Ocurrió un error", "No se pudo concretar la operacion, claves no coinciden!", "error");
           }
     });
     $("#formularioModificacion").submit(function(){//ENVIA FORMULARIO DE MODIFICACION DE REGISTRO

@@ -1,0 +1,60 @@
+
+DELIMITER $$
+
+USE `pdisospechosos`$$
+
+DROP VIEW IF EXISTS `vistadelitos`$$
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vistadelitos` AS
+SELECT
+  `tb_delito`.`id_delito`           AS `id_delito`,
+  `tb_delito`.`descripcion_delito`  AS `descripcion_delito`,
+  `tb_delito`.`estado`              AS `estado`,
+  `tb_estados`.`descripcion_estado` AS `descripcion_estado`
+FROM (`tb_delito`
+   JOIN `tb_estados`
+     ON ((`tb_estados`.`id_estado` = `tb_delito`.`estado`)))$$
+
+DELIMITER ;
+
+--------------------------------------------------------------------------------------------------------
+
+DELIMITER $$
+
+USE `pdisospechosos`$$
+
+DROP VIEW IF EXISTS `vistaequipos`$$
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vistaequipos` AS
+SELECT
+  `tb_equipofutbol`.`id_equipo`          AS `id_equipo`,
+  `tb_equipofutbol`.`descripcion_equipo` AS `descripcion_equipo`,
+  `tb_equipofutbol`.`estado`             AS `estado`,
+  `tb_estados`.`descripcion_estado`      AS `descripcion_estado`
+FROM (`tb_equipofutbol`
+   JOIN `tb_estados`
+     ON ((`tb_estados`.`id_estado` = `tb_equipofutbol`.`estado`)))$$
+
+DELIMITER ;
+
+---------------------------------------------------------------------------------------------------------
+
+DELIMITER $$
+
+USE `pdisospechosos`$$
+
+DROP VIEW IF EXISTS `vistapoblaciones`$$
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vistapoblaciones` AS
+SELECT
+  `tb_poblacion`.`id_poblacion`          AS `id_poblacion`,
+  `tb_poblacion`.`descripcion_poblacion` AS `descripcion_poblacion`,
+  `tb_poblacion`.`estado`                AS `estado`,
+  `tb_estados`.`descripcion_estado`      AS `descripcion_estado`
+FROM (`tb_poblacion`
+   JOIN `tb_estados`
+     ON ((`tb_estados`.`id_estado` = `tb_poblacion`.`estado`)))$$
+
+DELIMITER ;
+
+-------------------------------------------------------------------------------------------------------
