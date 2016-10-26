@@ -508,21 +508,32 @@
 				 		<?php
 				 			$resultado= $con->query("select * from tb_equipofutbol");
 				 				$contadorEquiposFutbol=0;
-				 				while($filas= $resultado->fetch_array()){
-				 						$contadorEquiposFutbol++;
-				 						echo'<tr>
-				 								<td><input type="checkbox" value="'.$filas['id_equipo'].'" name="equipo'.$filas['id_equipo'].'" ';
 
-                                            $resultado2= $con->query("select * from tb_equiposospechoso where id_equipo=".$filas['id_equipo'].' and run='.$_REQUEST['id']);
+								if(isset($_REQUEST['id'])){
+								 				while($filas= $resultado->fetch_array()){
+								 						$contadorEquiposFutbol++;
+								 						echo'<tr>
+								 								<td><input type="checkbox" value="'.$filas['id_equipo'].'" name="equipo'.$filas['id_equipo'].'" ';
 
-                                            if($resultado2->num_rows>0){
-                                                echo' checked="checked" ';
-                                            }
+				                                            $resultado2= $con->query("select * from tb_equiposospechoso where id_equipo=".$filas['id_equipo'].' and run='.$_REQUEST['id']);
 
-                                        echo'/><label for="'.$filas['id_equipo'].'" >'.$filas['descripcion_equipo'].'</label>
-				 								</td>
-				 							 </tr>';
-				 				}
+				                                            if($resultado2->num_rows>0){
+				                                                echo' checked="checked" ';
+				                                            }
+
+				                                        echo'/><label for="'.$filas['id_equipo'].'" >'.$filas['descripcion_equipo'].'</label>
+								 								</td>
+								 							 </tr>';
+								 				}
+								}else{
+								 				while($filas= $resultado->fetch_array()){
+								 						$contadorEquiposFutbol++;
+								 						echo'<tr>
+								 								<td><input type="checkbox" value="'.$filas['id_equipo'].'" name="equipo'.$filas['id_equipo'].'" /><label for="'.$filas['id_equipo'].'" >'.$filas['descripcion_equipo'].'</label>
+								 								</td>
+								 							 </tr>';
+								 				}
+								}
 				 				echo'<input type="hidden" value="'.$contadorEquiposFutbol.'" name="contadorEquiposFutbol" >';
 				 		?>
 				 			</tbody>
@@ -540,21 +551,32 @@
 						 		<?php
 						 			$resultado= $con->query("select * from tb_cicatriz");
 						 				$contadorOpcionesCicatriz=0;
-						 				while($filas= $resultado->fetch_array()){
-						 						$contadorOpcionesCicatriz++;
-						 						echo'<tr>
-						 								<td><input type="checkbox" value="'.$filas['id_lugarCicatriz'].'" name="cicatriz'.$filas['id_lugarCicatriz'].'" ';
 
-                                                $resultado2= $con->query("select * from tb_cicatrizsospechoso where id_lugarCicatriz=".$filas['id_lugarCicatriz'].' and run='.$_REQUEST['id']);
+								if(isset($_REQUEST['id'])){
+										 				while($filas= $resultado->fetch_array()){
+										 						$contadorOpcionesCicatriz++;
+										 						echo'<tr>
+										 								<td><input type="checkbox" value="'.$filas['id_lugarCicatriz'].'" name="cicatriz'.$filas['id_lugarCicatriz'].'" ';
 
-                                                if($resultado2->num_rows>0){
-                                                    echo' checked="checked" ';
-                                                }
+				                                                $resultado2= $con->query("select * from tb_cicatrizsospechoso where id_lugarCicatriz=".$filas['id_lugarCicatriz'].' and run='.$_REQUEST['id']);
 
-                                                echo'/><label for="'.$filas['id_lugarCicatriz'].'" >'.$filas['descripcion_lugarCicatriz'].'</label>
-						 								</td>
-						 							 </tr>';
-						 				}
+				                                                if($resultado2->num_rows>0){
+				                                                    echo' checked="checked" ';
+				                                                }
+
+				                                                echo'/><label for="'.$filas['id_lugarCicatriz'].'" >'.$filas['descripcion_lugarCicatriz'].'</label>
+										 								</td>
+										 							 </tr>';
+										 				}
+								}else{
+														while($filas= $resultado->fetch_array()){
+																$contadorOpcionesCicatriz++;
+																echo'<tr>
+																		<td><input type="checkbox" value="'.$filas['id_lugarCicatriz'].'" name="cicatriz'.$filas['id_lugarCicatriz'].'" /><label for="'.$filas['id_lugarCicatriz'].'" >'.$filas['descripcion_lugarCicatriz'].'</label>
+																		</td>
+																	 </tr>';
+														}
+								}
 						 				echo'<input type="hidden" value="'.$contadorOpcionesCicatriz.'" name="contadorOpcionesCicatriz" >';
 						 		?>
 						 			</tbody>
@@ -570,21 +592,32 @@
 						 		<?php
 						 			$resultado= $con->query("select * from tb_tatuaje");
 						 				$contadorOpcionesTatuaje=0;
-						 				while($filas= $resultado->fetch_array()){
-						 						$contadorOpcionesTatuaje++;
-						 						echo'<tr>
-						 								<td><input type="checkbox" value="'.$filas['id_lugarTatuaje'].'" name="tatuaje'.$filas['id_lugarTatuaje'].'" ';
 
-                                                $resultado2= $con->query("select * from tb_tatuajesospechoso where id_lugarTatuaje=".$filas['id_lugarTatuaje'].' and run='.$_REQUEST['id']);
+								if(isset($_REQUEST['id'])){
+								 				while($filas= $resultado->fetch_array()){
+								 						$contadorOpcionesTatuaje++;
+								 						echo'<tr>
+								 								<td><input type="checkbox" value="'.$filas['id_lugarTatuaje'].'" name="tatuaje'.$filas['id_lugarTatuaje'].'" ';
 
-                                                if($resultado2->num_rows>0){
-                                                    echo' checked="checked" ';
-                                                }
+		                                                $resultado2= $con->query("select * from tb_tatuajesospechoso where id_lugarTatuaje=".$filas['id_lugarTatuaje'].' and run='.$_REQUEST['id']);
 
-                                                echo'/><label for="'.$filas['id_lugarTatuaje'].'" >'.$filas['descripcion_lugarTatuaje'].'</label>
-						 								</td>
-						 							 </tr>';
-						 				}
+		                                                if($resultado2->num_rows>0){
+		                                                    echo' checked="checked" ';
+		                                                }
+
+		                                                echo'/><label for="'.$filas['id_lugarTatuaje'].'" >'.$filas['descripcion_lugarTatuaje'].'</label>
+								 								</td>
+								 							 </tr>';
+								 				}
+									}else{
+									 				while($filas= $resultado->fetch_array()){
+									 						$contadorOpcionesTatuaje++;
+									 						echo'<tr>
+									 								<td><input type="checkbox" value="'.$filas['id_lugarTatuaje'].'" name="tatuaje'.$filas['id_lugarTatuaje'].'" /><label for="'.$filas['id_lugarTatuaje'].'" >'.$filas['descripcion_lugarTatuaje'].'</label>
+									 								</td>
+									 							 </tr>';
+									 				}
+										}
 						 				echo'<input type="hidden" value="'.$contadorOpcionesTatuaje.'" name="contadorOpcionesTatuaje" >';
 						 		?>
 						 			</tbody>
@@ -600,21 +633,32 @@
 						 		<?php
 						 			$resultado= $con->query("select * from tb_piercing");
 						 				$contadorOpcionesPiercing=0;
-						 				while($filas= $resultado->fetch_array()){
-						 						$contadorOpcionesPiercing++;
-						 						echo'<tr>
-						 								<td><input type="checkbox" value="'.$filas['id_lugarPiercing'].'" name="piercing'.$filas['id_lugarPiercing'].'" ';
 
-                                                $resultado2= $con->query("select * from tb_piercingsospechoso where id_lugarPiercing=".$filas['id_lugarPiercing'].' and run='.$_REQUEST['id']);
+								if(isset($_REQUEST['id'])){
+									 				while($filas= $resultado->fetch_array()){
+									 						$contadorOpcionesPiercing++;
+									 						echo'<tr>
+									 								<td><input type="checkbox" value="'.$filas['id_lugarPiercing'].'" name="piercing'.$filas['id_lugarPiercing'].'" ';
 
-                                                if($resultado2->num_rows>0){
-                                                    echo' checked="checked" ';
-                                                }
+			                                                $resultado2= $con->query("select * from tb_piercingsospechoso where id_lugarPiercing=".$filas['id_lugarPiercing'].' and run='.$_REQUEST['id']);
 
-                                                echo'/><label for="'.$filas['id_lugarPiercing'].'" >'.$filas['descripcion_lugarPiercing'].'</label>
-						 								</td>
-						 							 </tr>';
-						 				}
+			                                                if($resultado2->num_rows>0){
+			                                                    echo' checked="checked" ';
+			                                                }
+
+			                                                echo'/><label for="'.$filas['id_lugarPiercing'].'" >'.$filas['descripcion_lugarPiercing'].'</label>
+									 								</td>
+									 							 </tr>';
+									 				}
+									}else{
+										 				while($filas= $resultado->fetch_array()){
+										 						$contadorOpcionesPiercing++;
+										 						echo'<tr>
+										 								<td><input type="checkbox" value="'.$filas['id_lugarPiercing'].'" name="piercing'.$filas['id_lugarPiercing'].'" /><label for="'.$filas['id_lugarPiercing'].'" >'.$filas['descripcion_lugarPiercing'].'</label>
+										 								</td>
+										 							 </tr>';
+										 				}
+										}
 						 				echo'<input type="hidden" value="'.$contadorOpcionesPiercing.'" name="contadorOpcionesPiercing" >';
 						 		?>
 						 			</tbody>
@@ -633,21 +677,31 @@
 				 			$resultado= $con->query("SELECT * FROM tb_poblacion");
 				 				$contadorPoblaciones=0;
 
-				 				while($filas= $resultado->fetch_array()){
-				 						$contadorPoblaciones++;
-				 						echo'<tr>
-				 								<td><input type="checkbox" value="'.$filas['id_poblacion'].'" name="poblacion'.$filas['id_poblacion'].'" ';
+								if(isset($_REQUEST['id'])){
+						 				while($filas= $resultado->fetch_array()){
+						 						$contadorPoblaciones++;
+						 						echo'<tr>
+						 								<td><input type="checkbox" value="'.$filas['id_poblacion'].'" name="poblacion'.$filas['id_poblacion'].'" ';
 
-                                                $resultado2= $con->query("select * from tb_poblacionsospechoso where id_poblacion=".$filas['id_poblacion'].' and run='.$_REQUEST['id']);
+		                                                $resultado2= $con->query("select * from tb_poblacionsospechoso where id_poblacion=".$filas['id_poblacion'].' and run='.$_REQUEST['id']);
 
-                                                if($resultado2->num_rows>0){
-                                                    echo' checked="checked" ';
-                                                }
+		                                                if($resultado2->num_rows>0){
+		                                                    echo' checked="checked" ';
+		                                                }
 
-                                        echo'/><label for="'.$filas['id_poblacion'].'" >'.$filas['descripcion_poblacion'].'</label>
-				 								</td>
-				 							 </tr>';
-				 				}
+		                                        echo'/><label for="'.$filas['id_poblacion'].'" >'.$filas['descripcion_poblacion'].'</label>
+						 								</td>
+						 							 </tr>';
+						 				}
+								}else{
+						 				while($filas= $resultado->fetch_array()){
+						 						$contadorPoblaciones++;
+						 						echo'<tr>
+						 								<td><input type="checkbox" value="'.$filas['id_poblacion'].'" name="poblacion'.$filas['id_poblacion'].'" /><label for="'.$filas['id_poblacion'].'" >'.$filas['descripcion_poblacion'].'</label>
+						 								</td>
+						 							 </tr>';
+						 				}
+								}
 				 				echo'<input type="hidden" value="'.$contadorPoblaciones.'" name="contadorPoblaciones" >';
 				 		?>
 				 			</tbody>
@@ -664,7 +718,7 @@
 		</div>
 	</div>
 
-		<script src="./js/subirImagenSospechoso.js"></script>
+		<script src="../js/subirImagenSospechoso.js"></script>
 <?php
 	cargarFooter();
  ?>
