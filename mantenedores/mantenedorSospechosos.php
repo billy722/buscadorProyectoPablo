@@ -10,52 +10,74 @@ if(isset($_SESSION['run'])==false &&
 
 }else{
 
-    include("../principal/comun.php");
-    conectarBD();
+    require_once("../principal/comun.php");
     cargarEncabezado();
  ?>
-            <div class="container" style="margin-top:25px;">
-                <div class="row col-xs-4">
-                  <input class="form-control" type="text" placeholder="Ingrese rut/ nombre/ apodo">
-                </div>
-                <div class="row">
-                  <button class="col-xs-1 btn btn-warning">Buscar</button>
-                  <a href="./formularioIngresoSospechosos.php" class="col-xs-2 col-xs-offset-5 btn btn-success">Nuevo</a>
-                </div>
-            </div>
+<div class="container">
 
-            <div class="container" id="divListadoSospechosos">
+              <h1 class="col-xs-4 text text-primary">Sospechosos</h1>
 
-              <table class="table table-bordered tablaLista table-striped">
-                <thead>
-                    <th>Rut</th>
-                    <th>Nombre</th>
-                    <th>Apellido Paterno</th>
-                    <th>Apellido Materno</th>
-                    <th>Editar</th>
-                </thead>
-                <tbody>
-                    <?php $privilegios= $con->query("select * from tb_sospechoso order by run");
-                    $resultado="";
-                    while($filas = $privilegios->fetch_array()){
+              <div class="container col-xs-12">
+                     <div class="row">
 
-                      echo'<tr>
-                              <td>'.$filas["run"].'-'.$filas["dv"].'</td>
-                              <td class="text-uppercase">'.$filas["nombres"].'</td>
-                              <td class="text-uppercase">'.$filas["apellido_paterno"].'</td>
-                              <td class="text-uppercase">'.$filas["apellido_materno"].'</td>
-                              <td><a href="formularioIngresoSospechosos.php?id='.$filas['run'].'"><span class="glyphicon glyphicon-pencil"></a></td>
-                          </tr>';
-                    }
-                    ?>
-                </tbody>
-              </table>
-            </div>
+                          <div class="col-xs-5">
+                            <div class="input-group ">
+                                <span class="input-group-addon glyphicon glyphicon-search"></span>
+                                <input placeholder="Buscar" onKeyUp="cambiarPagina(1)" id="txt_buscar" type="text" class="form-control">
+                       		  </div>
+              			      </div>
 
-            <div id="divCargando"></div>
+              			      <div class="col-xs-3">
 
-<?php
-	cargarFooter();
+                                  <label class="control-label col-xs-3" for="cmb_cantidadRegistros">Mostrar</label>
+                                  <div class="col-xs-6">
+                                      <select onChange="cambiarPagina(1)" name="cmb_cantidadRegistros" class="form-control" id="cmb_cantidadRegistros">
+                                        <option value="5">5</option>
+                                        <option value="10">10</option>
+                                        <option value="20">20</option>
+                                        <option value="60">60</option>
+                                      </select>
+                                  </div>
+                          </div>
 
-}
- ?>
+                          <!--BOTON QUE ABRE MODAL DE CREAR NUEVO -->
+
+                              <a href="./formularioIngresoSospechosos.php" class=" btn btn-success col-xs-1 pull-right">Nuevo</a>
+
+
+           		     </div>
+
+                     <br>
+               		   <div class="row">
+                          <div id="contenedorMantenedor"></div><!-- DIV DONDE SE CARGA LA TABLA-->
+                     </div>
+          </div>
+</div>
+          <script>
+          var pagina;
+          //INICIO SCRIPT PARA CARGAR TABLA Y PAGINADA
+            function cambiarPagina(arg_pagina){
+                 pagina= arg_pagina;
+                 listarTabla();
+            }
+
+            function listarTabla(){
+
+                var busqueda= $("#txt_buscar").val();
+                if(busqueda==null){
+                    busqueda="_";
+                }
+
+                $.ajax({
+                  url:"controladorMantenedores.php",
+                  data:"mant=7&func=3&buscar="+busqueda+"&pag="+pagina+"&cantidadReg="+$("#cmb_cantidadRegistros").val(),
+                  success:function(respuesta){
+                        $("#contenedorMantenedor").html(respuesta);
+                  }
+                });
+
+            }
+            cambiarPagina(1); //FIN SCRIPT PARA CARGAR TABLA Y PAGINADA
+          </script>
+
+<?php } ?>

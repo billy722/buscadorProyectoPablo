@@ -757,6 +757,66 @@ $Zonas = new Zonas();
             break;
       }
 break;
+
+
+case "7": //mantenedor sospechosos
+
+
+        require_once '../clases/Sospechoso.php';
+        $Sospechoso= new Sospechoso();
+
+        switch($_REQUEST['func']){
+
+              case '1': // Ingresar sospechosos
+
+
+                      break;
+             case '2': // modificar sospechosos
+
+
+                     break;
+             case '3': // listar sospechosos
+             echo'<table class="table table-bordered tablaLista table-striped">
+                   <thead>
+                       <th>Rut</th>
+                       <th>Nombre</th>
+                       <th>Apellido Paterno</th>
+                       <th>Apellido Materno</th>
+                       <th>Lugar Nacimiento</th>
+                       <th>Editar</th>
+                   </thead>
+                   <tbody>
+             ';
+                     $retorno = $Sospechoso->BuscarFiltarRegistros("vistasospechoso","campoBuscar",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg']);
+
+                      $contadorFilas=0;
+                      foreach($retorno[0][0] as $column){
+                        $contadorFilas++;
+
+                        echo'<tr>
+                                <td>'.$column["run"].'</td>
+                                <td class="text-uppercase">'.$column["nombres"].'</td>
+                                <td class="text-uppercase">'.$column["apellido_paterno"].'</td>
+                                <td class="text-uppercase">'.$column["apellido_materno"].'</td>
+                                <td class="text-uppercase">'.$column["lugar_deNacimiento"].'</td>
+                                <td><a href="formularioIngresoSospechosos.php?id='.$column['run'].'"><span class="glyphicon glyphicon-pencil"></a></td>
+                            </tr>';
+
+                         }
+                          echo'<tr>
+                            <td colspan="7">
+                              <center>';
+                                echo $retorno[0][1];
+                            echo'</center>
+                            </td>
+                          </tr>
+                       </tbody>
+                    </table>';
+
+                     break;
+        }
+
+break;
 }
 
 
