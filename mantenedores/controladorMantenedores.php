@@ -622,33 +622,33 @@ $Zonas = new Zonas();
             case '2': //Mantenedor modificar - ZONA
                     //echo "id recibido: ".$_REQUEST['txt_idGrupo'];
 
-                  if($_REQUEST['txt_idGrupo']=="" or $_REQUEST['txt_nombreGrupo']==""){
+                  if($_REQUEST['txt_idZonas']=="" or $_REQUEST['txt_nombreZonas']==""){
                         echo "4";//hay campos vacios
 
                   }else{//los campos no estan vacios
 
                           //limpia variables de comillas y asigna
-                          $idGrupo=$Grupo->limpiarNumeroEntero($_REQUEST['txt_idGrupo']);
-                          $nombreGrupo=$Grupo->limpiarTexto($_REQUEST['txt_nombreGrupo']);
+                          $idZona=$Zonas->limpiarNumeroEntero($_REQUEST['txt_idZonas']);
+                          $nombreZona=$Zonas->limpiarTexto($_REQUEST['txt_nombreZonas']);
 
-                          $Grupo->setIdGrupo($idGrupo);
-                          $Grupo->setGrupo($nombreGrupo);
+                          $Zonas->setIdZona($idZona);
+                          $Zonas->setZona($nombreZona);
 
-                          if($Grupo->comprobarNombre()==false){//comprueba nombre de usuario
+                          if($Zonas->comprobarNombre()==false){//comprueba nombre de usuario
 
-                              $Grupo->actualizar();
-                              $Grupo->eliminarPrivilegiosDeGrupo();
+                              $Zonas->actualizar();
+                              $Zonas->eliminarPrivilegiosDeGrupo();
 
-                              require_once '../clases/Privilegio.php';
-                              $Privilegio= new Privilegio();
-                              $listaPrivilegios= $Privilegio->listarPrivilegios();
+                              require_once '../clases/Poblacion.php';
+                              $Poblacion= new Poblacion();
+                              $listaPoblaciones= $Poblacion->listarPoblacion();
 
-                              foreach($listaPrivilegios as $columna){
-                                      $priv='chb_privilegio'.$columna['id_privilegios'];
-                                      //echo "id texto privilegio: ".$priv;
+                              foreach($listaPoblaciones as $columna){
+                                      $pobl='chb_poblacion'.$columna['id_poblacion'];
+                                      //echo "id texto privilegio: ".$pobl;
 
-                                      if(isset($_REQUEST[$priv])){
-                                             $Grupo->asignarPrivilegioAlGrupo($columna['id_privilegios']);
+                                      if(isset($_REQUEST[$pobl])){
+                                             $Zonas->asignarPoblacionAZona($columna['id_poblacion']);
                                       }
                               }
                               echo "2";//todo correcto
@@ -701,8 +701,8 @@ $Zonas = new Zonas();
             break;
 
             case '4'://ELIMINAR ZONA
-                 $Grupo->setIdGrupo($_REQUEST['id']);
-                 $Grupo->eliminarGrupo();
+                 $Zonas->setIdZona($_REQUEST['id']);
+                 $Zonas->eliminarZona();
             break;
 
             case '5'://carga informacion del formulario modificar

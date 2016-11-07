@@ -62,7 +62,7 @@ public function __construct(){
   }
 
   public function eliminarPrivilegiosDeGrupo(){
-      $consulta="delete from tb_zonaprivilegio where id_zonaUsuario=".$this->_idZona.";";
+      $consulta="delete from tb_poblacionzonas where id_zona=".$this->_idZona.";";
 
      if($this->insertar($consulta)){
 return true;
@@ -72,17 +72,18 @@ return true;
   }
 
   public function actualizar(){
-    $consulta='UPDATE tb_zonausuario SET descripcion_zonaUsuario=\''.$this->_zona.'\' WHERE id_zonaUsuario='.$this->_idZona;
+    $consulta='UPDATE tb_zona SET descripcion_zona=\''.$this->_zona.'\' WHERE id_zona='.$this->_idZona;
 
      if($this->insertar($consulta)){
        return true;
      }else{
-       echo "ERROR AL ASIGNAR PRIVILEGIO: ".$consulta;
+       echo "ERROR AL ASIGNAR POBLACION: ".$consulta;
      }
   }
   // Funcion eliminar datos de la tabla region
-  public function eliminarGrupo(){$region=$this->insertar('DELETE FROM `tb_zonausuario` WHERE `id_zonaUsuario`='.$this->_idZona.';');
-    return $region;}
+  public function eliminarZona(){
+    $resultado=$this->insertar('DELETE FROM `tb_zona` WHERE `id_zona`='.$this->_idZona.';');
+    return $resultado;}
 
   public function comprobarNombre(){
     $consulta;

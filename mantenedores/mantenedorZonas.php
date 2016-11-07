@@ -187,7 +187,7 @@ var pagina;
 
               <form class="form-horizontal" name="formularioModificacion" id="formularioModificacion" action="">
 
-                    <div id="divPrivilegiosGrupo"></div><!-- se cargar los privilegios que tiene el grupo-->
+                  <div id="divPrivilegiosGrupo"></div><!-- se cargar los privilegios que tiene el grupo-->
 
                   <!-- BOTON QUE CIERRA MODAL-->
                   <div class="form-group">
@@ -196,7 +196,7 @@ var pagina;
                     </div>
                   </div>
 
-                </form>
+             </form>
 
 
             </div>
@@ -243,7 +243,7 @@ var pagina;
               event.preventDefault();
 
       //alert cargando
-    //  swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowOutsideClick:false,showCancelButton: false,closeOnConfirm: false});
+    // swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowOutsideClick:false,showCancelButton: false,closeOnConfirm: false});
 
                     $.ajax({
                         url:"controladorMantenedores.php?mant=6&func=2",
@@ -264,31 +264,62 @@ var pagina;
                               }
                               else{
                                 sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
-                                 // alert(resultado);
+                                //alert(resultado);
                                  // $("#error").html(resultado);
                               }
                         }
                     });
             });
 
+  function ajaxEliminar(){
+    $.ajax({
+            url:"controladorMantenedores.php",
+            data:"mant=6&func=4&id="+id,
+            error:function(error){
+                alert(error);
+            },
+            success:function(respuesta){
+                   //$("#error").html(respuesta);
+                  swal("Operacion exitosa!", "Eliminado Correctamente", "success");
+                  cambiarPagina(1);
+            }
+    });
+  }
+
           function eliminar(id){
             event.preventDefault();
       //alert cargando
-      swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowOutsideClick:false,showCancelButton: false,closeOnConfirm: false});
-
-                 $.ajax({
-                  url:"controladorMantenedores.php",
-                  data:"mant=6&func=4&id="+id,
-                  error:function(error){
-                      alert(error);
-                  },
-                  success:function(respuesta){
-                         //$("#error").html(respuesta);
-                        swal("Operacion exitosa!", "Eliminado Correctamente", "success");
-                        cambiarPagina(1);
+                swal({
+                  title: "Está seguro?",
+                  text: "Una vez eliminada no podrá retroceder.",
+                  type: "warning",
+                  showCancelButton: true,
+                  confirmButtonClass: "btn-danger",
+                  confirmButtonText: "Si, Borrar!",
+                  cancelButtonText: "No, Detener!",
+                  closeOnConfirm: false,
+                  closeOnCancel: false
+                },
+                function(isConfirm) {
+                  if (isConfirm) {
+                        $.ajax({
+                                url:"controladorMantenedores.php",
+                                data:"mant=6&func=4&id="+id,
+                                error:function(error){
+                                    alert(error);
+                                },
+                                success:function(respuesta){
+                                      $("#error").html(respuesta);
+                                      swal("Operacion exitosa!", "Eliminado Correctamente", "success");
+                                      cambiarPagina(1);
+                                }
+                        });
+                  } else {
+                    swal("Cancelado", "No se eliminó el registro :)", "error");
                   }
                 });
-            }
+
+          }
 
 </script>
 
