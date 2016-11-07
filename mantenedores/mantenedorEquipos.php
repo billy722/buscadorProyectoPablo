@@ -27,7 +27,7 @@ if(isset($_SESSION['run'])==false &&
 
                 <div class="col-xs-4">
                   <div class="input-group">
-                    <span class="input-group-addon "></span>
+                    <span class="input-group-addon glyphicon glyphicon-search"></span>
                     <input placeholder="Buscar" onKeyUp="cambiarPagina(1)" id="txt_buscar" type="text" class="form-control">
            		  </div>
     			</div>

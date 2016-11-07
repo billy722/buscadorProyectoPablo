@@ -23,7 +23,7 @@ conectarBD();
 			 			</tr>
 			 			<tr>
 			 				<td><strong>Nombre:</strong></td>
-			 				<td class="text-uppercase"><input class="form-control" type="text" readonly value="'.$filas['nombre'].'" ></td>
+			 				<td class="text-uppercase"><input class="form-control" type="text" readonly value="'.$filas['nombres'].'" ></td>
 			 			</tr>
 			 			<tr>
 			 				<td><strong>Lugar Nacimiento:</strong></td>

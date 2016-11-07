@@ -15,11 +15,11 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                         $dv= substr($campoRut,$posicionGuion+1,$posicionGuion+1);
                         $Usuario->setRun($rut);
                         $Usuario->setDV($dv);
-                        $Usuario->setNombre($_REQUEST['txt_nombreCrear']);
-                        $Usuario->setApellidoPaterno($_REQUEST['txt_apellidoPaternoCrear']);
-                        $Usuario->setApellidoMaterno($_REQUEST['txt_apellidoMaternoCrear']);
-                        $Usuario->setClave($_REQUEST['txt_clave1Crear']);
-                        $Usuario->setTelefono($_REQUEST['txt_telefonoCrear']);
+                        $Usuario->setNombre($Usuario->limpiarTexto($_REQUEST['txt_nombreCrear']));
+                        $Usuario->setApellidoPaterno($Usuario->limpiarTexto($_REQUEST['txt_apellidoPaternoCrear']));
+                        $Usuario->setApellidoMaterno($Usuario->limpiarTexto($_REQUEST['txt_apellidoMaternoCrear']));
+                        $Usuario->setClave($Usuario->limpiarTexto($_REQUEST['txt_clave1Crear']));
+                        $Usuario->setTelefono($Usuario->limpiarTexto($_REQUEST['txt_telefonoCrear']));
                         $Usuario->setCorreo($_REQUEST['txt_correoCrear']);
                         $Usuario->setGrupoUsuario($_REQUEST['select_tipoUsuarioCrear']);
                         $Usuario->setEstado("1");
@@ -34,11 +34,11 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                 $dv= substr($campoRut,$posicionGuion+1,$posicionGuion+1);
                 $Usuario->setRun($rut);
                 $Usuario->setDV($dv);
-                $Usuario->setNombre($_REQUEST['txt_nombreModificar']);
-                $Usuario->setApellidoPaterno($_REQUEST['txt_apellidoPaternoModificar']);
-                $Usuario->setApellidoMaterno($_REQUEST['txt_apellidoMaternoModificar']);
-                $Usuario->setClave($_REQUEST['txt_clave1Modificar']);
-                $Usuario->setTelefono($_REQUEST['txt_telefonoModificar']);
+                $Usuario->setNombre($Usuario->limpiarTexto($_REQUEST['txt_nombreModificar']));
+                $Usuario->setApellidoPaterno($Usuario->limpiarTexto($_REQUEST['txt_apellidoPaternoModificar']));
+                $Usuario->setApellidoMaterno($Usuario->limpiarTexto($_REQUEST['txt_apellidoMaternoModificar']));
+                $Usuario->setClave($Usuario->limpiarTexto($_REQUEST['txt_clave1Modificar']));
+                $Usuario->setTelefono($Usuario->limpiarTexto($_REQUEST['txt_telefonoModificar']));
                 $Usuario->setCorreo($_REQUEST['txt_correoModificar']);
                 $Usuario->setGrupoUsuario($_REQUEST['select_tipoUsuarioModificar']);
                 $Usuario->setEstado($_REQUEST['select_estadoUsuarioModificar']);
@@ -147,7 +147,6 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                 $Delito->setEstadoDelito($_REQUEST['cmb_estadoDelitoModificar']);
                 if($Delito->actualizarDelito()){
                   echo "2";
-
                 }
               break;
               case '3'://Eliminar delito
@@ -311,21 +310,21 @@ case '3'://Mant Poblacion
 
             switch($_REQUEST['func']){
               case '1': //Ingresar nuevo equipo
-                $Equipo->setDescripcionEquipo($_REQUEST['txt_descripcionEquipoCrear']);
+                $Equipo->setDescripcionEquipo($Equipo->limpiarTexto($_REQUEST['txt_descripcionEquipoCrear']));
                 $Equipo->setEstadoEquipo("1");
                 $Equipo->ingresarEquipo();
               break;
               case '2'://Modificar equipo
-                $Equipo->setIdEquipo($_REQUEST['txt_idEquipoModificar']);
-                $Equipo->setDescripcionEquipo($_REQUEST['txt_descripcionEquipoModificar']);
-                $Equipo->setEstadoEquipo($_REQUEST['cmb_estadoEquipoModificar']);
+                $Equipo->setIdEquipo($Equipo->limpiarNumeroEntero($_REQUEST['txt_idEquipoModificar']));
+                $Equipo->setDescripcionEquipo($Equipo->limpiarTexto($_REQUEST['txt_descripcionEquipoModificar']));
+                $Equipo->setEstadoEquipo($Equipo->limpiarNumeroEntero($_REQUEST['cmb_estadoEquipoModificar']));
                 if($Equipo->actualizarEquipo()){
                   echo "2";
 
                 }
               break;
               case '3'://Eliminar equipo
-                      $Equipo->setIdEquipo($_REQUEST['id']);
+                      $Equipo->setIdEquipo($Equipo->limpiarNumeroEntero($_REQUEST['id']));
                       $Equipo->setEstadoEquipo("3");
                       $verificarExito= $Equipo->eliminarEquipo();
 
@@ -557,8 +556,8 @@ $Grupo = new Grupos();
                            echo '<div class="row">';
 
                                     echo'<input type="checkbox"';
-                                    foreach($poblacionesActuales as $priActual){
-                                            if($priActual['id']==$columnasC['id_privilegios']){
+                                    foreach($privilegiosACtuales as $pobActua){
+                                            if($pobActua['id']==$columnasC['id_privilegios']){
                                                 echo' checked ';
                                             }
                                     }

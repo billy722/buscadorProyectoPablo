@@ -27,7 +27,7 @@ if(isset($_SESSION['run'])==false &&
 
                 <div class="col-xs-4">
                   <div class="input-group">
-                    <span class="input-group-addon "></span>
+                    <span class="input-group-addon glyphicon glyphicon-search"></span>
                     <input placeholder="Buscar" onKeyUp="cambiarPagina(1)" id="txt_buscar" type="text" class="form-control">
            		  </div>
     			</div>
@@ -82,7 +82,7 @@ var pagina;
   cambiarPagina(1); //FIN SCRIPT PARA CARGAR TABLA Y PAGINADA
 </script>
 <!--Modal para crear-->
- <div class="modal fade" id="ventanaModalCrear" role="dialog">
+ <div class="modal fade" data-backdrop=”static” data-keyboard=”false”  id="ventanaModalCrear" role="dialog">
         <div class="modal-dialog modal-md">
           <div class="modal-content">
             <div class="modal-header">
@@ -94,51 +94,51 @@ var pagina;
               <form class="form-horizontal" name="formularioCreacion" id="formularioCreacion" action="">
 
                     <!-- CAMPO 1 DEL MODAL-->
-                      <div class="form-group">
+            <div class="form-group">
                   <label class="sr-only control-label col-lg-2" for="txt_runCrear">Run</label>
-                  <div class="col-lg-3">
+                  <div class="col-lg-9">
                     <input  required minlenght="12" title="Complete este campo" placeholder="Ej.12123456-7" class="form-control" id="txt_runCrear" name="txt_runCrear" type="text" >
                   </div>
             </div>
 
             <div class="form-group">
                   <label class="sr-only control-label col-lg-2" for="txt_nombreCrear">Nombres</label>
-                  <div class="col-lg-3">
+                  <div class="col-lg-9">
                     <input required title="Complete este campo" placeholder="Nombre" id="txt_nombreCrear" name="txt_nombreCrear" type="text" class="form-control">
                   </div>
             </div>
 
             <div class="form-group">
                   <label class="sr-only control-label col-lg-2" for="txt_apellidoPaternoCrear">Apellido Paterno</label>
-                  <div class="col-lg-3">
+                  <div class="col-lg-9">
                     <input required title="Complete este campo" placeholder="Apellido Paterno" id="txt_apellidoPaternoCrear" name="txt_apellidoPaternoCrear" type="text" class="form-control">
                   </div>
             </div>
 
 			<div class="form-group">
                   <label class="sr-only control-label col-lg-2" for="txt_apellidoMaternoCrear">Apellido Materno</label>
-                  <div class="col-lg-3">
+                  <div class="col-lg-9">
                     <input required title="Complete este campo" placeholder="Apellido Materno" id="txt_apellidoMaternoCrear" name="txt_apellidoMaternoCrear" type="text" class="form-control">
                   </div>
             </div>
 
             <div class="form-group">
                   <label class="sr-only control-label col-lg-2" for="txt_correoCrear">Correo</label>
-                  <div class="col-lg-3">
+                  <div class="col-lg-9">
                     <input required title="Complete este campo" placeholder="Correo" id="txt_correoCrear" name="txt_correoCrear" type="text" class="form-control">
                   </div>
             </div>
 
             <div class="form-group">
                   <label class="sr-only control-label col-lg-2" for="txt_telefonoCrear">Telefono</label>
-                  <div class="col-lg-3">
+                  <div class="col-lg-9">
                     <input required title="Complete este campo" required maxlenght="9" placeholder="Telefono" id="txt_telefonoCrear" name="txt_telefonoCrear" type="number" class="form-control">
                   </div>
             </div>
 
             <div class="form-group">
                   <label class="sr-only control-label col-lg-2" for="select_tipoUsuarioCrear">Tipo Usuario</label>
-                  <div class="col-lg-3">
+                  <div class="col-lg-9">
                     <select id="select_tipoUsuarioCrear" class="form-control" name="select_tipoUsuarioCrear">
                         <?php
                          require '../clases/Grupos.php';
@@ -155,14 +155,14 @@ var pagina;
 
             <div id="divClave1" class="form-group">
                   <label class="sr-only control-label col-lg-2" for="txt_clave1Crear">Contraseña</label>
-                  <div class="col-lg-3">
+                  <div class="col-lg-9">
                     <input required title="Complete este campo" placeholder="Contraseña" id="txt_clave1Crear" name="txt_clave1Crear" type="password" class="form-control">
                   </div>
             </div>
 
               <div id="divClave2" class="form-group">
                   <label class="sr-only control-label col-lg-2" for="txt_clave2Crear">Repita Contraseña</label>
-                  <div class="col-lg-3">
+                  <div class="col-lg-9">
                     <input required title="Complete este campo" placeholder="Confirme Contraseña" id="txt_clave2Crear" name="txt_clave2Crear" type="password" class="form-control">
                   </div>
               </div>
