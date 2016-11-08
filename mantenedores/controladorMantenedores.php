@@ -9,21 +9,39 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
             switch($_REQUEST['func']){//SELECCIONAR ACCION
 
                 case '1'://Ingresar-Modificar usuario
-                        $campoRut=$_REQUEST['txt_runCrear'];
-                        $posicionGuion= strpos($campoRut,"-");
-                        $rut= substr($campoRut,0,$posicionGuion);
-                        $dv= substr($campoRut,$posicionGuion+1,$posicionGuion+1);
-                        $Usuario->setRun($rut);
-                        $Usuario->setDV($dv);
-                        $Usuario->setNombre($Usuario->limpiarTexto($_REQUEST['txt_nombreCrear']));
-                        $Usuario->setApellidoPaterno($Usuario->limpiarTexto($_REQUEST['txt_apellidoPaternoCrear']));
-                        $Usuario->setApellidoMaterno($Usuario->limpiarTexto($_REQUEST['txt_apellidoMaternoCrear']));
-                        $Usuario->setClave($Usuario->limpiarTexto($_REQUEST['txt_clave1Crear']));
-                        $Usuario->setTelefono($Usuario->limpiarTexto($_REQUEST['txt_telefonoCrear']));
-                        $Usuario->setCorreo($_REQUEST['txt_correoCrear']);
-                        $Usuario->setGrupoUsuario($_REQUEST['select_tipoUsuarioCrear']);
-                        $Usuario->setEstado("1");
-                        $Usuario->insertarModificarUsuario();
+                      $campoRut=$_REQUEST['txt_runCrear'];
+                      $nombre= $_REQUEST['txt_nombreCrear'];
+                      $apellidoPaterno= $_REQUEST['txt_apellidoPaternoCrear'];
+                      $apellidoMaterno= $_REQUEST['txt_apellidoMaternoCrear'];
+                      $clave= $_REQUEST['txt_clave1Crear'];
+                      $telefono= $_REQUEST['txt_telefonoCrear'];
+                      $correo= $_REQUEST['txt_correoCrear'];
+                      $tipoUsuario= $_REQUEST['select_tipoUsuarioCrear'];
+
+                      if($campoRut=="" || $nombre="" || $apellidoPaterno=="" || $clave=="" || $tipoUsuario==""){
+                            echo "2";//HAY CAMPOS VACIOS
+
+                      }else{
+                            $posicionGuion= strpos($campoRut,"-");
+                            $rut= substr($campoRut,0,$posicionGuion);
+                            $dv= substr($campoRut,$posicionGuion+1,$posicionGuion+1);
+                            $Usuario->setRun($rut);
+
+                           if($Usuario->comprobarExisteRun($rut)){
+                                echo "3"; //RUT QUE INTENTA INGRESAR YA EXISTE
+                           }else{
+                               $Usuario->setDV($dv);
+                               $Usuario->setNombre($Usuario->limpiarTexto($nombre));
+                               $Usuario->setApellidoPaterno($Usuario->limpiarTexto($apellidoPaterno));
+                               $Usuario->setApellidoMaterno($Usuario->limpiarTexto($apellidoMaterno));
+                               $Usuario->setClave($Usuario->limpiarTexto($clave));
+                               $Usuario->setTelefono($Usuario->limpiarTexto($telefono));
+                               $Usuario->setCorreo($Usuario->limpiarCorreo($correo));
+                               $Usuario->setGrupoUsuario($Usuario->limpiarNumeroEntero($tipoUsuario));
+                               $Usuario->setEstado("1");
+                               $Usuario->insertarModificarUsuario();
+                           }
+                      }
 
                         break;
 

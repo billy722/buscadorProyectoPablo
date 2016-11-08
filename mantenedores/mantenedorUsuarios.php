@@ -211,49 +211,49 @@ var pagina;
 
 						<div class="form-group">
 									<label class="sr-only control-label col-lg-2" for="txt_runModificar">Run</label>
-									<div class="col-lg-3">
+									<div class="col-lg-9">
 										<input  required minlenght="12" readonly title="Complete este campo" placeholder="Run" class="form-control" id="txt_runModificar" name="txt_runModificar" type="text" >
 									</div>
 						</div>
 
 						<div class="form-group">
 									<label class="sr-only control-label col-lg-2" for="txt_nombreModificar">Nombre</label>
-									<div class="col-lg-3">
+									<div class="col-lg-9">
 										<input required title="Complete este campo" placeholder="Nombre" id="txt_nombreModificar" name="txt_nombreModificar" type="text" class="form-control">
 									</div>
 						</div>
 
 						<div class="form-group">
 									<label class="sr-only control-label col-lg-2" for="txt_apellidoPaternoModificar">Apellido Paterno</label>
-									<div class="col-lg-3">
+									<div class="col-lg-9">
 										<input required title="Complete este campo" placeholder="Apellido Paterno" id="txt_apellidoPaternoModificar" name="txt_apellidoPaternoModificar" type="text" class="form-control">
 									</div>
 						</div>
 
 						<div class="form-group">
 									<label class="sr-only control-label col-lg-2" for="txt_apellidoMaternoModificar">Apellido Materno</label>
-									<div class="col-lg-3">
+									<div class="col-lg-9">
 										<input required title="Complete este campo" placeholder="Apellido Materno" id="txt_apellidoMaternoModificar" name="txt_apellidoMaternoModificar" type="text" class="form-control">
 									</div>
 						</div>
 
 						<div class="form-group">
 									<label class="sr-only control-label col-lg-2" for="txt_correoModificar">Correo</label>
-									<div class="col-lg-3">
+									<div class="col-lg-9">
 										<input required title="Complete este campo" placeholder="Correo" id="txt_correoModificar" name="txt_correoModificar" type="text" class="form-control">
 									</div>
 						</div>
 
 						<div class="form-group">
 									<label class="sr-only control-label col-lg-2" for="txt_telefonoModificar">Telefono</label>
-									<div class="col-lg-3">
+									<div class="col-lg-9">
 										<input required title="Complete este campo" placeholder="Telefono" id="txt_telefonoModificar" name="txt_telefonoModificar" type="text" class="form-control">
 									</div>
 						</div>
 
             <div class="form-group">
                               <label class="sr-only control-label col-lg-2" for="select_tipoUsuarioModificar">Tipo Usuario</label>
-                              <div class="col-lg-3">
+                              <div class="col-lg-9">
                                   <select class="form-control" name="select_tipoUsuarioModificar" id="select_tipoUsuarioModificar">
                                       <?php
                                           require_once '../clases/Grupos.php';
@@ -270,7 +270,7 @@ var pagina;
               </div>
               <div class="form-group">
                   <label class="sr-only control-label col-lg-2" for="select_estadoUsuarioModificar">Estado Usuario</label>
-                  <div class="col-lg-3">
+                  <div class="col-lg-9">
                       <select class="form-control" name="select_estadoUsuarioModificar" id="select_estadoUsuarioModificar">
                           <?php
                               require_once '../clases/Estado.php';
@@ -287,14 +287,14 @@ var pagina;
             </div>
 						<div id="divClave1" class="form-group">
 									<label class="sr-only control-label col-lg-2" for="txt_clave1Modificar">Contraseña</label>
-									<div class="col-lg-3">
+									<div class="col-lg-9">
 										<input title="Complete este campo" placeholder="Contraseña" id="txt_clave1Modificar" name="txt_clave1Modificar" type="password" class="form-control">
 									</div>
 						</div>
 
 							<div id="divClave2" class="form-group">
 									<label class="sr-only control-label col-lg-2" for="txt_clave2Modificar">Repita Contraseña</label>
-									<div class="col-lg-3">
+									<div class="col-lg-9">
 										<input title="Complete este campo" placeholder="Confirme Contraseña" id="txt_clave2Modificar" name="txt_clave2Modificar" type="password" class="form-control">
 									</div>
 							</div>
@@ -334,13 +334,18 @@ swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowO
                 url:"./controladorMantenedores.php?mant=1&func=1",
                 data: $("#formularioCreacion").serialize(),
                 success:function(resultado){
+
                   if(resultado=="1"){
                           swal("Operacion exitosa!", "Agregado Correctamente", "success");
                           cambiarPagina(1);
-                        }else{
-                          //alert(resultado);
-                          sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
-                        }}
+                  }else if(resultado=="2"){
+                          sweetAlert("Ocurrió un error", "Hay campos vacios", "error");
+                  }else if(resultado=="3"){
+                          sweetAlert("Ocurrió un error", "El Run que intenta ingresar ya existe.", "error");
+                  }else{
+                        sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
+                  }
+                }
             });
           }else{
             //alert("claves no coinciden");
@@ -368,18 +373,35 @@ swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowO
 
     function eliminar(run){
       event.preventDefault();
-      swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowOutsideClick:false,showCancelButton: false,closeOnConfirm: false});
-           $.ajax({
-            url:"./controladorMantenedores.php",
-            data:"mant=1&func=5&run="+run,
-            success:function(respuesta){
-                    if(respuesta=="2"){
-                    //alert("ELIMINADO CORRECTAMENTE");
-                    swal("Operacion exitosa!", "Eliminado Correctamente", "success");
-                        cambiarPagina(1);
-                    }else{
-                        alert("error al eliminar: "+respuesta);
-                    }
+
+          swal({
+            title: "Está seguro?",
+            text: "Una vez eliminada no podrá retroceder.",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Si, Borrar!",
+            cancelButtonText: "No, Detener!",
+            closeOnConfirm: false,
+            closeOnCancel: false
+          },
+          function(isConfirm) {
+            if (isConfirm) {
+                      $.ajax({
+                       url:"./controladorMantenedores.php",
+                       data:"mant=1&func=5&run="+run,
+                       success:function(respuesta){
+                               if(respuesta=="2"){
+                               //alert("ELIMINADO CORRECTAMENTE");
+                               swal("Operacion exitosa!", "Eliminado Correctamente", "success");
+                                   cambiarPagina(1);
+                               }else{
+                                   alert("error al eliminar: "+respuesta);
+                               }
+                       }
+                     });
+            } else {
+              swal("Cancelado", "No se eliminó el registro :)", "error");
             }
           });
       }

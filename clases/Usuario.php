@@ -108,6 +108,13 @@ class Usuario extends Conexion{
                 }
   }
 
+  public function comprobarExisteRun(){
+     $consulta="select run from tb_usuarios where run=".$this->run;
+
+     $resultado= $this->consultaExistencia($consulta);
+     return $resultado;
+  }
+
 
 }
 
