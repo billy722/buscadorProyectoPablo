@@ -219,7 +219,7 @@ var pagina;
 						<div class="form-group">
 									<label class="sr-only control-label col-lg-2" for="txt_nombreModificar">Nombre</label>
 									<div class="col-lg-9">
-										<input required title="Complete este campo" placeholder="Nombre" id="txt_nombreModificar" name="txt_nombreModificar" type="text" class="form-control">
+										<input title="Complete este campo" placeholder="Nombre" id="txt_nombreModificar" name="txt_nombreModificar" type="text" class="form-control">
 									</div>
 						</div>
 
