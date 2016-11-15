@@ -26,6 +26,8 @@ class Conexion{
 
           if ($this->con->query($arg_consulta)) {
                 return true;
+          }else if($this->con->errno=="1062"){
+                echo "1062";
           }else{
               echo "Lo sentimos, este sitio web está experimentando problemas.";
               echo "Error: La ejecución de la consulta falló debido a: \n";

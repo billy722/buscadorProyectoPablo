@@ -196,32 +196,6 @@ function validaRut(str)
 }
 
 
-function agregarCampoFoto(){
-  var contadorTr=$("#tablaFotosIngreso tr").length-1;
-  contadorTr++;
-
-  //alert(contadorTr);
-      $("#tablaFotosIngreso").append('<tr><td><input name="foto'+contadorTr+'" type="file"></input></td><td><input type="date" name="fechaFoto'+contadorTr+'"></td><td><input type="checkbox" name="tipoFoto'+contadorTr+'"></td></tr>');
-      $("#contadorFotos").val(contadorTr);
-}
-
-function removerCampoFoto(){
-     var cantidad= $("#contadorFotos").val();
-
-     if(cantidad!=1){
-         $("#tablaFotosIngreso tr:last").remove();
-
-          cantidad--;
-           $("#contadorFotos").val(cantidad);
-      }
-}
-
-
-
-
-
-
-
 function mostrarCargando(){
     document.getElementById("divCargando").innerHTML ='<div id="over" class="adelante"><p id="textoCargando">CARGANDO</p></div><div id="fade" class="atras">&nbsp;</div>';
 }

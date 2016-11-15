@@ -1,27 +1,25 @@
 <?php
 	include("../principal/comun.php");
+	require_once '../clases/Sospechoso.php';
 	conectarBD();
 	cargarEncabezado();
 
+	$soloRun=$_REQUEST['id'];
 
-	if(isset($_REQUEST['correcto'])){
-			ECHO'<script type="text/javascript">
-				alert("GUARDADO CORRECTAMENTE");
-			</script>';
-	}
 
-    if(isset($_REQUEST['id'])){
+				$Sospechoso= new Sospechoso();
+        $listado= $Sospechoso->registros("select * from tb_sospechoso where run=".$soloRun);
 
-        $rs= $con->query("select * from tb_sospechoso where run=".$_REQUEST['id']);
-        $filasPrincipal= $rs->fetch_array();
-    }
+			foreach($listado as $filasPrincipal){
+
+			}
  ?>
 
 
 
 <div id="contenedorFormularios" class="container" >
 
-	<form id="formularioIngresarSospechoso" name="formularioIngresarSospechoso" method="POST"  enctype="multipart/form-data">
+	<form id="formularioModificacionSospechoso" name="formularioModificacionSospechoso" method="POST"  enctype="multipart/form-data">
 	<div class="container row">
 
 	<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" id="tablaIngresoSospechoso">
@@ -33,57 +31,57 @@
 
 				<tr>
 					<td><strong>Run</strong></td>
-					<td><input required class="form-control" name="run" placeholder="12345678-1" type="text"
-					    <?php if(isset($_REQUEST['id'])){ echo' value="'.$filasPrincipal['run'].'"'; } ?>
+					<td><input class="form-control" name="run" placeholder="12345678-1" type="text"
+					    <?php if(isset($soloRun)){ echo' value="'.$filasPrincipal['run'].'"'; } ?>
 					    >
 					</td>
 				</tr>
 				<tr>
 					<td><strong>Nombre</strong></td>
-					<td><input required class="form-control text-uppercase" name="nombre" type="text"
-					     <?php if(isset($_REQUEST['id'])){ echo' value="'.$filasPrincipal['nombres'].'"'; } ?>
+					<td><input class="form-control text-uppercase" name="nombre" type="text"
+					     <?php if(isset($soloRun)){ echo' value="'.$filasPrincipal['nombres'].'"'; } ?>
 					>
 					</td>
 				</tr>
 				<tr>
 					<td><strong>Apellido Paterno</strong></td>
-					<td><input required class="form-control text-uppercase" name="apellidoPaterno" type="text"
-					     <?php if(isset($_REQUEST['id'])){ echo' value="'.$filasPrincipal['apellido_paterno'].'"'; } ?>
+					<td><input class="form-control text-uppercase" name="apellidoPaterno" type="text"
+					     <?php if(isset($soloRun)){ echo' value="'.$filasPrincipal['apellido_paterno'].'"'; } ?>
 					>
 					</td>
 				</tr>
 				<tr>
 					<td><strong>Apellido Materno</strong></td>
-					<td><input required class="form-control" name="apellidoMaterno" type="text"
-					     <?php if(isset($_REQUEST['id'])){ echo' value="'.$filasPrincipal['apellido_materno'].'"'; } ?>
+					<td><input class="form-control" name="apellidoMaterno" type="text"
+					     <?php if(isset($soloRun)){ echo' value="'.$filasPrincipal['apellido_materno'].'"'; } ?>
 					>
 					</td>
 				</tr>
 				<tr>
 					<td><strong>Fecha Nacimiento</strong></td>
-					<td><input required class="form-control" name="edad" type="date"
-					     <?php if(isset($_REQUEST['id'])){ echo' value="'.$filasPrincipal['fecha_nacimiento'].'"'; } ?>
+					<td><input class="form-control" name="edad" type="date"
+					     <?php if(isset($soloRun)){ echo' value="'.$filasPrincipal['fecha_nacimiento'].'"'; } ?>
 					>
 					</td>
 				</tr>
 				<tr>
 					<td><strong>Apodos</strong></td>
 					<td><input class="form-control" name="apodo" type="text"
-					     <?php if(isset($_REQUEST['id'])){ echo' value="'.$filasPrincipal['apodos'].'"'; } ?>
+					     <?php if(isset($soloRun)){ echo' value="'.$filasPrincipal['apodos'].'"'; } ?>
 					>
 					</td>
 				</tr>
 				<tr>
 					<td><strong>Lugar Nacimiento</strong></td>
 					<td><input class="form-control" name="lugarNacimiento" type="text"
-					     <?php if(isset($_REQUEST['id'])){ echo' value="'.$filasPrincipal['lugar_deNacimiento'].'"'; } ?>
+					     <?php if(isset($soloRun)){ echo' value="'.$filasPrincipal['lugar_deNacimiento'].'"'; } ?>
 					>
 					</td>
 				</tr>
 				<tr>
 					<td><strong>Estatura(cm)</strong></td>
 					<td><input class="form-control" name="estatura" type="number" min="0"
-					     <?php if(isset($_REQUEST['id'])){ echo' value="'.$filasPrincipal['estatura'].'"'; } ?>
+					     <?php if(isset($soloRun)){ echo' value="'.$filasPrincipal['estatura'].'"'; } ?>
 					>
 					</td>
 				</tr>
@@ -93,7 +91,7 @@
 						<select class="form-control" name="colorPelo">
 							<?php
 								$resultado = $con->query("select * from tb_colorpelo");
-                                if(isset($_REQUEST['id'])){
+                                if(isset($soloRun)){
                                     while ($filas= $resultado->fetch_array()){
                                         echo'<option value="'.$filas['id_colorPelo'].'"';
                                             if($filas['id_colorPelo']==$filasPrincipal['id_colorPelo']){
@@ -115,7 +113,7 @@
 					<td><select class="form-control" name="contextura">
 						<?php
 							$resultado = $con->query("select * from tb_contextura");
-                            if(isset($_REQUEST['id'])){
+                            if(isset($soloRun)){
 
                                 while($filas = $resultado->fetch_array()){
                                     echo '<option value="'.$filas['id_contextura'].'" ';
@@ -137,7 +135,7 @@
 					<td><select class="form-control" name="estadoCivil">
 						<?php
 							$resultado = $con->query("select * from tb_estadoCivil");
-                            if(isset($_REQUEST['id'])){
+                            if(isset($soloRun)){
                                 while($filas = $resultado->fetch_array()){
                                     echo '<option value="'.$filas['id_estadoCivil'].'"  ';
                                             if($filas['id_estadoCivil']==$filasPrincipal['id_estadoCivil']){
@@ -158,7 +156,7 @@
 					<td><select class="form-control" name="sexo">
 						<?php
 							$resultado = $con->query("select * from tb_sexo");
-                            if(isset($_REQUEST['id'])){
+                            if(isset($soloRun)){
                                 while($filas = $resultado->fetch_array()){
                                     echo '<option value="'.$filas['id_sexo'].'" ';
                                             if($filas['id_sexo']==$filasPrincipal['id_sexo']){
@@ -178,7 +176,7 @@
 					<td><strong>Tez De Piel</strong></td>
 					<td><select class="form-control" name="tezPiel">
 						<?php
-							$resultado = $con->query("select * from tb_tezpiel");                            if(isset($_REQUEST['id'])){
+							$resultado = $con->query("select * from tb_tezpiel");                            if(isset($soloRun)){
                                 while($filas = $resultado->fetch_array()){
                                     echo '<option value="'.$filas['id_tezPiel'].'" ';
                                             if($filas['id_tezPiel']==$filasPrincipal['id_tezPiel']){
@@ -199,7 +197,7 @@
 					<td><select class="form-control" name="tipoOjos">
 						<?php
 							$resultado = $con->query("select * from tb_colorojos");
-                            if(isset($_REQUEST['id'])){
+                            if(isset($soloRun)){
                                 while($filas = $resultado->fetch_array()){
                                     echo '<option value="'.$filas['id_colorOjos'].'" ';
                                             if($filas['id_colorOjos']==$filasPrincipal['id_tipoOjos']){
@@ -220,7 +218,7 @@
 					<td><select class="form-control" name="tipoPelo">
 						<?php
 							$resultado = $con->query("select * from tb_tipopelo");
-                            if(isset($_REQUEST['id'])){
+                            if(isset($soloRun)){
                                 while($filas = $resultado->fetch_array()){
                                     echo '<option value="'.$filas['id_tipoPelo'].'" ';
                                             if($filas['id_tipoPelo']==$filasPrincipal['id_tipoPelo']){
@@ -240,17 +238,17 @@
 		 					<td><label>Acne</label></td>
 		 					<td>
 		 						<input type="radio" value="1" name="acne" id="acne1"
-                    <?php if(isset($_REQUEST['id'])){ if($filasPrincipal['acne']=="1"){echo' checked="checked" ';} } ?>
+                    <?php if(isset($soloRun)){ if($filasPrincipal['acne']=="1"){echo' checked="checked" ';} } ?>
 
                     ><label for="acne1">Si</label>
 
 		 						<input type="radio" value="2" name="acne" id="acne2"
-                    <?php if(isset($_REQUEST['id'])){ if($filasPrincipal['acne']=="2"){echo' checked="checked" ';} } ?>
+                    <?php if(isset($soloRun)){ if($filasPrincipal['acne']=="2"){echo' checked="checked" ';} } ?>
 
                     ><label for="acne2">No</label>
 
 		 						<input type="radio" value="0" name="acne" id="acne3"
-		 	        <?php if(isset($_REQUEST['id'])){ if($filasPrincipal['acne']=="0"){echo' checked="checked" ';} }else{echo' checked="checked"';} ?>
+		 	        <?php if(isset($soloRun)){ if($filasPrincipal['acne']=="0"){echo' checked="checked" ';} }else{echo' checked="checked"';} ?>
 
 		 	        ><label for="acne3">Sin especificar</label>
 		 					</td>
@@ -260,7 +258,7 @@
 		 					<td>
 		 						<input type="radio" value="1" name="barba" id="barba1"
 		 						<?php
-                                if(isset($_REQUEST['id'])){
+                                if(isset($soloRun)){
                                     if($filasPrincipal['barba']=="1"){
                                         echo' checked="checked" ';
                                     }
@@ -269,7 +267,7 @@
 
 		 						<input type="radio" value="2" name="barba" id="barba2"
 		 						<?php
-                                if(isset($_REQUEST['id'])){
+                                if(isset($soloRun)){
                                     if($filasPrincipal['barba']=="2"){
                                         echo' checked="checked" ';
                                     }
@@ -277,7 +275,7 @@
                                 ><label for="barba2">No</label>
 
 		 						<input type="radio" value="0" name="barba" id="barba3"
-                                <?php if(isset($_REQUEST['id'])){
+                                <?php if(isset($soloRun)){
                                     if($filasPrincipal['barba']=="0"){
                                         echo' checked="checked" ';
                                     }
@@ -292,7 +290,7 @@
 		 					<td>
 		 						<input type="radio" value="1" name="bigote" id="bigote1"
 		 						<?php
-                                if(isset($_REQUEST['id'])){
+                                if(isset($soloRun)){
                                     if($filasPrincipal['bigote']=="1"){
                                         echo' checked="checked" ';
                                     }
@@ -300,7 +298,7 @@
 		 						><label for="bigote1">Si</label>
 		 						<input type="radio" value="2" name="bigote" id="bigote2"
 		 						<?php
-                                if(isset($_REQUEST['id'])){
+                                if(isset($soloRun)){
                                     if($filasPrincipal['bigote']=="2"){
                                         echo' checked="checked" ';
                                     }
@@ -308,7 +306,7 @@
 
 		 						><label for="bigote2">No</label>
 		 						<input type="radio" value="0" name="bigote" id="bigote3"
-                                <?php if(isset($_REQUEST['id'])){
+                                <?php if(isset($soloRun)){
                                     if($filasPrincipal['bigote']=="0"){
                                         echo' checked="checked" ';
                                     }
@@ -323,7 +321,7 @@
 		 					<td>
 		 						<input type="radio" value="1" name="manchas" id="manchas1"
 		 						<?php
-                                if(isset($_REQUEST['id'])){
+                                if(isset($soloRun)){
                                     if($filasPrincipal['manchas']=="1"){
                                         echo' checked="checked" ';
                                     }
@@ -331,14 +329,14 @@
 		 						><label for="manchas1">Si</label>
 		 						<input type="radio" value="2" name="manchas" id="manchas2"
 		 						<?php
-                                if(isset($_REQUEST['id'])){
+                                if(isset($soloRun)){
                                     if($filasPrincipal['manchas']=="2"){
                                         echo' checked="checked" ';
                                     }
                                 } ?>
 		 						><label for="manchas2">No</label>
 		 						<input type="radio" value="0" name="manchas" id="manchas3"
-                                <?php if(isset($_REQUEST['id'])){
+                                <?php if(isset($soloRun)){
                                     if($filasPrincipal['manchas']=="0"){
                                         echo' checked="checked" ';
                                     }
@@ -352,21 +350,21 @@
 		 					<td><label>Lentes</label></td>
 		 					<td>
 		 						<input type="radio" value="1" name="lentes" id="lentes1"
-                                <?php if(isset($_REQUEST['id'])){
+                                <?php if(isset($soloRun)){
                                     if($filasPrincipal['lentes']=="1"){
                                         echo' checked="checked" ';
                                     }
                                 }?>
 		 						><label for="lentes1">Si</label>
 		 						<input type="radio" value="2" name="lentes" id="lentes2"
-                                <?php if(isset($_REQUEST['id'])){
+                                <?php if(isset($soloRun)){
                                     if($filasPrincipal['lentes']=="2"){
                                         echo' checked="checked" ';
                                     }
                                 }?>
 		 						><label for="lentes2">No</label>
 		 						<input type="radio" value="0" name="lentes" id="lentes3"
-                                <?php if(isset($_REQUEST['id'])){
+                                <?php if(isset($soloRun)){
                                     if($filasPrincipal['lentes']=="0"){
                                         echo' checked="checked" ';
                                     }
@@ -380,21 +378,21 @@
 		 					<td><label>Pecas</label></td>
 		 					<td>
 		 						<input type="radio" value="1" name="pecas" id="pecas1"
-                                <?php if(isset($_REQUEST['id'])){
+                                <?php if(isset($soloRun)){
                                     if($filasPrincipal['pecas']=="1"){
                                         echo' checked="checked" ';
                                     }
                                 }?>
 		 						><label for="pecas1">Si</label>
 		 						<input type="radio" value="2" name="pecas" id="pecas2"
-                                <?php if(isset($_REQUEST['id'])){
+                                <?php if(isset($soloRun)){
                                     if($filasPrincipal['pecas']=="2"){
                                         echo' checked="checked" ';
                                     }
                                 }?>
 		 						><label for="pecas2">No</label>
 		 						<input type="radio" value="0" name="pecas" id="pecas3"
-                                <?php if(isset($_REQUEST['id'])){
+                                <?php if(isset($soloRun)){
                                     if($filasPrincipal['pecas']=="0"){
                                         echo' checked="checked" ';
                                     }
@@ -408,21 +406,21 @@
 		 					<td><label>Antecedentes</label></td>
 		 					<td>
 		 						<input type="radio" value="1" name="antecedentes" id="antecedentes1"
-                                <?php if(isset($_REQUEST['id'])){
+                                <?php if(isset($soloRun)){
                                     if($filasPrincipal['antecedentes_penales']=="1"){
                                         echo' checked="checked" ';
                                     }
                                 }?>
 		 						><label for="antecedentes1">Si</label>
 		 						<input type="radio" value="2" name="antecedentes" id="antecedentes2"
-                                <?php if(isset($_REQUEST['id'])){
+                                <?php if(isset($soloRun)){
                                     if($filasPrincipal['antecedentes_penales']=="2"){
                                         echo' checked="checked" ';
                                     }
                                 }?>
 		 						><label for="antecedentes2">No</label>
 		 						<input type="radio" value="0" name="antecedentes" id="antecedentes3"
-                                <?php if(isset($_REQUEST['id'])){
+                                <?php if(isset($soloRun)){
                                     if($filasPrincipal['antecedentes_penales']=="0"){
                                         echo' checked="checked" ';
                                     }
@@ -447,22 +445,23 @@
 				 			$resultado= $con->query("select * from tb_delito");
 				 				$contadorDelitos=0;
 
-				 				while($filas= $resultado->fetch_array()){
-				 						$contadorDelitos++;
-				 						echo'<tr>
-				 								<td><input class="" type="checkbox" value="'.$filas['id_delito'].'" name="delito'.$filas['id_delito'].'" ';
 
-                                        //$resultado2= $con->query("select * from tb_delitosopechoso where id_delito=".$filas['id_delito'].' and run_sospechoso='.$_REQUEST['id']);
+						 				while($filas= $resultado->fetch_array()){
+						 						$contadorDelitos++;
+						 						echo'<tr>
+						 								<td><input class="" type="checkbox" value="'.$filas['id_delito'].'" name="delito'.$filas['id_delito'].'" ';
 
-                                          //  if($resultado2->num_rows>0){
-                                                //echo' checked="checked" ';
-                                            //}
+		                                        $resultado2= $con->query("select * from tb_delitosopechoso where id_delito=".$filas['id_delito'].' and run_sospechoso='.$soloRun);
 
-                                        echo' /><label class="text-capitalize" for="'.$filas['id_delito'].'" >'.$filas['descripcion_delito'].'</label>
-                                                    </td>
-                                                 </tr>';
-				 				}
-				 				echo'<input type="hidden" value="'.$contadorDelitos.'" name="contadorDelitos" >';
+		                                           if($resultado2->num_rows>0){
+		                                                echo' checked="checked" ';
+		                                            }
+
+		                                        echo' /><label class="text-capitalize" for="'.$filas['id_delito'].'" >'.$filas['descripcion_delito'].'</label>
+		                                                    </td>
+		                                                 </tr>';
+						 				}
+						 				echo'<input type="hidden" value="'.$contadorDelitos.'" name="contadorDelitos" >';
 				 		?>
 				 			</tbody>
 				 		</table>
@@ -496,6 +495,9 @@
 
 						</div>
 
+ 						<div id="divInferiorImagenesActuales">
+
+ 						</div>
  				</div>
 	<!--</div> CIERRE PRIMERA FILA
 	<div class="container row">-->
@@ -510,13 +512,13 @@
 				 			$resultado= $con->query("select * from tb_equipofutbol");
 				 				$contadorEquiposFutbol=0;
 
-								if(isset($_REQUEST['id'])){
+								if(isset($soloRun)){
 								 				while($filas= $resultado->fetch_array()){
 								 						$contadorEquiposFutbol++;
 								 						echo'<tr>
 								 								<td><input type="checkbox" value="'.$filas['id_equipo'].'" name="equipo'.$filas['id_equipo'].'" ';
 
-				                                            $resultado2= $con->query("select * from tb_equiposospechoso where id_equipo=".$filas['id_equipo'].' and run='.$_REQUEST['id']);
+				                                            $resultado2= $con->query("select * from tb_equiposospechoso where id_equipo=".$filas['id_equipo'].' and run='.$soloRun);
 
 				                                            if($resultado2->num_rows>0){
 				                                                echo' checked="checked" ';
@@ -553,13 +555,13 @@
 						 			$resultado= $con->query("select * from tb_cicatriz");
 						 				$contadorOpcionesCicatriz=0;
 
-								if(isset($_REQUEST['id'])){
+								if(isset($soloRun)){
 										 				while($filas= $resultado->fetch_array()){
 										 						$contadorOpcionesCicatriz++;
 										 						echo'<tr>
 										 								<td><input type="checkbox" value="'.$filas['id_lugarCicatriz'].'" name="cicatriz'.$filas['id_lugarCicatriz'].'" ';
 
-				                                                $resultado2= $con->query("select * from tb_cicatrizsospechoso where id_lugarCicatriz=".$filas['id_lugarCicatriz'].' and run='.$_REQUEST['id']);
+				                                                $resultado2= $con->query("select * from tb_cicatrizsospechoso where id_lugarCicatriz=".$filas['id_lugarCicatriz'].' and run='.$soloRun);
 
 				                                                if($resultado2->num_rows>0){
 				                                                    echo' checked="checked" ';
@@ -594,13 +596,13 @@
 						 			$resultado= $con->query("select * from tb_tatuaje");
 						 				$contadorOpcionesTatuaje=0;
 
-								if(isset($_REQUEST['id'])){
+								if(isset($soloRun)){
 								 				while($filas= $resultado->fetch_array()){
 								 						$contadorOpcionesTatuaje++;
 								 						echo'<tr>
 								 								<td><input type="checkbox" value="'.$filas['id_lugarTatuaje'].'" name="tatuaje'.$filas['id_lugarTatuaje'].'" ';
 
-		                                                $resultado2= $con->query("select * from tb_tatuajesospechoso where id_lugarTatuaje=".$filas['id_lugarTatuaje'].' and run='.$_REQUEST['id']);
+		                                                $resultado2= $con->query("select * from tb_tatuajesospechoso where id_lugarTatuaje=".$filas['id_lugarTatuaje'].' and run='.$soloRun);
 
 		                                                if($resultado2->num_rows>0){
 		                                                    echo' checked="checked" ';
@@ -635,13 +637,13 @@
 						 			$resultado= $con->query("select * from tb_piercing");
 						 				$contadorOpcionesPiercing=0;
 
-								if(isset($_REQUEST['id'])){
+								if(isset($soloRun)){
 									 				while($filas= $resultado->fetch_array()){
 									 						$contadorOpcionesPiercing++;
 									 						echo'<tr>
 									 								<td><input type="checkbox" value="'.$filas['id_lugarPiercing'].'" name="piercing'.$filas['id_lugarPiercing'].'" ';
 
-			                                                $resultado2= $con->query("select * from tb_piercingsospechoso where id_lugarPiercing=".$filas['id_lugarPiercing'].' and run='.$_REQUEST['id']);
+			                                                $resultado2= $con->query("select * from tb_piercingsospechoso where id_lugarPiercing=".$filas['id_lugarPiercing'].' and run='.$soloRun);
 
 			                                                if($resultado2->num_rows>0){
 			                                                    echo' checked="checked" ';
@@ -678,13 +680,13 @@
 				 			$resultado= $con->query("SELECT * FROM tb_poblacion");
 				 				$contadorPoblaciones=0;
 
-								if(isset($_REQUEST['id'])){
+								if(isset($soloRun)){
 						 				while($filas= $resultado->fetch_array()){
 						 						$contadorPoblaciones++;
 						 						echo'<tr>
 						 								<td><input type="checkbox" value="'.$filas['id_poblacion'].'" name="poblacion'.$filas['id_poblacion'].'" ';
 
-		                                                $resultado2= $con->query("select * from tb_poblacionsospechoso where id_poblacion=".$filas['id_poblacion'].' and run='.$_REQUEST['id']);
+		                                                $resultado2= $con->query("select * from tb_poblacionsospechoso where id_poblacion=".$filas['id_poblacion'].' and run='.$soloRun);
 
 		                                                if($resultado2->num_rows>0){
 		                                                    echo' checked="checked" ';
@@ -714,17 +716,15 @@
 							<button class="btn btn-primary botonGrabarSospechoso" type="submit"><h4>GUARDAR</h4></button>
 						</td>
 				 	</div>
-
 			</form>
 		</div>
 	</div>
-
 	<script type="text/javascript">
 
-	          $("#formularioIngresarSospechoso").submit(function(){
+	          $("#formularioModificacionSospechoso").submit(function(){
 								event.preventDefault();
 
-												          var formData = new FormData(document.getElementById("formularioIngresarSospechoso"));
+												          var formData = new FormData(document.getElementById("formularioModificacionSospechoso"));
 
 													            $.ajax({
 													              url: "controladorMantenedores.php?mant=7&func=1",
@@ -735,26 +735,21 @@
 													              contentType: false,
 													              processData:false,
 													              success:function(resultado){
-																				//	alert(resultado);
-													                if(resultado==1){
-																							swal("Operacion exitosa!", "Guardado correctamente.", "success");
-																							window.reload();
-																					}else if(resultado=="1062"){
-																							swal("Error!", "El Rut ya existe.", "error");
-																					}
+													                alert(resultado);
+													                //location.reload();
 													              }
 													            });
 	          });
 
 
-						function agregarCampoFoto(){
-						  var contadorTr=$("#tablaFotosIngreso tr").length-1;
-						  contadorTr++;
+					function agregarCampoFoto(){
+					  var contadorTr=$("#tablaFotosIngreso tr").length-1;
+					  contadorTr++;
 
-						  //alert(contadorTr);
-						      $("#tablaFotosIngreso").append('<tr><td><input class="form-control" name="foto'+contadorTr+'" type="file"></input></td><td><input class="form-control" type="date" name="fechaFoto'+contadorTr+'"></td><td><input class="form-control" type="checkbox" name="tipoFoto'+contadorTr+'"></td></tr>');
-						      $("#contadorFotos").val(contadorTr);
-						}
+					  //alert(contadorTr);
+					      $("#tablaFotosIngreso").append('<tr><td><input class="form-control" name="foto'+contadorTr+'" type="file"></input></td><td><input class="form-control" type="date" name="fechaFoto'+contadorTr+'"></td><td><input class="form-control" type="checkbox" name="tipoFoto'+contadorTr+'"></td></tr>');
+					      $("#contadorFotos").val(contadorTr);
+					}
 
 					function removerCampoFoto(){
 					     var cantidad= $("#contadorFotos").val();
@@ -766,6 +761,46 @@
 					           $("#contadorFotos").val(cantidad);
 					      }
 					}
+					function eliminarFoto(idFoto,run){
+						swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowOutsideClick:false,showCancelButton: false,closeOnConfirm: false});
+						$.ajax({
+							url:"controladorMantenedores.php?mant=7&func=5",
+							data:"idFoto="+idFoto+"&run="+run,
+							success:function(respuesta){
+								 if(respuesta==1){
+									 cargarImagenesActuales(run);
+									 swal("Operacion exitosa!", "Imagen Eliminada", "success");
+								 }
+							}
+						});
+					}
+					function fotoPrincipal(idFoto,run){
+						swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowOutsideClick:false,showCancelButton: false,closeOnConfirm: false});
+						$.ajax({
+							url:"controladorMantenedores.php?mant=7&func=6",
+							data:"idFoto="+idFoto+"&run="+run,
+							success:function(respuesta){
+								 if(respuesta==1){
+									 cargarImagenesActuales(run);
+									 //swal("Operacion exitosa!", "Imagen Eliminada", "success");
+								 }
+							}
+						});
+					}
+
+		function cargarImagenesActuales(run){
+
+			 $.ajax({
+				 url:"controladorMantenedores.php?mant=7&func=4",
+				 data:"run="+run,
+				 success:function(respuesta){
+
+						$("#divInferiorImagenesActuales").html(respuesta);
+				 }
+			 });
+		}
+
+		cargarImagenesActuales(<?php echo $soloRun; ?>);
 		</script>
 <?php
 	cargarFooter();
