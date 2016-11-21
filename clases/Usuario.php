@@ -72,9 +72,9 @@ class Usuario extends Conexion{
       if ($dvr == 10)
           $dvr = 'K';
       if ($dvr == strtoupper($dv))
-          echo "1";
+          return true;
       else
-          echo "2";
+          return false;
   }
   public function cantidadUsuarios(){
     $cantidad= $this->cantidadRegistros("select run from tb_usuarios");
@@ -113,6 +113,49 @@ class Usuario extends Conexion{
 
      $resultado= $this->consultaExistencia($consulta);
      return $resultado;
+  }
+
+  public function comprobarUsuario(){
+      $filas= $this->registros("CALL comprobarDatosIngreso('$this->run','$this->clave')");
+      if($filas){
+            session_start();
+            $_SESSION['run']=$filas[0]['run'];
+            $_SESSION['nombre']=$filas[0]['nombre']." ".$filas[0]['apellidoPaterno']." ".$filas[0]['apellidoMaterno'];
+            $_SESSION['grupo']=$filas[0]['id_grupoUsuario'];
+        return true;
+      }else{
+        return false;
+      }
+  }
+
+  public function verificarSesion($rutaRecibida){
+
+    @session_start();
+
+    if(!isset($_SESSION['correo'])){
+        header("location: ".$rutaRecibida);
+    }else{
+
+    }
+  }
+  public function cerrarSesion($rutaInicial){
+      session_start();
+
+      // Destruir todas las variables de sesión.
+      $_SESSION = array();
+
+      //borra también la cookie de sesión.
+      if (ini_get("session.use_cookies")) {
+          $params = session_get_cookie_params();
+          setcookie(session_name(), '', time() - 42000,
+              $params["path"], $params["domain"],
+              $params["secure"], $params["httponly"]
+          );
+      }
+
+      // Finalmente, destruir la sesión.
+      session_destroy();
+      header('location: '.$rutaInicial);
   }
 
 

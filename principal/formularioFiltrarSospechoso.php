@@ -387,15 +387,48 @@ if(isset($_SESSION['run'])==false &&
 </div>
 <div class="container" id="divInformacion"></div>
 
+
+   <div class="modal fade" id="modalInfo" role="dialog">
+     <div class="modal-dialog modal-lg">
+       <div class="modal-content">
+         <div class="modal-header">
+           <button type="button" class="close" data-dismiss="modal">&times;</button>
+           <h4 class="modal-title">Crear CDA</h4>
+         </div>
+         <div id="modbody" class="modal-body">
+<span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea sed, nulla aspernatur commodi voluptatibus rerum neque. Ipsa quis, blanditiis facilis placeat. Quod numquam quas id, alias praesentium non placeat eaque.</span>
+         </div>
+        </div>
+      </div>
+    </div>
+
 <script>
+
+function enviarFormulario(){
+		    $.post("./filtrarSospechosos.php",$("#formularioBusqueda").serialize(),function(respuesta){
+                $('#informacionSospechoso ').removeClass('informacionSospechoso');
+		             document.getElementById("resultadoBusqueda").innerHTML = respuesta;
+		    });
+
+            $('html,body').animate({
+                scrollTop: $("#resultadoBusqueda").offset().top
+            }, 2000);
+}
+
+
+function limpiarResultados(){
+	document.getElementById("formularioBusqueda").reset();
+	document.getElementById("resultadoBusqueda").innerHTML = "";
+}
+
 function mostrarInformacionSospechoso(run){
      //alert(run);
 
       $.post("./informacionSospechoso.php?run="+run,$("#fis").serialize(),function(respuesta){
                  //document.getElementById("informacionSospechoso").innerHTML = respuesta;
                  //$('#informacionSospechoso ').addClass('informacionSospechoso');
-
-                 document.getElementById("divInformacion").innerHTML ='<div id="over" class=" informacionSospechoso ">'+respuesta+'</div><div id="fade" class="atras">&nbsp;</div>';
+  alert(respuesta);
+                 //document.getElementById("divInformacion").innerHTML ='<div id="over" class=" informacionSospechoso ">'+respuesta+'</div><div id="fade" class="atras">&nbsp;</div>';
         });
 }
 function ocultarInformacionEmergente(){
