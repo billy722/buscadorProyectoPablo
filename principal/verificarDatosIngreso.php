@@ -8,8 +8,8 @@ $Usuario = new Usuario();
   $usuario= $Usuario->limpiarTexto($usuario);
   $usuario= $Usuario->limpiarNumeroEntero($usuario);
 
-  $contrasena= $Usuario->limpiarTexto($contrasena);
-  $contrasena= $Usuario->limpiarNumeroEntero($contrasena);
+  //$contrasena= $Usuario->limpiarTexto($contrasena);
+  //$contrasena= $Usuario->limpiarNumeroEntero($contrasena);
 
 
 

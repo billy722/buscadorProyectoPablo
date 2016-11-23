@@ -32,11 +32,12 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                            if($Usuario->comprobarExisteRun($rut)){
                                 echo "3"; //RUT QUE INTENTA INGRESAR YA EXISTE
                            }else{
+                             $password = crypt($clave);
                                $Usuario->setDV($dv);
                                $Usuario->setNombre($Usuario->limpiarTexto($nombre));
                                $Usuario->setApellidoPaterno($Usuario->limpiarTexto($apellidoPaterno));
                                $Usuario->setApellidoMaterno($Usuario->limpiarTexto($apellidoMaterno));
-                               $Usuario->setClave($Usuario->limpiarTexto($clave));
+                               $Usuario->setClave($password);
                                $Usuario->setTelefono($Usuario->limpiarTexto($telefono));
                                $Usuario->setCorreo($Usuario->limpiarCorreo($correo));
                                $Usuario->setGrupoUsuario($Usuario->limpiarNumeroEntero($tipoUsuario));
