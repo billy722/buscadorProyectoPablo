@@ -116,17 +116,6 @@ class Usuario extends Conexion{
   }
 
   public function comprobarUsuario(){
-      //$filas= $this->registros("CALL comprobarDatosIngreso('$this->run','$this->clave')");
-      //
-      //if($filas){
-      //      session_start();
-      //      $_SESSION['run']=$filas[0]['run'];
-      //      $_SESSION['nombre']=$filas[0]['nombre']." ".$filas[0]['apellidoPaterno']." ".$filas[0]['apellidoMaterno'];
-      //      $_SESSION['grupo']=$filas[0]['id_grupoUsuario'];
-      //  return true;
-      //}else{
-      //  return false;
-      //}
       $filas= $this->registros("CALL comprobarDatosIngreso('$this->run')");
       $claveBD=$filas[0]['clave'];
       $claveRecibida=$this->clave;

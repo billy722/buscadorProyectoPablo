@@ -53,12 +53,14 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                 $posicionGuion= strpos($campoRut,"-");
                 $rut= substr($campoRut,0,$posicionGuion);
                 $dv= substr($campoRut,$posicionGuion+1,$posicionGuion+1);
+                $clave = $_REQUEST['txt_clave1Modificar'];
+                $password = crypt($clave);
                 $Usuario->setRun($rut);
                 $Usuario->setDV($dv);
                 $Usuario->setNombre($Usuario->limpiarTexto($_REQUEST['txt_nombreModificar']));
                 $Usuario->setApellidoPaterno($Usuario->limpiarTexto($_REQUEST['txt_apellidoPaternoModificar']));
                 $Usuario->setApellidoMaterno($Usuario->limpiarTexto($_REQUEST['txt_apellidoMaternoModificar']));
-                $Usuario->setClave($Usuario->limpiarTexto($_REQUEST['txt_clave1Modificar']));
+                $Usuario->setClave($password);
                 $Usuario->setTelefono($Usuario->limpiarTexto($_REQUEST['txt_telefonoModificar']));
                 $Usuario->setCorreo($_REQUEST['txt_correoModificar']);
                 $Usuario->setGrupoUsuario($_REQUEST['select_tipoUsuarioModificar']);
