@@ -19,7 +19,7 @@ function cargarEncabezado(){
 		<link rel="stylesheet" type="text/css" href="../css/configuraciones/estilosConfiguraciones.css">
 		<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
 
-		<script type="text/javascript" src="../js/jquery-1.11.3.js"></script>
+		<script type="text/javascript" src="../js/jquery-3.1.0.min.js"></script>
 		<script type="text/javascript" src="../js/funciones.js"></script>
 		<script type="text/javascript" src="../js/scriptsConfiguraciones.js"></script>
 		<script type="text/javascript" src="../js/bootstrap.min.js"></script>

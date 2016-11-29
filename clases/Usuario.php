@@ -119,7 +119,7 @@ class Usuario extends Conexion{
       $filas= $this->registros("CALL comprobarDatosIngreso('$this->run')");
       $claveBD=$filas[0]['clave'];
       $claveRecibida=$this->clave;
-    if(crypt($this->clave, $claveBD) == $claveBD){
+  if(crypt($this->clave, $claveBD) == $claveBD){
           session_start();
           $_SESSION['run']=$filas[0]['run'];
           $_SESSION['nombre']=$filas[0]['nombre']." ".$filas[0]['apellidoPaterno']." ".$filas[0]['apellidoMaterno'];

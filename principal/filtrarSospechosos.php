@@ -235,14 +235,14 @@
 		while($filas= $resultado->fetch_array()){
 
 
-			echo'<a href="javascript:mostrarInformacionSospechoso('.$filas['run'].')" data-toggle="modal" data-target="#modalInfo">
+			echo'<div onclick="mostrarInformacionSospechoso('.$filas['run'].')" data-toggle="modal" data-target="#modalInfo">
 					<div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 img-thumbnail" id="cuadroSospechoso"
 						style="
 						background-image: url(\'../imagenes/'.$filas['nombre_imagen'].'\');
 					    background-size: cover;
 					    background-position: center;" >
 					</div>
-				</a>';
+				</div>';
 		}
 	echo'</div>';
 	}else{

@@ -17,33 +17,33 @@ if(isset($_SESSION['run'])==false &&
 		<!-- <div id="contenedorMenuConfiguraciones" class="container">
         	<div class="container btn btn-group">
 
-           <?php $privilegios= $con->query("call privilegios(".$_SESSION['run'].");");
-                 $resultado="";
-                 while($filas = $privilegios->fetch_array()){
-
-                    if($filas['id_privilegios']==4){
-                        echo'<a class="btn btn-default col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorUsuarios.php" ><strong>Usuarios</strong></a>';
-                    }
-                    if($filas['id_privilegios']==5){
-                        echo'<a class="btn btn-default col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="" ><strong>Privilegios</strong></a>';
-                    }
-                    if($filas['id_privilegios']==6){
-                        echo'<a class="btn btn-default col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorDelitos.php" ><strong>Delitos</strong></a>';
-                    }
-                   /*  if($filas['id_privilegios']==7){
-                        echo'<a type="a" class="botonesMenuConfiguraciones" value="Listado de solicitantes" onclick="cargarMantenedorSolicitantes()">';
-                    } */
-           			    if($filas['id_privilegios']==8){
-                        echo'<a class="btn btn-default col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="" ><strong>Zonas</strong></a>';
-                    }
-                    if($filas['id_privilegios']==9){
-                        echo'<a class="btn btn-default col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorPoblacion.php" ><strong>Poblaciones</strong></a>';
-                    }
-                    if($filas['id_privilegios']==10){
-                        echo'<a class="btn btn-default col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorEquipos.php" ><strong>Equipos</strong></a>';
-                    }
-
-                }
+           <?php// $privilegios= $con->query("call privilegios(".$_SESSION['run'].");");
+                //  $resultado="";
+                //  while($filas = $privilegios->fetch_array()){
+                //
+                //     if($filas['id_privilegios']==4){
+                //         echo'<a class="btn btn-default col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorUsuarios.php" ><strong>Usuarios</strong></a>';
+                //     }
+                //     if($filas['id_privilegios']==5){
+                //         echo'<a class="btn btn-default col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="" ><strong>Privilegios</strong></a>';
+                //     }
+                //     if($filas['id_privilegios']==6){
+                //         echo'<a class="btn btn-default col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorDelitos.php" ><strong>Delitos</strong></a>';
+                //     }
+                //    /*  if($filas['id_privilegios']==7){
+                //         echo'<a type="a" class="botonesMenuConfiguraciones" value="Listado de solicitantes" onclick="cargarMantenedorSolicitantes()">';
+                //     } */
+           		// 	    if($filas['id_privilegios']==8){
+                //         echo'<a class="btn btn-default col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="" ><strong>Zonas</strong></a>';
+                //     }
+                //     if($filas['id_privilegios']==9){
+                //         echo'<a class="btn btn-default col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorPoblacion.php" ><strong>Poblaciones</strong></a>';
+                //     }
+                //     if($filas['id_privilegios']==10){
+                //         echo'<a class="btn btn-default col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorEquipos.php" ><strong>Equipos</strong></a>';
+                //     }
+                //
+                // }
               ?>
           </div>
     </div> -->

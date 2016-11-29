@@ -110,7 +110,53 @@ class Conexion{
       return $resultado;
     }
 
-    public function BuscarFiltarRegistros($arg_tabla,$arg_campoBuscar,$arg_palabraBuscar,$arg_pagina,$arg_cantidadRegistros){
+    public function procesaWhereBuscador($arg_campoBuscar,$arg_palabraBuscar,$arg_condicionesExtra){
+
+      /*
+        NOTAS:
+            -RECIBE UNO O MAS CAMPOS DONDE BUSCAR SEPARADOS CON UN ESPACIO
+            -RECIBE UN TEXTO Y LO SEPARA POR PALABRA PARA HACER LA BUSQUEDA MAS EFECTIVA
+            -RECIBE CONDICIONES ADICIONALES EJM: "id_estado==1 or id_estado==3"
+
+            -DEVUELVE UN STRING CON LAS CLAUSULAS WHERE QUE HARAN LA BUSQUEDA MAS EFECTIVA
+      */
+      $whereBuscar="";
+
+              $palabrasBuscar= explode(" ",$arg_palabraBuscar);//divide palabras que desea buscar
+              $camposDondeBuscar= explode(" ",$arg_campoBuscar);//divide campos en los que desea buscar
+
+              //echo "cantidad campos: ".sizeof($camposDondeBuscar);
+              $operadorUnion= (sizeof($camposDondeBuscar)>1) ? (" or ") : " and ";
+
+              foreach($camposDondeBuscar as $cActual){//recorre campos a buscar
+
+                      foreach($palabrasBuscar as $pActual){//recorre cada palabra a buscar
+                          if(!$whereBuscar==""){
+                              $whereBuscar.=$operadorUnion;
+                          }
+                          $whereBuscar.=" ".$cActual." like '%".$pActual."%' ";
+                      }
+              }
+
+          if($arg_condicionesExtra==""){//no agrega condciones extra
+                return $whereBuscar=" (".$whereBuscar.") ";
+          }else{
+                $whereBuscar=" (".$whereBuscar.") and (".$arg_condicionesExtra.") ";
+                return $whereBuscar;
+          }
+
+
+
+
+
+    }
+    public function BuscarFiltarRegistros($arg_tabla,$arg_campoBuscar,$arg_palabraBuscar,$arg_pagina,$arg_cantidadRegistros,$arg_condicionesExtra){
+      /*
+        NOTAS:
+            -DEVUELVE LISTADO DE REGISTROS RESULTANTES DE LA BUSQUEDA EN LA FILA 0 DE UN ARRAY
+            -DEVUELVE UN PAGINADOR EN LA FILA 1 DE UN ARRAY
+      */
+
       $arg_palabraBuscar=$this->limpiarTexto($arg_palabraBuscar);
 
       $consulta="";
@@ -119,25 +165,46 @@ class Conexion{
       $cantidadRegistros = $arg_cantidadRegistros;
       $inicio = ($arg_pagina > 1 ) ? ($arg_pagina * $cantidadRegistros - $cantidadRegistros) : 0;
 
-        if($arg_palabraBuscar!=''){
-          $consulta="select sql_calc_found_rows * from ".$arg_tabla." where ".$arg_campoBuscar." like '%".$arg_palabraBuscar."%' limit ".$inicio.",".$cantidadRegistros;
-          $consultaCantidad="select * from ".$arg_tabla." where ".$arg_campoBuscar." like '%".$arg_palabraBuscar."%' ";
+        // if($arg_palabraBuscar!=''){
 
-        }else{
-          $consulta="select sql_calc_found_rows * from ".$arg_tabla." limit ".$inicio.",".$cantidadRegistros;
-          $consultaCantidad="select * from ".$arg_tabla;
-        }
-        //echo $consulta;
+          $consulta="select sql_calc_found_rows * from ".$arg_tabla."
+          where ".$this->procesaWhereBuscador($arg_campoBuscar,$arg_palabraBuscar,$arg_condicionesExtra)."
+           limit ".$inicio.",".$cantidadRegistros;
+
+
+          $consultaCantidad="select * from ".$arg_tabla."
+          where ".$this->procesaWhereBuscador($arg_campoBuscar,$arg_palabraBuscar,$arg_condicionesExtra)." ";
+
+        // }else{
+        //   $consulta="select sql_calc_found_rows * from ".$arg_tabla." limit ".$inicio.",".$cantidadRegistros;
+        //   $consultaCantidad="select * from ".$arg_tabla;
+        // }
+
         $resultado=$this->registros($consulta);
         $cantidad= $this->cantidadRegistros($consultaCantidad);
 
             $cantidad= ($cantidad/$arg_cantidadRegistros);
             $cantidad= ceil($cantidad);
 
+
             $paginador="";
+            if($arg_pagina>1){
+                  $paginador.='<a href="javascript:cambiarPagina('.($arg_pagina-1).')" class="btn btn-default back">&lArr;</a>';
+            }
+
+
                 for($c=1; $c<=$cantidad; $c++){
-                   $paginador.='<a class="btn btn-default" href="javascript:cambiarPagina('.$c.')">'.$c.'</a>';
+                     $paginador.='<a class="link__paginador ';
+                            if($c==$arg_pagina){
+                                $paginador.=" active";
+                            }
+                     $paginador.=' btn btn-default" href="javascript:cambiarPagina('.$c.')">'.$c.'</a>';
                 }
+
+           if($arg_pagina<$cantidad){
+                 $paginador.='<a href="javascript:cambiarPagina('.($arg_pagina+1).')"class="btn btn-default forward">&rArr;</a>';
+           }
+
         $devuelve[0][0] = $resultado;
         $devuelve[0][1] = $paginador;
 

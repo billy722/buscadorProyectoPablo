@@ -1,13 +1,14 @@
 <?php
 session_start();
 
-if(isset($_SESSION['run'])==false &&
-
-   isset($_SESSION['nombre'])==false &&
-
-   isset($_SESSION['idDepartamento'])==false &&
-
-   isset($_SESSION['descripcionDepartamento'])==false){
+if(1==2){
+// if(isset($_SESSION['run'])==false &&
+//
+//    isset($_SESSION['nombre'])==false &&
+//
+//    isset($_SESSION['idDepartamento'])==false &&
+//
+//    isset($_SESSION['descripcionDepartamento'])==false){
 
 
 
@@ -393,10 +394,12 @@ if(isset($_SESSION['run'])==false &&
        <div class="modal-content">
          <div class="modal-header">
            <button type="button" class="close" data-dismiss="modal">&times;</button>
-           <h4 class="modal-title">Crear CDA</h4>
+           <h4 class="modal-title">Datos Sospechoso</h4>
          </div>
          <div id="modbody" class="modal-body">
-<span>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ea sed, nulla aspernatur commodi voluptatibus rerum neque. Ipsa quis, blanditiis facilis placeat. Quod numquam quas id, alias praesentium non placeat eaque.</span>
+
+            <div id="divInformacionSospechoso" class="row"></div>
+
          </div>
         </div>
       </div>
@@ -427,8 +430,8 @@ function mostrarInformacionSospechoso(run){
       $.post("./informacionSospechoso.php?run="+run,$("#fis").serialize(),function(respuesta){
                  //document.getElementById("informacionSospechoso").innerHTML = respuesta;
                  //$('#informacionSospechoso ').addClass('informacionSospechoso');
-  alert(respuesta);
-                 //document.getElementById("divInformacion").innerHTML ='<div id="over" class=" informacionSospechoso ">'+respuesta+'</div><div id="fade" class="atras">&nbsp;</div>';
+          //alert(respuesta);
+            document.getElementById("divInformacionSospechoso").innerHTML =respuesta;
         });
 }
 function ocultarInformacionEmergente(){

@@ -50,6 +50,13 @@ class Sospechoso extends Conexion{
   }
 
 
+public function vistasospechoso(){
+  $consulta="select * from vistasospechoso where solorrun=".$this->run;
+
+  $usuarios= $this->registros($consulta);
+  return $usuarios;
+}
+
   public function validarRut($rut)
   {
       if (!preg_match("/^[0-9.]+[-]?+[0-9kK]{1}/", $rut)) {

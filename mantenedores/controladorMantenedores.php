@@ -87,7 +87,7 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                             <tbody>
 
                                          <?php
-                                          $retorno= $Usuario->BuscarFiltarRegistros("vistausuarios","nombre",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg']);
+                                          $retorno= $Usuario->BuscarFiltarRegistros("vistausuarios","nombre apellidoPaterno apellidoMaterno telefono correo",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg'],"");
                                           $listado=$retorno[0][0];
 
 
@@ -195,7 +195,7 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                             <tbody>
 
                                          <?php
-                                          $retorno= $Delito->BuscarFiltarRegistros("vistadelitos","descripcion_delito",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg']);
+                                          $retorno= $Delito->BuscarFiltarRegistros("vistadelitos","descripcion_delito",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg'],"");
                                           $listado=$retorno[0][0];
 
 
@@ -282,7 +282,7 @@ case '3'://Mant Poblacion
                             <tbody>
 
                                          <?php
-                                          $retorno= $Poblacion->BuscarFiltarRegistros("vistapoblaciones","descripcion_poblacion",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg']);
+                                          $retorno= $Poblacion->BuscarFiltarRegistros("vistapoblaciones","descripcion_poblacion",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg'],"");
                                           $listado=$retorno[0][0];
 
 
@@ -369,7 +369,7 @@ case '3'://Mant Poblacion
                             <tbody>
 
                                          <?php
-                                          $retorno= $Equipo->BuscarFiltarRegistros("vistaequipos","descripcion_equipo",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg']);
+                                          $retorno= $Equipo->BuscarFiltarRegistros("vistaequipos","descripcion_equipo",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg'],"");
                                           $listado=$retorno[0][0];
 
 
@@ -507,7 +507,7 @@ $Grupo = new Grupos();
                     <th></th>
                 </thead>
              ';
-                     $retorno = $Grupo->BuscarFiltarRegistros("tb_grupousuario","descripcion_grupoUsuario",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg']);
+                     $retorno = $Grupo->BuscarFiltarRegistros("tb_grupousuario","descripcion_grupoUsuario",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg'],"");
 
                       $contadorFilas=0;
                       foreach($retorno[0][0] as $column){
@@ -690,7 +690,7 @@ $Zonas = new Zonas();
                     <th></th>
                 </thead>
              ';
-                     $retorno = $Zonas->BuscarFiltarRegistros("tb_zona","descripcion_zona",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg']);
+                     $retorno = $Zonas->BuscarFiltarRegistros("tb_zona","descripcion_zona",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg'],"");
 
                       $contadorFilas=0;
                       foreach($retorno[0][0] as $column){
@@ -1078,7 +1078,7 @@ case "7": //mantenedor sospechosos
                    </thead>
                    <tbody>
              ';
-                     $retorno = $Sospechoso->BuscarFiltarRegistros("vistasospechoso","campoBuscar",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg']);
+                     $retorno = $Sospechoso->BuscarFiltarRegistros("vistasospechoso","campoBuscar",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg'],"");
 
                       $contadorFilas=0;
                       foreach($retorno[0][0] as $column){

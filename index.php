@@ -1,5 +1,7 @@
 <?php
     include("./principal/comun.php");
+    require_once('recaptcha/recaptchalib.php');
+    $publickey = "6LdQPg0UAAAAAHmaujbBm7E-2SSPhLJmHmffFhqz";
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -14,11 +16,15 @@
 
 <body>
 
-
+  <script type="text/javascript">
+   var RecaptchaOptions = {
+      theme : 'white'
+   };
+   </script>
 
 		<div class="container">
       <div class="login col-xs-8 col-xs-offset-2 col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4 col-lg-4 col-lg-offset-4">
-			<form name="formularioLogin" id="formularioLogin" method="post" action="">
+			<form name="formularioLogin" id="formularioLogin" action="">
         <div class="form-group">
 
               <div class="inut-group">
@@ -31,6 +37,12 @@
 
               <div class="inut-group">
                 <input class="form-control" type="password" id="txt_contrasena" name="txt_contrasena" placeholder="Contraseña"/>
+              </div>
+              <div class="inut-group">
+                  <div id="idDivRecaptcha">
+                          <?php     echo recaptcha_get_html($publickey); ?>
+                  </div>
+
               </div>
 
               <div class="input-group col-xs-12">
@@ -59,6 +71,7 @@
 					//   }
 					// }
 
+
  $("#formularioLogin").submit(function(event){
    event.preventDefault();
 
@@ -76,6 +89,7 @@
 
                    $.ajax({
                      url:"./principal/verificarDatosIngreso.php?u="+usuario+"&c="+contrasena,
+                     data: $("#formularioLogin").serialize(),
                      success: function(respuesta){
 
                            if(respuesta==1){
@@ -106,6 +120,20 @@
                              setTimeout(function(){
                                $('.info-login').text("");
                              },4000);
+
+                           }else if(respuesta==4){
+
+
+                            //  $('.tapa').css({"display":"none"});
+                             $('#botonIngreso').addClass("btn-danger");
+                             $('#botonIngreso').removeClass("btn-warning");
+                             $('.info-login').text("Codigo de verificacion incorrecto.");
+                             $('#botonIngreso').html('Validar');
+                             setTimeout(function(){
+                               $('.info-login').text("");
+
+                               location.reload();
+                             },1000);
                            }
                      }
                    });

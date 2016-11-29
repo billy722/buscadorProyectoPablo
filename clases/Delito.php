@@ -5,7 +5,7 @@ class Delito extends Conexion{
       private $_idDelito;
       private $_descripcion_delito;
       private $_estado;
-      
+
 //Creacion de constructor y extension del constructor de la clase Conexion.
   public function __construct(){
 
@@ -35,6 +35,13 @@ public function getEstadoDelito(){
     $delitos=$this->registros('select * from tb_delito inner join tb_estados on tb_estados.id_estado=tb_delito.estado');
     return $delitos;
  }
+ public function listarDelitosUnSospechoso($arg_run){
+    $delitos=$this->registros('select d.descripcion_delito
+from tb_delito d
+inner join tb_delitosopechoso ds on ds.id_delito=d.id_delito
+where ds.run_sospechoso='.$arg_run);
+    return $delitos;
+ }
   //  public function paginar($pagina){
   //   $postPorPagina = 4;
   //   $inicio = ($pagina > 1 ) ? ($pagina * $postPorPagina - $postPorPagina) : 0;
@@ -49,8 +56,8 @@ public function getEstadoDelito(){
       $delitos=$this->insertar('INSERT INTO `tb_delito` (`id_delito`,`descripcion_delito`,`estado`) VALUES (null,\''.$this->_descripcion_delito.'\',\''.$this->_estado.'\');');
       return $delitos;
   }
-   
-  
+
+
   public function actualizarDelito(){
         $delitos=$this->insertar('UPDATE `tb_delito` SET `descripcion_delito`=\''.$this->_descripcion_delito.'\', `estado`=\''.$this->_estado.'\' WHERE `id_delito`='.$this->_idDelito.';');
 
@@ -59,7 +66,7 @@ public function getEstadoDelito(){
         }else{
 
            echo "ERROR AL MODIFICAR";
-        } 
+        }
   }
   // Funcion eliminar datos de la tabla region
   public function eliminarDelito(){
