@@ -109,7 +109,7 @@ var pagina;
                       <div class="form-group">
                             <label class=" control-label col-lg-2" for="txt_descripcionCrear">Nombre</label>
                             <div class="col-lg-5">
-                              <input type="text"  title="Complete este campo" placeholder="Nombre" id="txt_descripcionCrear" name="txt_descripcionCrear" type="text" class="form-control">
+                              <input type="text"  required title="Complete este campo" placeholder="Nombre" id="txt_descripcionCrear" name="txt_descripcionCrear" type="text" class="form-control">
                             </div>
                       </div>
                     <hr>
@@ -137,7 +137,7 @@ var pagina;
                   <!-- BOTON QUE CIERRA MODAL-->
                   <div class="form-group">
                     <div class="col-lg-4 col-lg-offset-1">
-                      <input required type="submit" data-toggle="modal" data-target="#ventanaModalCrear" class="btn btn-success pull-right" value="Guardar">
+                      <input required type="submit"  class="btn btn-success pull-right" value="Guardar">
                     </div>
                   </div>
 
@@ -146,7 +146,7 @@ var pagina;
 
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-default" id="botonCerrarModalCrear" data-dismiss="modal">Cerrar</button>
             </div>
           </div>
         </div>
@@ -223,6 +223,7 @@ var pagina;
                                       swal("Operacion exitosa!", "Agregado Correctamente", "success");
                                       limpiarCamposCrear();
                                       cambiarPagina(1);
+                                      $("#botonCerrarModalCrear").click();
                               }
                               else if(resultado=="3"){
                                 sweetAlert("No permitido.", "Otro grupo ya utiliza el nombre que ha ingresado", "warning");
@@ -283,9 +284,19 @@ var pagina;
                       alert(error);
                   },
                   success:function(respuesta){
-                         //$("#error").html(respuesta);
-                        swal("Operacion exitosa!", "Eliminado Correctamente", "success");
-                        cambiarPagina(1);
+                         //alert(respuesta);
+
+                    if(respuesta==1){
+                      swal("Operacion exitosa!", "Eliminado Correctamente", "success");
+                      cambiarPagina(1);
+                    }else if(respuesta==2){
+                        sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
+                    }else if(respuesta==3){
+                        sweetAlert("No permitido", "Hay Usuarios con este grupo asignado.", "error");
+                    }else{
+                      alert(respuesta);
+                    }
+
                   }
                 });
             }

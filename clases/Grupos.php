@@ -72,7 +72,7 @@ public function __construct(){
       $consulta="delete from tb_grupoprivilegio where id_grupoUsuario=".$this->_idGrupo.";";
 
      if($this->insertar($consulta)){
-return true;
+        return true;
      }else{
          echo "ERROR AL eliminar PRIVILEGIOS de grupo: ".$consulta;
      }
@@ -88,8 +88,25 @@ return true;
      }
   }
   // Funcion eliminar datos de la tabla region
-  public function eliminarGrupo(){$region=$this->insertar('DELETE FROM `tb_grupousuario` WHERE `id_grupoUsuario`='.$this->_idGrupo.';');
-    return $region;}
+  public function eliminarGrupo(){
+      if($this->consultaExistencia("select run from tb_usuarios where id_grupoUsuario= '".$this->_idGrupo."'")){
+          echo "3";//hay usuarios con este grupo asignado
+      }else{
+
+            if($this->insertar('delete from tb_grupoprivilegio where id_grupoUsuario='.$this->_idGrupo)){
+
+                if($this->insertar('DELETE FROM tb_grupousuario WHERE id_grupoUsuario='.$this->_idGrupo.';')){
+                    echo "1";//eliminado correctamente
+                }else{
+                    echo "2";//ocurrio un error
+                }
+
+            }else{
+                echo "2";//ocurrio un error
+            }
+      }
+
+  }
 
   public function comprobarNombre(){
     $consulta;

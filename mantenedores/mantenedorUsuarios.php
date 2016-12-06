@@ -170,13 +170,13 @@ var pagina;
                        <!-- BOTON QUE CIERRA MODAL-->
                   <div class="form-group">
                     <div class="col-lg-4 col-lg-offset-1">
-                      <input required type="submit" data-toggle="modal" data-target="#ventanaModalCrear" class="btn btn-success pull-right" value="Guardar">
+                      <input required type="submit" class="btn btn-success pull-right" value="Guardar">
                     </div>
                   </div>
                 </form>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-default" id="botonCerrarModalCrear"data-dismiss="modal">Cerrar</button>
             </div>
             </div>
           </div>
@@ -219,7 +219,7 @@ var pagina;
 						<div class="form-group">
 									<label class="sr-only control-label col-lg-2" for="txt_nombreModificar">Nombre</label>
 									<div class="col-lg-9">
-										<input title="Complete este campo" placeholder="Nombre" id="txt_nombreModificar" name="txt_nombreModificar" type="text" class="form-control">
+										<input required title="Complete este campo" placeholder="Nombre" id="txt_nombreModificar" name="txt_nombreModificar" type="text" class="form-control">
 									</div>
 						</div>
 
@@ -307,7 +307,7 @@ var pagina;
 
 							<div class="form-group">
 								<div class="col-lg-4 col-lg-offset-1">
-									<input required type="submit" data-toggle="modal" data-target="#ventanaModalModificar" class="btn btn-success pull-right" value="Guardar">
+									<input required type="submit" class="btn btn-success pull-right" value="Guardar">
 								</div>
 							</div>
 						</form>
@@ -315,7 +315,7 @@ var pagina;
 
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-default" id="botonCerrarModalModificar" data-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>
@@ -334,10 +334,11 @@ swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowO
                 url:"./controladorMantenedores.php?mant=1&func=1",
                 data: $("#formularioCreacion").serialize(),
                 success:function(resultado){
-
+            //alert(resultado);
                   if(resultado=="1"){
                           swal("Operacion exitosa!", "Agregado Correctamente", "success");
                           cambiarPagina(1);
+                          $("#botonCerrarModalCrear").click();
                   }else if(resultado=="2"){
                           sweetAlert("Ocurrió un error", "Hay campos vacios", "error");
                   }else if(resultado=="3"){
@@ -355,6 +356,12 @@ swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowO
     $("#formularioModificacion").submit(function(){//ENVIA FORMULARIO DE MODIFICACION DE REGISTRO
       event.preventDefault();
       swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowOutsideClick:false,showCancelButton: false,closeOnConfirm: false});
+
+      var clave1= $("#txt_clave1Modificar").val();
+      var clave2= $("#txt_clave2Modificar").val();
+
+      if(clave1==clave2){
+
             $.ajax({
                 url:"./controladorMantenedores.php?mant=1&func=2",
                 data: $("#formularioModificacion").serialize(),
@@ -363,12 +370,18 @@ swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowO
                               //alert("MODIFICADO CORRECTAMENTE");
                               swal("Operacion exitosa!", "Modificado Correctamente", "success");
                               cambiarPagina(1);
+                              $("#botonCerrarModalModificar").click();
                       }else{
                           alert(resultado);
                           $("#error").html(resultado);
                       }
                 }
             });
+
+        }else{
+            sweetAlert("Ocurrió un error", "No se pudo concretar la operacion, claves no coinciden!", "error");
+        }
+
     });
 
     function eliminar(run){

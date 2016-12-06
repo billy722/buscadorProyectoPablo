@@ -20,7 +20,7 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                       $correo= $_REQUEST['txt_correoCrear'];
                       $tipoUsuario= $_REQUEST['select_tipoUsuarioCrear'];
 
-                      if($campoRut=="" || $nombre="" || $apellidoPaterno=="" || $clave=="" || $tipoUsuario==""){
+                      if($campoRut=="" || $nombre=="" || $apellidoPaterno=="" || $clave=="" || $tipoUsuario==""){
                             echo "2";//HAY CAMPOS VACIOS
 
                       }else{
@@ -32,7 +32,14 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                            if($Usuario->comprobarExisteRun($rut)){
                                 echo "3"; //RUT QUE INTENTA INGRESAR YA EXISTE
                            }else{
-                             $password = crypt($clave);
+
+                             // Generamos un salt aleatoreo, de 22 caracteres para Bcrypt
+                             $salt = substr(base64_encode(openssl_random_pseudo_bytes('30')), 0, 22);
+                             // A Crypt no le gustan los '+' así que los vamos a reemplazar por puntos.
+                             $salt = strtr($salt, array('+' => '.'));
+                             // Generamos el hash
+                             $password = crypt($clave, '$2y$10$' . $salt);
+
                                $Usuario->setDV($dv);
                                $Usuario->setNombre($Usuario->limpiarTexto($nombre));
                                $Usuario->setApellidoPaterno($Usuario->limpiarTexto($apellidoPaterno));
@@ -54,7 +61,15 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                 $rut= substr($campoRut,0,$posicionGuion);
                 $dv= substr($campoRut,$posicionGuion+1,$posicionGuion+1);
                 $clave = $_REQUEST['txt_clave1Modificar'];
-                $password = crypt($clave);
+
+                // Generamos un salt aleatoreo, de 22 caracteres para Bcrypt
+                $salt = substr(base64_encode(openssl_random_pseudo_bytes('30')), 0, 22);
+                // A Crypt no le gustan los '+' así que los vamos a reemplazar por puntos.
+                $salt = strtr($salt, array('+' => '.'));
+                // Generamos el hash
+                $password = crypt($clave, '$2y$10$' . $salt);
+
+
                 $Usuario->setRun($rut);
                 $Usuario->setDV($dv);
                 $Usuario->setNombre($Usuario->limpiarTexto($_REQUEST['txt_nombreModificar']));
@@ -87,7 +102,7 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                             <tbody>
 
                                          <?php
-                                          $retorno= $Usuario->BuscarFiltarRegistros("vistausuarios","nombre apellidoPaterno apellidoMaterno telefono correo",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg'],"");
+                                          $retorno= $Usuario->BuscarFiltarRegistros("vistausuarios","run nombre apellidoPaterno apellidoMaterno telefono correo descripcion_grupoUsuario descripcion_estado",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg'],"");
                                           $listado=$retorno[0][0];
 
 
@@ -195,7 +210,7 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                             <tbody>
 
                                          <?php
-                                          $retorno= $Delito->BuscarFiltarRegistros("vistadelitos","descripcion_delito",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg'],"");
+                                          $retorno= $Delito->BuscarFiltarRegistros("vistadelitos","descripcion_delito descripcion_estado",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg'],"");
                                           $listado=$retorno[0][0];
 
 
@@ -282,7 +297,7 @@ case '3'://Mant Poblacion
                             <tbody>
 
                                          <?php
-                                          $retorno= $Poblacion->BuscarFiltarRegistros("vistapoblaciones","descripcion_poblacion",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg'],"");
+                                          $retorno= $Poblacion->BuscarFiltarRegistros("vistapoblaciones","descripcion_poblacion descripcion_estado",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg'],"");
                                           $listado=$retorno[0][0];
 
 
@@ -369,7 +384,7 @@ case '3'://Mant Poblacion
                             <tbody>
 
                                          <?php
-                                          $retorno= $Equipo->BuscarFiltarRegistros("vistaequipos","descripcion_equipo",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg'],"");
+                                          $retorno= $Equipo->BuscarFiltarRegistros("vistaequipos","descripcion_equipo descripcion_estado",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg'],"");
                                           $listado=$retorno[0][0];
 
 
@@ -540,9 +555,10 @@ $Grupo = new Grupos();
 
             break;
 
-            case '4'://mostrar info para actualizar editar - GRUPO
+            case '4'://eliminar
                  $Grupo->setIdGrupo($_REQUEST['id']);
-                 $Grupo->eliminarGrupo();
+                 $res= $Grupo->eliminarGrupo();
+
             break;
 
             case '5'://carga informacion del formulario modificar

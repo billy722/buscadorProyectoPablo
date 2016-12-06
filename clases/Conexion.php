@@ -71,8 +71,11 @@ class Conexion{
             echo "Error: " . $this->con->error . "\n";
             exit;
         }else{
-            $cantidad= $resultado->num_rows;
-            return $cantidad;
+          if($resultado->num_rows>0){
+              return $resultado->num_rows;
+          }else{
+            return 0;
+          }
         }
     }
 

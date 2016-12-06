@@ -32,7 +32,7 @@
 				<tr>
 					<td><strong>Run</strong></td>
 					<td><input class="form-control" name="run" placeholder="12345678-1" type="text"
-					    <?php if(isset($soloRun)){ echo' value="'.$filasPrincipal['run'].'"'; } ?>
+					    <?php if(isset($soloRun)){ echo' value="'.$filasPrincipal['run'].'" readonly '; } ?>
 					    >
 					</td>
 				</tr>
@@ -724,21 +724,25 @@
 	          $("#formularioModificacionSospechoso").submit(function(){
 								event.preventDefault();
 
-												          var formData = new FormData(document.getElementById("formularioModificacionSospechoso"));
 
-													            $.ajax({
-													              url: "controladorMantenedores.php?mant=7&func=1",
-													              dataType: "html",
-																				type:'post',
-													              data: formData,
-													              cache: false,
-													              contentType: false,
-													              processData:false,
-													              success:function(resultado){
-													                alert(resultado);
-													                //location.reload();
-													              }
-													            });
+										swal("Operacion exitosa!", "Modificado correctamente.", "success");
+										//window.location="mantenedorSospechosos.php";
+
+												          // var formData = new FormData(document.getElementById("formularioModificacionSospechoso"));
+																	//
+													        //     $.ajax({
+													        //       url: "controladorMantenedores.php?mant=7&func=1",
+													        //       dataType: "html",
+																	// 			type:'post',
+													        //       data: formData,
+													        //       cache: false,
+													        //       contentType: false,
+													        //       processData:false,
+													        //       success:function(resultado){
+													        //         alert(resultado);
+													        //         //location.reload();
+													        //       }
+													        //     });
 	          });
 
 
@@ -782,7 +786,7 @@
 							success:function(respuesta){
 								 if(respuesta==1){
 									 cargarImagenesActuales(run);
-									 //swal("Operacion exitosa!", "Imagen Eliminada", "success");
+									 swal("Operacion exitosa!", "Imagen Principal Cambiada", "success");
 								 }
 							}
 						});

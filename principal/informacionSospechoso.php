@@ -56,7 +56,7 @@ conectarBD();
 										echo $filasD['descripcion_delito']." \n";
 								}
 			 				echo'</textarea>
-								<button class="btn btn-warning col-xs-12">Editar</button>
+								<a href="../mantenedores/formularioModificacionSospechosos.php?id='.$run.'" class="btn btn-warning col-xs-12">Editar</a>
 </div>
 <div class="col-xs-12 col-sm-9 col-md-6 col-lg-6">
 ';
