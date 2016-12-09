@@ -246,7 +246,7 @@
 		}
 	echo'</div>';
 	}else{
-		echo'No hay coincidencias';
+		echo'<center><label  style="color:white; font-size:40px;">NO SE ENCONTRARON COINCIDENCIAS</label></center>';
 	}
 
  ?>

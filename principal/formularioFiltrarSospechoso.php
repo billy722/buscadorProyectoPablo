@@ -1,14 +1,14 @@
 <?php
 session_start();
 
-if(1==2){
-// if(isset($_SESSION['run'])==false &&
-//
-//    isset($_SESSION['nombre'])==false &&
-//
-//    isset($_SESSION['idDepartamento'])==false &&
-//
-//    isset($_SESSION['descripcionDepartamento'])==false){
+
+if(isset($_SESSION['run'])==false &&
+
+   isset($_SESSION['nombre'])==false &&
+
+   isset($_SESSION['idDepartamento'])==false &&
+
+   isset($_SESSION['descripcionDepartamento'])==false){
 
 
 
@@ -373,6 +373,8 @@ if(1==2){
 
 		 						<input class="btn btn-warning" value="LIMPIAR" type="button" onclick="limpiarResultados();"/>
 		 						<input class="btn btn-warning" value="BUSCAR" type="button" onclick="enviarFormulario();" />
+		 						<!-- <input class="btn btn-warning" value="IMPRIMIR RESULTADOS" type="button" onclick="window.print()" /> -->
+
 
 		 	</div>
 		</div>
