@@ -7,6 +7,8 @@
 <html lang="es">
 
 <head>
+  <title>SOSPECHOSOS</title>
+  <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<script type="text/javascript" src="./js/jquery-3.1.0.min.js"></script>
 	<script type="text/javascript" src="./js/funciones.js"></script>

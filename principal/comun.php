@@ -14,7 +14,9 @@ function cargarEncabezado(){
 	<!DOCTYPE html>
 	<html>
 	<head>
+
 		<title>SOSPECHOSOS</title>
+		<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
 		<link rel="stylesheet" type="text/css" href="../css/principal.css">
 		<link rel="stylesheet" type="text/css" href="../css/configuraciones/estilosConfiguraciones.css">
 		<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
@@ -26,6 +28,7 @@ function cargarEncabezado(){
 
 		<link rel="stylesheet" href="../sweetalert/sweet-alert.css">
 		<script src="../sweetalert/sweet-alert.min.js"></script>
+
 
 	</head>
 	<body>
