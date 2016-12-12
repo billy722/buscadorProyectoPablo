@@ -19,6 +19,7 @@ class Conexion{
                 exit;
             }else{
                   //echo 'La conexion es exitosa';
+                  mysqli_set_charset($this->con,"utf8");
             }
     }
     public function insertar($arg_consulta){

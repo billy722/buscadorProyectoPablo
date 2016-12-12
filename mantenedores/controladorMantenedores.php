@@ -175,17 +175,29 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
 
             switch($_REQUEST['func']){
               case '1': //Ingresar nuevo delito
+
+                if($_REQUEST['txt_descripcionDelitoCrear']==""){
+                      echo "2";//HAY CAMPOS VACIOS
+
+                }else{
                 $Delito->setDescripcionDelito($_REQUEST['txt_descripcionDelitoCrear']);
                 $Delito->setEstadoDelito("1");
                 $Delito->ingresarDelito();
+
+              }
               break;
               case '2'://Modificar delito
+              if($_REQUEST['txt_descripcionDelitoModificar']=="" || $_REQUEST['txt_idDelitoModificar']=="" || $_REQUEST['cmb_estadoDelitoModificar']==""){
+                    echo "2";//HAY CAMPOS VACIOS
+
+              }else{
                 $Delito->setIdDelito($_REQUEST['txt_idDelitoModificar']);
                 $Delito->setDescripcionDelito($_REQUEST['txt_descripcionDelitoModificar']);
                 $Delito->setEstadoDelito($_REQUEST['cmb_estadoDelitoModificar']);
                 if($Delito->actualizarDelito()){
-                  echo "2";
+                  echo "1";
                 }
+              }
               break;
               case '3'://Eliminar delito
                       $Delito->setIdDelito($_REQUEST['id']);
@@ -220,7 +232,7 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                                                 echo'<tr><td><span id="txt_idDelito'.$contadorFilas.'">'.$filas['id_delito'].'</span></td>';
                                                 echo'<td><span id="txt_descripcionDelito'.$contadorFilas.'">'.$filas['descripcion_delito'].'</span></td>';
                                                 echo'<td><span id="txt_estadoDelito'.$contadorFilas.'">'.$filas['descripcion_estado'].'</span>
-                                                <input type="hidden" id="txt_idEstado'.$contadorFilas.'" value="'.$filas['estado'].'"></td>';
+                                                <input required type="hidden" id="txt_idEstado'.$contadorFilas.'" value="'.$filas['estado'].'"></td>';
                                                   //CAMPOS OCULTOS CON IDS
 
                                                 echo'<td>

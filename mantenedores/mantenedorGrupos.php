@@ -99,7 +99,7 @@ var pagina;
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Crear Usuario</h4>
+              <h4 class="modal-title">Crear Grupo de Usuario</h4>
             </div>
             <div id="modbody" class="modal-body">
 
@@ -181,7 +181,7 @@ var pagina;
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Modificar Usuario</h4>
+              <h4 class="modal-title">Modificar Grupo de Usuarios</h4>
             </div>
             <div id="modbody" class="modal-body">
 
@@ -192,7 +192,7 @@ var pagina;
                   <!-- BOTON QUE CIERRA MODAL-->
                   <div class="form-group">
                     <div class="col-lg-4 col-lg-offset-1">
-                      <input required type="submit" data-toggle="modal" data-target="#ventanaModalModificar" class="btn btn-success pull-right" value="Guardar">
+                      <input required type="submit" class="btn btn-success pull-right" value="Guardar">
                     </div>
                   </div>
 
@@ -201,7 +201,7 @@ var pagina;
 
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-default" id="botonCerrarModalModificar" data-dismiss="modal">Cerrar</button>
             </div>
           </div>
         </div>
@@ -256,6 +256,7 @@ var pagina;
                               if(resultado=="2"){
                                       swal("Operacion exitosa!", "Modificado Correctamente", "success");
                                       cambiarPagina(1);
+                                      $("#botonCerrarModalModificar").click();
                               }
                               else if(resultado=="3"){
                                 sweetAlert("No permitido.", "Otro grupo ya utiliza el nombre que ha ingresado", "warning");

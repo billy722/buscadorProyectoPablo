@@ -54,7 +54,12 @@ where ds.run_sospechoso='.$arg_run);
    //Funcion ingresar datos a la tabla region de la base de datos
   public function ingresarDelito(){
       $delitos=$this->insertar('INSERT INTO `tb_delito` (`id_delito`,`descripcion_delito`,`estado`) VALUES (null,\''.$this->_descripcion_delito.'\',\''.$this->_estado.'\');');
-      return $delitos;
+      //return $delitos;
+      if($delitos){
+        echo "1";
+      }else{
+        echo "2";
+      }
   }
 
 
