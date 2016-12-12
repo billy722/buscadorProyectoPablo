@@ -50,6 +50,13 @@ class Usuario extends Conexion{
   }
 
 
+  public function consultaUnUsuario(){
+    $consulta="select * from tb_usuarios where run=".$this->run;
+
+    $resultado= $this->registros($consulta);
+    return $resultado;
+  }
+
   public function validarRut($rut)
   {
       if (!preg_match("/^[0-9.]+[-]?+[0-9kK]{1}/", $rut)) {

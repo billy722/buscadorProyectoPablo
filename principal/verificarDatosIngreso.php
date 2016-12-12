@@ -7,18 +7,18 @@ $Usuario = new Usuario();
 
   require_once('../recaptcha/recaptchalib.php');
     $privatekey = "6LdQPg0UAAAAAKdU4W8Yp6C7m0bJ2RTIw03ZovWr";
-    $resp = recaptcha_check_answer ($privatekey,
+    $resp = recaptcha_check_answer($privatekey,
                                   $_SERVER["REMOTE_ADDR"],
                                   $_REQUEST["recaptcha_challenge_field"],
                                   $_REQUEST["recaptcha_response_field"]);
 
-    if (!$resp->is_valid) {
+    if (!$resp->is_valid){
       // What happens when the CAPTCHA was entered incorrectly
           // die ("The reCAPTCHA wasn't entered correctly. Go back and try it again." .
           //      "(reCAPTCHA said: " . $resp->error . ")");
         echo "4"; //EL CAPTCHA ES INCORRECTO
 
-    } else {
+    }else{
 
         $usuario= $Usuario->limpiarTexto($usuario);
         $usuario= $Usuario->limpiarNumeroEntero($usuario);
