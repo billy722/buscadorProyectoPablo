@@ -87,7 +87,7 @@ var pagina;
           <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Crear Poblaciones</h4>
+              <h4 class="modal-title">Crear Poblacion</h4>
             </div>
             <div id="modbody" class="modal-body">
 
@@ -104,7 +104,7 @@ var pagina;
                        <!-- BOTON QUE CIERRA MODAL-->
                   <div class="form-group">
                     <div class="col-lg-4 col-lg-offset-1">
-                      <input required type="submit" data-toggle="modal" data-target="#ventanaModalCrear" class="btn btn-success pull-right" value="Guardar">
+                      <input required type="submit"  class="btn btn-success pull-right" value="Guardar">
                     </div>
                   </div>
 
@@ -113,7 +113,7 @@ var pagina;
 
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-default" id="botonCerrarModalCrear" data-dismiss="modal">Cerrar</button>
             </div>
             </div>
           </div>
@@ -143,7 +143,7 @@ var pagina;
               <form class="form-horizontal" name="formularioModificacion" id="formularioModificacion" action="">
 
                     <!--campos ocultos para guardar -->
-                    <input type="hidden" id="txt_idPoblacionModificar" name="txt_idPoblacionModificar" >
+                    <input type="hidden" required id="txt_idPoblacionModificar" name="txt_idPoblacionModificar" >
 
                     <!-- CAMPO 1 DEL MODAL-->
                       <div class="form-group">
@@ -173,7 +173,7 @@ var pagina;
                   <!-- BOTON QUE CIERRA MODAL-->
                   <div class="form-group">
                     <div class="col-lg-4 col-lg-offset-1">
-                      <input required type="submit" data-toggle="modal" data-target="#ventanaModalModificar" class="btn btn-success pull-right" value="Guardar">
+                      <input required type="submit"  class="btn btn-success pull-right" value="Guardar">
                     </div>
                   </div>
 
@@ -182,7 +182,7 @@ var pagina;
 
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+              <button type="button" class="btn btn-default" id="botonCerrarModalModificar" data-dismiss="modal">Cerrar</button>
             </div>
           </div>
         </div>
@@ -200,8 +200,16 @@ var pagina;
                         data: $("#formularioCreacion").serialize(),
                         success:function(resultado){
                           //alert("INGRESADO CORRECTAMENTE");
+                          if(resultado=="1"){
                           swal("Operacion exitosa!", "Agregado Correctamente", "success");
                           cambiarPagina(1);
+                          $("#botonCerrarModalCrear").click();
+                        }else if(resultado=="2"){
+                          sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
+
+                        }else{
+                          sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
+                        }
                         }
 
                     });
@@ -214,13 +222,16 @@ var pagina;
                         url:"./controladorMantenedores.php?mant=3&func=2",
                         data: $("#formularioModificacion").serialize(),
                         success:function(resultado){
-                              if(resultado=="2"){
+                              if(resultado=="1"){
                                       //alert("MODIFICADO CORRECTAMENTE");
                                       swal("Operacion exitosa!", "Modificado Correctamente", "success");
                                       cambiarPagina(1);
-                              }else{
-                                  alert(resultado);
-                                  $("#error").html(resultado);
+                                      $("#botonCerrarModalModificar").click();
+                              }else if(resultado=="2"){
+                                sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
+                              }else {
+                                sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
+
                               }
                         }
                     });

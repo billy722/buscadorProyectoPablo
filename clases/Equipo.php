@@ -5,7 +5,7 @@ class Equipo extends Conexion{
       private $_idEquipo;
       private $_descripcion_equipo;
       private $_estado;
-      
+
 //Creacion de constructor y extension del constructor de la clase Conexion.
   public function __construct(){
 
@@ -38,19 +38,23 @@ public function getEstadoEquipo(){
    //Funcion ingresar datos a la tabla
   public function ingresarEquipo(){
       $equipo=$this->insertar('INSERT INTO `tb_equipofutbol` (`id_equipo`,`descripcion_equipo`,`estado`) VALUES (null,\''.$this->_descripcion_equipo.'\',\''.$this->_estado.'\');');
-      return $equipo;
+      if($equipo){
+        echo "1";
+      }else{
+        echo "3";
+      }
   }
   public function actualizarEquipo(){
         $equipo=$this->insertar('UPDATE `tb_equipofutbol` SET `descripcion_equipo`=\''.$this->_descripcion_equipo.'\', `estado`=\''.$this->_estado.'\' WHERE `id_equipo`='.$this->_idEquipo.';');
 
         if($equipo){
-            return true;
+            echo "1";;
         }else{
 
-           echo "ERROR AL MODIFICAR";
-        } 
+           echo "3";
+        }
   }
-  // Funcion eliminar datos de la tabla 
+  // Funcion eliminar datos de la tabla
   public function eliminarEquipo(){
     $verificar;
     if($this->consultaExistencia("select * from tb_equiposospechoso where id_equipo=".$this->_idEquipo.";")){
