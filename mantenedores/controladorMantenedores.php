@@ -371,22 +371,33 @@ if($resultadoUsuario){
 
             switch($_REQUEST['func']){
               case '1': //Ingresar nueva poblacion
+              if($_REQUEST['txt_descripcionPoblacionCrear']==""){
+                echo "2"; //valores vacios.
+              }else{
+
                 $Poblacion->setDescripcionPoblacion($_REQUEST['txt_descripcionPoblacionCrear']);
                 $Poblacion->setEstadoPoblacion("1");
+
                 if($Poblacion->ingresarPoblacion()){
-                  echo "2";
+                  echo "1";
                 }else{
-                  echo "3";
+                  echo "3";//ERROR
                 }
+
               break;
               case '2'://Modificar Poblacion
+              if($_REQUEST['txt_idPoblacionModificar']=="" || $_REQUEST['txt_descripcionPoblacionModificar']=="" || $_REQUEST['cmb_estadoPoblacionModificar']==""){
+                echo "2";
+              }else{
                 $Poblacion->setIdPoblacion($_REQUEST['txt_idPoblacionModificar']);
                 $Poblacion->setDescripcionPoblacion($_REQUEST['txt_descripcionPoblacionModificar']);
                 $Poblacion->setEstadoPoblacion($_REQUEST['cmb_estadoPoblacionModificar']);
                 if($Poblacion->actualizarPoblacion()){
-                  echo "2";
-
+                  echo "1";
+                }else{
+                  echo "3";
                 }
+              }
               break;
               case '3'://Eliminar Poblacion
                       $Poblacion->setIdPoblacion($_REQUEST['id']);
@@ -394,7 +405,7 @@ if($resultadoUsuario){
                       $verificarExito= $Poblacion->eliminarPoblacion();
 
                       if($verificarExito==true){
-                            echo "2";
+                            echo "1";
                       }else{
                         echo "3";
                       }
@@ -474,18 +485,26 @@ if($resultadoUsuario){
 
             switch($_REQUEST['func']){
               case '1': //Ingresar nuevo equipo
+              if($_REQUEST['txt_descripcionEquipoCrear']==""){
+                echo "2";
+              }else {
                 $Equipo->setDescripcionEquipo($Equipo->limpiarTexto($_REQUEST['txt_descripcionEquipoCrear']));
                 $Equipo->setEstadoEquipo("1");
                 $Equipo->ingresarEquipo();
+              }
               break;
               case '2'://Modificar equipo
+              if($_REQUEST['txt_idEquipoModificar']=="" || $_REQUEST['txt_descripcionEquipoModificar']=="" || $_REQUEST['cmb_estadoEquipoModificar']==""){
+                echo "2";
+              }else{
                 $Equipo->setIdEquipo($Equipo->limpiarNumeroEntero($_REQUEST['txt_idEquipoModificar']));
                 $Equipo->setDescripcionEquipo($Equipo->limpiarTexto($_REQUEST['txt_descripcionEquipoModificar']));
                 $Equipo->setEstadoEquipo($Equipo->limpiarNumeroEntero($_REQUEST['cmb_estadoEquipoModificar']));
                 if($Equipo->actualizarEquipo()){
-                  echo "2";
+                  echo "1";
 
                 }
+              }
               break;
               case '3'://Eliminar equipo
                       $Equipo->setIdEquipo($Equipo->limpiarNumeroEntero($_REQUEST['id']));

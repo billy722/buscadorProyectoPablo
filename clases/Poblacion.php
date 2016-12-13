@@ -5,7 +5,7 @@ class Poblacion extends Conexion{
       private $_idPoblacion;
       private $_descripcion_poblacion;
       private $_estado;
-      
+
 //Creacion de constructor y extension del constructor de la clase Conexion.
   public function __construct(){
 
@@ -38,19 +38,22 @@ public function getEstadoPoblacion(){
    //Funcion ingresar datos a la tabla
   public function ingresarPoblacion(){
       $poblacion=$this->insertar('INSERT INTO `tb_poblacion` (`id_poblacion`,`descripcion_poblacion`,`estado`) VALUES (null,\''.$this->_descripcion_poblacion.'\',\''.$this->_estado.'\');');
-      return $poblacion;
+      if($poblacion){
+        echo "1";
+      }else{
+        echo "2";
+      }
   }
   public function actualizarPoblacion(){
         $poblacion=$this->insertar('UPDATE `tb_poblacion` SET `descripcion_poblacion`=\''.$this->_descripcion_poblacion.'\', `estado`=\''.$this->_estado.'\' WHERE `id_poblacion`='.$this->_idPoblacion.';');
 
         if($poblacion){
-            return true;
+          echo "1";
         }else{
-
-           echo "ERROR AL MODIFICAR";
-        } 
+          echo "2";
+        }
   }
-  // Funcion eliminar datos de la tabla 
+  // Funcion eliminar datos de la tabla
   public function eliminarPoblacion(){
     $verificar;
     if($this->consultaExistencia("select * from tb_poblacionsospechoso where id_poblacion=".$this->_idPoblacion.";")){
