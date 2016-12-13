@@ -103,7 +103,15 @@ var pagina;
         url:"controladorMantenedores.php",
         data:"mant=4&func=4&buscar="+busqueda+"&pag="+pagina+"&cantidadReg="+$("#cmb_cantidadRegistros").val(),
         success:function(respuesta){
-              $("#contenedorMantenedor").html(respuesta);
+          if(respuesta==0){
+                 swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
+                 setTimeout(function(){
+                       window.location="../principal/menuPrincipal.php";
+                    },5000);
+
+           }else{
+             $("#contenedorMantenedor").html(respuesta);
+          }
         }
       });
 
@@ -229,16 +237,22 @@ var pagina;
                         data: $("#formularioCreacion").serialize(),
                         success:function(resultado){
                           //alert("INGRESADO CORRECTAMENTE");
-                          if(resultado=="1"){
-                          swal("Operacion exitosa!", "Agregado Correctamente", "success");
-                          cambiarPagina(1);
-                          $("#botonCerrarModalCrear").click();
-                        }else if(resultado=="2") {
-                          sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
+                          if(resultado==0){
+                                 swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
+                                 setTimeout(function(){
+                                       window.location="../principal/menuPrincipal.php";
+                                    },5000);
 
-                        }else {
-                          sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
-                        }
+                           }else if(resultado=="1"){
+                              swal("Operacion exitosa!", "Agregado Correctamente", "success");
+                              cambiarPagina(1);
+                              $("#botonCerrarModalCrear").click();
+                            }else if(resultado=="2"){
+                              sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
+
+                            }else{
+                              sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
+                            }
                         }
 
                     });
@@ -251,18 +265,22 @@ var pagina;
                         url:"./controladorMantenedores.php?mant=4&func=2",
                         data: $("#formularioModificacion").serialize(),
                         success:function(resultado){
-                              if(resultado=="1"){
-                                      //alert("MODIFICADO CORRECTAMENTE");
-                                      swal("Operacion exitosa!", "Modificado Correctamente", "success");
-                                      cambiarPagina(1);
-                                        $("#botonCerrarModalModificar").click();
-                              }else if(resultado=="2"){
-                                sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
-                              }else{
-                                sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
-                                  alert(resultado);
-                                  $("#error").html(resultado);
-                              }
+                          if(resultado==0){
+                                 swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
+                                 setTimeout(function(){
+                                       window.location="../principal/menuPrincipal.php";
+                                    },5000);
+
+                           }else if(resultado=="1"){
+                              swal("Operacion exitosa!", "Agregado Correctamente", "success");
+                              cambiarPagina(1);
+                              $("#botonCerrarModalCrear").click();
+                            }else if(resultado=="2"){
+                              sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
+
+                            }else{
+                              sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
+                            }
                         }
                     });
             });
@@ -273,14 +291,23 @@ var pagina;
                  $.ajax({
                   url:"controladorMantenedores.php",
                   data:"mant=4&func=3&id="+id,
-                  success:function(respuesta){
-                          if(respuesta=="2"){
-                          //alert("ELIMINADO CORRECTAMENTE");
-                          swal("Operacion exitosa!", "Eliminado Correctamente", "success");
-                              cambiarPagina(1);
-                          }else{
-                              alert("error al eliminar: "+respuesta);
-                          }
+                  success:function(resultado){
+                    if(resultado==0){
+                           swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
+                           setTimeout(function(){
+                                 window.location="../principal/menuPrincipal.php";
+                              },5000);
+
+                     }else if(resultado=="1"){
+                        swal("Operacion exitosa!", "Agregado Correctamente", "success");
+                        cambiarPagina(1);
+                        $("#botonCerrarModalCrear").click();
+                      }else if(resultado=="2"){
+                        sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
+
+                      }else{
+                        sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
+                      }
                   }
                 });
             }

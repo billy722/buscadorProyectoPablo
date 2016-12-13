@@ -39,19 +39,19 @@ public function getEstadoEquipo(){
   public function ingresarEquipo(){
       $equipo=$this->insertar('INSERT INTO `tb_equipofutbol` (`id_equipo`,`descripcion_equipo`,`estado`) VALUES (null,\''.$this->_descripcion_equipo.'\',\''.$this->_estado.'\');');
       if($equipo){
-        echo "1";
+        return true;
       }else{
-        echo "3";
+        return false;
       }
   }
   public function actualizarEquipo(){
         $equipo=$this->insertar('UPDATE `tb_equipofutbol` SET `descripcion_equipo`=\''.$this->_descripcion_equipo.'\', `estado`=\''.$this->_estado.'\' WHERE `id_equipo`='.$this->_idEquipo.';');
 
         if($equipo){
-            echo "1";;
+            return true;
         }else{
 
-           echo "3";
+           return false;
         }
   }
   // Funcion eliminar datos de la tabla

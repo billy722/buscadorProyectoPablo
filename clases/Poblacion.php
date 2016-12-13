@@ -39,18 +39,18 @@ public function getEstadoPoblacion(){
   public function ingresarPoblacion(){
       $poblacion=$this->insertar('INSERT INTO `tb_poblacion` (`id_poblacion`,`descripcion_poblacion`,`estado`) VALUES (null,\''.$this->_descripcion_poblacion.'\',\''.$this->_estado.'\');');
       if($poblacion){
-        echo "1";
+        return true;
       }else{
-        echo "2";
+        return false;
       }
   }
   public function actualizarPoblacion(){
         $poblacion=$this->insertar('UPDATE `tb_poblacion` SET `descripcion_poblacion`=\''.$this->_descripcion_poblacion.'\', `estado`=\''.$this->_estado.'\' WHERE `id_poblacion`='.$this->_idPoblacion.';');
 
         if($poblacion){
-          echo "1";
+          return true;
         }else{
-          echo "2";
+          return true;
         }
   }
   // Funcion eliminar datos de la tabla

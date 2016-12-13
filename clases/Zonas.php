@@ -46,7 +46,7 @@ public function __construct(){
                 if($verificar){
                       return $ultimoId;
                 }else{
-                    echo "fallo al ingresar";
+                     return false;
                 }
   }
 
@@ -57,17 +57,17 @@ public function __construct(){
      if($this->insertar($consulta)){
        return true;
      }else{
-       echo "ERROR AL ASIGNAR POBLACION: ".$consulta;
+       return false;
      }
   }
 
-  public function eliminarPrivilegiosDeGrupo(){
+  public function eliminarPoblacionesDeZona(){
       $consulta="delete from tb_poblacionzonas where id_zona=".$this->_idZona.";";
 
      if($this->insertar($consulta)){
-return true;
+        return true;
      }else{
-         echo "ERROR AL eliminar PRIVILEGIOS de grupo: ".$consulta;
+        return false;
      }
   }
 
@@ -77,13 +77,14 @@ return true;
      if($this->insertar($consulta)){
        return true;
      }else{
-       echo "ERROR AL ASIGNAR POBLACION: ".$consulta;
+       return false;
      }
   }
   // Funcion eliminar datos de la tabla region
   public function eliminarZona(){
     $resultado=$this->insertar('DELETE FROM `tb_zona` WHERE `id_zona`='.$this->_idZona.';');
-    return $resultado;}
+    return $resultado;
+  }
 
   public function comprobarNombre(){
     $consulta;

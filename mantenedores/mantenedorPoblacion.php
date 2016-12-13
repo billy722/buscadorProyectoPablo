@@ -303,12 +303,15 @@ var pagina;
                                      window.location="../principal/menuPrincipal.php";
                                   },5000);
 
-                         }else if(respuesta=="2"){
+                         }else if(respuesta=="1"){
                           //alert("ELIMINADO CORRECTAMENTE");
                           swal("Operacion exitosa!", "Eliminado Correctamente", "success");
                               cambiarPagina(1);
-                          }else{
-                              alert("error al eliminar: "+respuesta);
+                          }else if(resultado=="2"){
+                                sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
+                          }else {
+                                sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
+
                           }
                   }
                 });

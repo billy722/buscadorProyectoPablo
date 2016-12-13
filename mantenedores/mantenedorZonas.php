@@ -112,7 +112,16 @@ var pagina;
         url:"controladorMantenedores.php",
         data:"mant=6&func=3&buscar="+busqueda+"&pag="+pagina+"&cantidadReg="+$("#cmb_cantidadRegistros").val(),
         success:function(respuesta){
+
+          if(respuesta==0){
+                 swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
+                 setTimeout(function(){
+                       window.location="../principal/menuPrincipal.php";
+                    },5000);
+
+           }else{
               $("#contenedorMantenedor").html(respuesta);
+            }
         }
       });
 
@@ -199,7 +208,15 @@ var pagina;
                                 $("#divPrivilegiosGrupo").html("Cargando...");
                         },
                         success:function(resultado){
-                                  $("#divPrivilegiosGrupo").html(resultado);
+                          if(resultado==0){
+                                 swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
+                                 setTimeout(function(){
+                                       window.location="../principal/menuPrincipal.php";
+                                    },5000);
+
+                           }else{
+                              $("#divPrivilegiosGrupo").html(resultado);
+                            }
                         }
                     });
 
@@ -248,24 +265,22 @@ var pagina;
                         url:"controladorMantenedores.php?mant=6&func=1",
                         data: $("#formularioCreacion").serialize(),
                         success:function(resultado){
-                          $("#error").html(resultado);
-                              if(resultado=="2"){
-                                      swal("Operacion exitosa!", "Agregado Correctamente", "success");
-                                      limpiarCamposCrear();
-                                      cambiarPagina(1);
-                                      $("#botonCerrarModalCrear").click();
-                              }
-                              else if(resultado=="3"){
-                                sweetAlert("No permitido.", "Otro grupo ya utiliza el nombre que ha ingresado", "warning");
-                              }
-                              else if(resultado=="4"){
-                                sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
-                              }
-                              else{
-                                sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
-                                 // alert(resultado);
-                                 // $("#error").html(resultado);
-                              }
+                          if(resultado==0){
+                                 swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
+                                 setTimeout(function(){
+                                       window.location="../principal/menuPrincipal.php";
+                                    },5000);
+
+                           }else if(resultado=="1"){
+                              swal("Operacion exitosa!", "Agregado Correctamente", "success");
+                              cambiarPagina(1);
+                              $("#botonCerrarModalCrear").click();
+                            }else if(resultado=="2"){
+                              sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
+
+                            }else{
+                              sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
+                            }
                         }
                     });
             });
@@ -281,24 +296,22 @@ var pagina;
                         data: $("#formularioModificacion").serialize(),
                         success:function(resultado){
 
-                            //alert(resultado);
-                            $("#error").html(resultado);
-                              if(resultado=="2"){
-                                      swal("Operacion exitosa!", "Modificado Correctamente", "success");
-                                      cambiarPagina(1);
-                                      $("#botonCerrarModalCrear").click();
-                              }
-                              else if(resultado=="3"){
-                                sweetAlert("No permitido.", "Otro grupo ya utiliza el nombre que ha ingresado", "warning");
-                              }
-                              else if(resultado=="4"){
-                                sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
-                              }
-                              else{
-                                sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
-                                //alert(resultado);
-                                 // $("#error").html(resultado);
-                              }
+                          if(resultado==0){
+                                 swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
+                                 setTimeout(function(){
+                                       window.location="../principal/menuPrincipal.php";
+                                    },5000);
+
+                           }else if(resultado=="1"){
+                              swal("Operacion exitosa!", "Agregado Correctamente", "success");
+                              cambiarPagina(1);
+                              $("#botonCerrarModalCrear").click();
+                            }else if(resultado=="2"){
+                              sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
+
+                            }else{
+                              sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
+                            }
                         }
                     });
             });
@@ -310,10 +323,23 @@ var pagina;
             error:function(error){
                 alert(error);
             },
-            success:function(respuesta){
-                   //$("#error").html(respuesta);
-                  swal("Operacion exitosa!", "Eliminado Correctamente", "success");
+            success:function(resultado){
+              if(resultado==0){
+                     swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
+                     setTimeout(function(){
+                           window.location="../principal/menuPrincipal.php";
+                        },5000);
+
+               }else if(resultado=="1"){
+                  swal("Operacion exitosa!", "Agregado Correctamente", "success");
                   cambiarPagina(1);
+                  $("#botonCerrarModalCrear").click();
+                }else if(resultado=="2"){
+                  sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
+
+                }else{
+                  sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
+                }
             }
     });
   }
@@ -340,14 +366,27 @@ var pagina;
                                 error:function(error){
                                     alert(error);
                                 },
-                                success:function(respuesta){
-                                      $("#error").html(respuesta);
-                                      swal("Operacion exitosa!", "Eliminado Correctamente", "success");
+                                success:function(resultado){
+                                  if(resultado==0){
+                                         swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
+                                         setTimeout(function(){
+                                               window.location="../principal/menuPrincipal.php";
+                                            },5000);
+
+                                   }else if(resultado=="1"){
+                                      swal("Operacion exitosa!", "Agregado Correctamente", "success");
                                       cambiarPagina(1);
+                                      $("#botonCerrarModalCrear").click();
+                                    }else if(resultado=="2"){
+                                      sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
+
+                                    }else{
+                                      sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
+                                    }
                                 }
                         });
                   } else {
-                    swal("Cancelado", "No se eliminó el registro :)", "error");
+                    swal("Cancelado", "No se eliminó el registro", "error");
                   }
                 });
 

@@ -97,9 +97,9 @@ class Usuario extends Conexion{
         $verificar;
         $verificar=$this->insertar("call insertarModificarUsuario($this->run,'$this->dv','$this->nombre','$this->apellidoPaterno','$this->apellidoMaterno','$this->clave','$this->telefono','$this->correo','$this->grupoUsuario',$this->estado)");
         if($verificar){
-          echo "1";
+          return true;
         }else{
-          echo "2";
+          return false;
         }
 
   }
@@ -111,7 +111,7 @@ class Usuario extends Conexion{
                 if($verificar){
                       return true;
                 }else{
-                    echo "fallo al eliminar el Usuario";
+                    return false;
                 }
   }
 

@@ -107,15 +107,15 @@ var pagina;
         url:"controladorMantenedores.php",
         data:"mant=1&func=3&buscar="+busqueda+"&pag="+pagina+"&cantidadReg="+$("#cmb_cantidadRegistros").val(),
         success:function(respuesta){
-            if(respuesta==0){
+          if(respuesta==0){
                  swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
                  setTimeout(function(){
                        window.location="../principal/menuPrincipal.php";
                     },5000);
 
            }else{
-             $("#contenedorMantenedor").html(respuesta);
-           }
+              $("#contenedorMantenedor").html(respuesta);
+            }
         }
       });
 
@@ -182,7 +182,7 @@ var pagina;
                   <div class="col-lg-9">
                     <select id="select_tipoUsuarioCrear" class="form-control" name="select_tipoUsuarioCrear">
                         <?php
-                         require '../clases/Grupos.php';
+                         require_once '../clases/Grupos.php';
                          $TipoUsuario= new Grupos();
                          $filas= $TipoUsuario->listarGrupos();
 
@@ -375,18 +375,22 @@ swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowO
                 url:"./controladorMantenedores.php?mant=1&func=1",
                 data: $("#formularioCreacion").serialize(),
                 success:function(resultado){
-            //alert(resultado);
-                  if(resultado=="1"){
-                          swal("Operacion exitosa!", "Agregado Correctamente", "success");
-                          cambiarPagina(1);
-                          $("#botonCerrarModalCrear").click();
-                  }else if(resultado=="2"){
-                          sweetAlert("Ocurrió un error", "Hay campos vacios", "error");
-                  }else if(resultado=="3"){
-                          sweetAlert("Ocurrió un error", "El Run que intenta ingresar ya existe.", "error");
-                  }else{
-                        sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
-                  }
+                  if(resultado==0){
+                         swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
+                         setTimeout(function(){
+                               window.location="../principal/menuPrincipal.php";
+                            },5000);
+
+                   }else if(resultado=="1"){
+                      swal("Operacion exitosa!", "Agregado Correctamente", "success");
+                      cambiarPagina(1);
+                      $("#botonCerrarModalCrear").click();
+                    }else if(resultado=="2"){
+                      sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
+
+                    }else{
+                      sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
+                    }
                 }
             });
           }else{
@@ -407,15 +411,22 @@ swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowO
                 url:"./controladorMantenedores.php?mant=1&func=2",
                 data: $("#formularioModificacion").serialize(),
                 success:function(resultado){
-                      if(resultado=="1"){
-                              //alert("MODIFICADO CORRECTAMENTE");
-                              swal("Operacion exitosa!", "Modificado Correctamente", "success");
-                              cambiarPagina(1);
-                              $("#botonCerrarModalModificar").click();
-                      }else{
-                          alert(resultado);
-                          $("#error").html(resultado);
-                      }
+                  if(resultado==0){
+                         swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
+                         setTimeout(function(){
+                               window.location="../principal/menuPrincipal.php";
+                            },5000);
+
+                   }else if(resultado=="1"){
+                      swal("Operacion exitosa!", "Agregado Correctamente", "success");
+                      cambiarPagina(1);
+                      $("#botonCerrarModalCrear").click();
+                    }else if(resultado=="2"){
+                      sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
+
+                    }else{
+                      sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
+                    }
                 }
             });
 
@@ -444,14 +455,23 @@ swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowO
                       $.ajax({
                        url:"./controladorMantenedores.php",
                        data:"mant=1&func=5&run="+run,
-                       success:function(respuesta){
-                               if(respuesta=="2"){
-                               //alert("ELIMINADO CORRECTAMENTE");
-                               swal("Operacion exitosa!", "Eliminado Correctamente", "success");
-                                   cambiarPagina(1);
-                               }else{
-                                   alert("error al eliminar: "+respuesta);
-                               }
+                       success:function(resultado){
+                         if(resultado==0){
+                                swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
+                                setTimeout(function(){
+                                      window.location="../principal/menuPrincipal.php";
+                                   },5000);
+
+                          }else if(resultado=="1"){
+                             swal("Operacion exitosa!", "Agregado Correctamente", "success");
+                             cambiarPagina(1);
+                             $("#botonCerrarModalCrear").click();
+                           }else if(resultado=="2"){
+                             sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
+
+                           }else{
+                             sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
+                           }
                        }
                      });
             } else {

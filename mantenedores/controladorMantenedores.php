@@ -58,7 +58,7 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                             $Usuario->setRun($rut);
 
                            if($Usuario->comprobarExisteRun($rut)){
-                                echo "3"; //RUT QUE INTENTA INGRESAR YA EXISTE
+                                echo "4"; //RUT QUE INTENTA INGRESAR YA EXISTE
                            }else{
 
                              // Generamos un salt aleatoreo, de 22 caracteres para Bcrypt
@@ -77,7 +77,11 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                                $Usuario->setCorreo($Usuario->limpiarCorreo($correo));
                                $Usuario->setGrupoUsuario($Usuario->limpiarNumeroEntero($tipoUsuario));
                                $Usuario->setEstado("1");
-                               $Usuario->insertarModificarUsuario();
+                                if($Usuario->insertarModificarUsuario()){
+                                  echo "1";
+                                }else{
+                                  echo "3";//error
+                                }
                            }
                       }
 
@@ -108,7 +112,11 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                 $Usuario->setCorreo($_REQUEST['txt_correoModificar']);
                 $Usuario->setGrupoUsuario($_REQUEST['select_tipoUsuarioModificar']);
                 $Usuario->setEstado($_REQUEST['select_estadoUsuarioModificar']);
-                $Usuario->insertarModificarUsuario();
+                  if($Usuario->insertarModificarUsuario()){
+                    echo "1";
+                  }else{
+                    echo "3";//errors
+                  }
 
                         break;
                 case '3'://Listar USUARIOS
@@ -179,7 +187,7 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
 <?php
                         break;
                         case '4'://validad rut
-                          $Usuario->validarRut($_REQUEST['txt_run']);
+                           $Usuario->validarRut($_REQUEST['txt_run']);
                           break;
                         case '5'://eliminar Usuario
                         $campoRut=$_REQUEST['run'];
@@ -191,7 +199,9 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                         $verificarExito= $Usuario->eliminarUsuario();
 
                         if($verificarExito==true){
-                              echo "2";
+                              echo "1";
+                        }else{
+                              echo "3";//error
                         }
                             break;
             }
@@ -383,8 +393,9 @@ if($resultadoUsuario){
                 }else{
                   echo "3";//ERROR
                 }
-
+              }
               break;
+
               case '2'://Modificar Poblacion
               if($_REQUEST['txt_idPoblacionModificar']=="" || $_REQUEST['txt_descripcionPoblacionModificar']=="" || $_REQUEST['cmb_estadoPoblacionModificar']==""){
                 echo "2";
@@ -480,6 +491,32 @@ if($resultadoUsuario){
 
             break;
   case '4'://Mant Equipos
+
+  $privilegioMantenedor=false;
+
+  @session_start();
+  require_once '../clases/Usuario.php';
+  require_once '../clases/Grupos.php';
+  $Usuario= new Usuario();
+  $Usuario->setRun($_SESSION['run']);
+  $resultadoUsuario= $Usuario->consultaUnUsuario();
+  if($resultadoUsuario){
+
+       $Grupo = new Grupos();
+       $Grupo->setIdGrupo($resultadoUsuario[0]['id_grupoUsuario']);
+       $privilegios=$Grupo->consultaPrivilegiosDeGrupo();
+
+       foreach($privilegios as $privilegio){
+
+          if($privilegio['id']==11){//privilegio MANTENEDOR
+              $privilegioMantenedor=true;
+          }
+       }
+
+
+       if($privilegioMantenedor==true){
+
+
             require_once '../clases/Equipo.php';
             $Equipo=new Equipo();
 
@@ -490,7 +527,11 @@ if($resultadoUsuario){
               }else {
                 $Equipo->setDescripcionEquipo($Equipo->limpiarTexto($_REQUEST['txt_descripcionEquipoCrear']));
                 $Equipo->setEstadoEquipo("1");
-                $Equipo->ingresarEquipo();
+                if($Equipo->ingresarEquipo()){
+                    echo "1";
+                }else{
+                    echo "3";
+                }
               }
               break;
               case '2'://Modificar equipo
@@ -502,7 +543,8 @@ if($resultadoUsuario){
                 $Equipo->setEstadoEquipo($Equipo->limpiarNumeroEntero($_REQUEST['cmb_estadoEquipoModificar']));
                 if($Equipo->actualizarEquipo()){
                   echo "1";
-
+                }else{
+                  echo "3";
                 }
               }
               break;
@@ -512,7 +554,9 @@ if($resultadoUsuario){
                       $verificarExito= $Equipo->eliminarEquipo();
 
                       if($verificarExito==true){
-                            echo "2";
+                            echo "1";
+                      }else{
+                           echo "3";
                       }
               break;
               case '4'://listar tabla
@@ -573,19 +617,53 @@ if($resultadoUsuario){
               break;
 
             }
+
+      }else{
+         echo "0";//no tiene privilegios
+      }
+
+    }else{
+      echo "0";//usuario no existe
+    }
+
+
             break;
 
 case "5"://MANTENEDOR GRUPOS DE USUARIOS
 
-require_once '../clases/Grupos.php';
-$Grupo = new Grupos();
+$privilegioMantenedor=false;
 
-      switch($_REQUEST['func']){
+@session_start();
+require_once '../clases/Usuario.php';
+require_once '../clases/Grupos.php';
+$Usuario= new Usuario();
+$Usuario->setRun($_SESSION['run']);
+$resultadoUsuario= $Usuario->consultaUnUsuario();
+if($resultadoUsuario){
+
+     $Grupo = new Grupos();
+     $Grupo->setIdGrupo($resultadoUsuario[0]['id_grupoUsuario']);
+     $privilegios=$Grupo->consultaPrivilegiosDeGrupo();
+
+     foreach($privilegios as $privilegio){
+
+        if($privilegio['id']==7){//privilegio MANTENEDOR
+            $privilegioMantenedor=true;
+        }
+     }
+
+
+     if($privilegioMantenedor==true){
+
+        require_once '../clases/Grupos.php';
+        $Grupo = new Grupos();
+
+        switch($_REQUEST['func']){
 
             case '1': //mantenedor Ingresar GRUPO
 
             if($_REQUEST['txt_descripcionCrear']==""){
-                  echo "4";//hay campos vacios
+                  echo "2";//hay campos vacios
 
             }else{//los campos no estan vacios
 
@@ -597,24 +675,28 @@ $Grupo = new Grupos();
                             if($Grupo->comprobarNombre()==false){//comprueba nombre de usuario
 
                                     $idGrupoIngresado= $Grupo->insertarGrupo();
-                                    $Grupo->setIdGrupo($idGrupoIngresado);
+                                    if($idGrupoIngresado){
+                                          echo "1";
+                                          $Grupo->setIdGrupo($idGrupoIngresado);
 
-                                    require_once '../clases/Privilegio.php';
-                                    $Privilegio= new Privilegio();
-                                    $listaPrivilegios= $Privilegio->listarPrivilegios();
+                                          require_once '../clases/Privilegio.php';
+                                          $Privilegio= new Privilegio();
+                                          $listaPrivilegios= $Privilegio->listarPrivilegios();
 
-                                    foreach($listaPrivilegios as $columna){
-                                            $priv='chb_privilegioCrear'.$columna['id_privilegios'];
-                                            //echo "id texto privilegio: ".$priv;
+                                          foreach($listaPrivilegios as $columna){
+                                                  $priv='chb_privilegioCrear'.$columna['id_privilegios'];
+                                                  //echo "id texto privilegio: ".$priv;
 
-                                            if(isset($_REQUEST[$priv])){
-                                                   $Grupo->asignarPrivilegioAlGrupo($columna['id_privilegios']);
-                                            }
-                                    }
-                                    echo "2";//CORRECTO
+                                                  if(isset($_REQUEST[$priv])){
+                                                         $Grupo->asignarPrivilegioAlGrupo($columna['id_privilegios']);
+                                                  }
+                                          }        
+                                      }else{
+                                        echo "3";//error
+                                      }
 
                             }else{
-                                echo "3";//EL NOMBRE INGRESADO YA EXISTE
+                                echo "4";//EL NOMBRE INGRESADO YA EXISTE
                             }
 
             }
@@ -623,7 +705,7 @@ $Grupo = new Grupos();
                     //echo "id recibido: ".$_REQUEST['txt_idGrupo'];
 
                   if($_REQUEST['txt_idGrupo']=="" or $_REQUEST['txt_nombreGrupo']==""){
-                        echo "4";//hay campos vacios
+                        echo "2";//hay campos vacios
 
                   }else{//los campos no estan vacios
 
@@ -636,25 +718,34 @@ $Grupo = new Grupos();
 
                           if($Grupo->comprobarNombre()==false){//comprueba nombre de usuario
 
-                              $Grupo->actualizar();
-                              $Grupo->eliminarPrivilegiosDeGrupo();
+                                if($Grupo->actualizar()){
 
-                              require_once '../clases/Privilegio.php';
-                              $Privilegio= new Privilegio();
-                              $listaPrivilegios= $Privilegio->listarPrivilegios();
+                                      if($Grupo->eliminarPrivilegiosDeGrupo()){
 
-                              foreach($listaPrivilegios as $columna){
-                                      $priv='chb_privilegio'.$columna['id_privilegios'];
-                                      //echo "id texto privilegio: ".$priv;
+                                          require_once '../clases/Privilegio.php';
+                                          $Privilegio= new Privilegio();
+                                          $listaPrivilegios= $Privilegio->listarPrivilegios();
 
-                                      if(isset($_REQUEST[$priv])){
-                                             $Grupo->asignarPrivilegioAlGrupo($columna['id_privilegios']);
+                                          foreach($listaPrivilegios as $columna){
+                                                  $priv='chb_privilegio'.$columna['id_privilegios'];
+                                                  //echo "id texto privilegio: ".$priv;
+
+                                                  if(isset($_REQUEST[$priv])){
+                                                         $Grupo->asignarPrivilegioAlGrupo($columna['id_privilegios']);
+                                                  }
+                                          }
+                                           echo "1";
+
+                                      }else{
+                                        echo "3";
                                       }
-                              }
-                              echo "2";//todo correcto
+
+                                  }else{
+                                    echo "3";//error
+                                  }
                           }
                           else{
-                            echo "3";//nombre ya existe
+                            echo "4";//nombre ya existe
                           }
                       }
 
@@ -701,16 +792,22 @@ $Grupo = new Grupos();
             break;
 
             case '4'://eliminar
-                 $Grupo->setIdGrupo($_REQUEST['id']);
-                 $res= $Grupo->eliminarGrupo();
+                 $Grupo->setIdGrupo($Grupo->limpiarNumeroEntero($_REQUEST['id']));
+                 if($Grupo->eliminarGrupo()){
+                      echo "1";
+                 }else{
+                      echo "3";//error
+                 }
 
             break;
 
             case '5'://carga informacion del formulario modificar
 
-               $Grupo->setIdGrupo($_REQUEST['id']);
-               $resultado= $Grupo->consultaUnGrupo();
-               $privilegiosACtuales= $Grupo->consultaPrivilegiosDeGrupo();
+            if(isset($_REQUEST['id'])){
+
+                 $Grupo->setIdGrupo($Grupo->limpiarNumeroEntero($_REQUEST['id']));
+                 $resultado= $Grupo->consultaUnGrupo();
+                 $privilegiosACtuales= $Grupo->consultaPrivilegiosDeGrupo();
 
             echo'
                                         <!-- CAMPO 1 DEL MODAL-->
@@ -754,22 +851,59 @@ $Grupo = new Grupos();
               echo' </div>
                 </div>';
 
+            }else{
+                echo "3";//error
+            }
+
             break;
-      }
+       }
+
+    }else{
+       echo "0";//no tiene privilegios
+    }
+
+  }else{
+    echo "0";//usuario no existe
+  }
 break;
 
 
 case "6"://MANTENEDOR ZONAS
 
-require_once '../clases/Zonas.php';
-$Zonas = new Zonas();
+$privilegioMantenedor=false;
+
+@session_start();
+require_once '../clases/Usuario.php';
+require_once '../clases/Grupos.php';
+$Usuario= new Usuario();
+$Usuario->setRun($_SESSION['run']);
+$resultadoUsuario= $Usuario->consultaUnUsuario();
+if($resultadoUsuario){
+
+     $Grupo = new Grupos();
+     $Grupo->setIdGrupo($resultadoUsuario[0]['id_grupoUsuario']);
+     $privilegios=$Grupo->consultaPrivilegiosDeGrupo();
+
+     foreach($privilegios as $privilegio){
+
+        if($privilegio['id']==9){//privilegio MANTENEDOR
+            $privilegioMantenedor=true;
+        }
+     }
+
+
+     if($privilegioMantenedor==true){
+
+
+      require_once '../clases/Zonas.php';
+      $Zonas = new Zonas();
 
       switch($_REQUEST['func']){
 
             case '1': //mantenedor Ingresar ZONA
 
             if($_REQUEST['txt_descripcionCrear']==""){
-                  echo "4";//hay campos vacios
+                  echo "2";//hay campos vacios
 
             }else{//los campos no estan vacios
 
@@ -781,24 +915,28 @@ $Zonas = new Zonas();
                             if($Zonas->comprobarNombre()==false){//comprueba nombre de usuario
 
                                     $idZonaIngresada= $Zonas->insertarZona();
-                                    $Zonas->setIdZona($idZonaIngresada);
+                                    if($idZonaIngresada){
+                                          echo "1";
+                                          $Zonas->setIdZona($idZonaIngresada);
 
-                                    require_once '../clases/Poblacion.php';
-                                    $Poblacion= new Poblacion();
-                                    $listaPoblaciones= $Poblacion->listarPoblacion();
+                                          require_once '../clases/Poblacion.php';
+                                          $Poblacion= new Poblacion();
+                                          $listaPoblaciones= $Poblacion->listarPoblacion();
 
-                                    foreach($listaPoblaciones as $columna){
-                                            $pob='chb_poblacionCrear'.$columna['id_poblacion'];
-                                            //echo "id texto privilegio: ".$pob;
+                                          foreach($listaPoblaciones as $columna){
+                                                  $pob='chb_poblacionCrear'.$columna['id_poblacion'];
+                                                  //echo "id texto privilegio: ".$pob;
 
-                                            if(isset($_REQUEST[$pob])){
-                                                   $Zonas->asignarPoblacionAZona($columna['id_poblacion']);
-                                            }
+                                                  if(isset($_REQUEST[$pob])){
+                                                         $Zonas->asignarPoblacionAZona($columna['id_poblacion']);
+                                                  }
+                                          }
+                                    }else{
+                                      echo "3";//error
                                     }
-                                    echo "2";//CORRECTO
 
                             }else{
-                                echo "3";//EL NOMBRE INGRESADO YA EXISTE
+                                echo "4";//EL NOMBRE INGRESADO YA EXISTE
                             }
 
             }
@@ -807,7 +945,7 @@ $Zonas = new Zonas();
                     //echo "id recibido: ".$_REQUEST['txt_idGrupo'];
 
                   if($_REQUEST['txt_idZonas']=="" or $_REQUEST['txt_nombreZonas']==""){
-                        echo "4";//hay campos vacios
+                        echo "2";//hay campos vacios
 
                   }else{//los campos no estan vacios
 
@@ -821,24 +959,26 @@ $Zonas = new Zonas();
                           if($Zonas->comprobarNombre()==false){//comprueba nombre de usuario
 
                               $Zonas->actualizar();
-                              $Zonas->eliminarPrivilegiosDeGrupo();
+                              if($Zonas->eliminarPoblacionesDeZona()){
+                                   echo "1";
+                                        require_once '../clases/Poblacion.php';
+                                        $Poblacion= new Poblacion();
+                                        $listaPoblaciones= $Poblacion->listarPoblacion();
 
-                              require_once '../clases/Poblacion.php';
-                              $Poblacion= new Poblacion();
-                              $listaPoblaciones= $Poblacion->listarPoblacion();
+                                        foreach($listaPoblaciones as $columna){
+                                                $pobl='chb_poblacion'.$columna['id_poblacion'];
+                                                //echo "id texto privilegio: ".$pobl;
 
-                              foreach($listaPoblaciones as $columna){
-                                      $pobl='chb_poblacion'.$columna['id_poblacion'];
-                                      //echo "id texto privilegio: ".$pobl;
+                                                if(isset($_REQUEST[$pobl])){
+                                                       $Zonas->asignarPoblacionAZona($columna['id_poblacion']);
+                                                }
+                                        }
+                                }else{
+                                  echo "3";//error
+                                }
 
-                                      if(isset($_REQUEST[$pobl])){
-                                             $Zonas->asignarPoblacionAZona($columna['id_poblacion']);
-                                      }
-                              }
-                              echo "2";//todo correcto
-                          }
-                          else{
-                            echo "3";//nombre ya existe
+                          }else{
+                            echo "4";//nombre ya existe
                           }
                       }
 
@@ -886,7 +1026,11 @@ $Zonas = new Zonas();
 
             case '4'://ELIMINAR ZONA
                  $Zonas->setIdZona($_REQUEST['id']);
-                 $Zonas->eliminarZona();
+                 if($Zonas->eliminarZona()){
+                   echo "1";
+                 }else{
+                   echo "3";//error
+                 }
             break;
 
             case '5'://carga informacion del formulario modificar
@@ -939,6 +1083,14 @@ $Zonas = new Zonas();
 
             break;
       }
+
+    }else{
+       echo "0";//no tiene privilegios
+    }
+
+  }else{
+    echo "0";//usuario no existe
+  }
 break;
 
 

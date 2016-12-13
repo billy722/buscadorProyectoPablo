@@ -55,7 +55,7 @@ public function __construct(){
                 if($verificar){
                       return $ultimoId;
                 }else{
-                    echo "fallo al ingresar grupo";
+                    return false;
                 }
   }
 
@@ -86,7 +86,7 @@ public function __construct(){
      if($this->insertar($consulta)){
        return true;
      }else{
-       echo "ERROR AL ASIGNAR PRIVILEGIO: ".$consulta;
+       return false;
      }
   }
   // Funcion eliminar datos de la tabla region
@@ -98,13 +98,13 @@ public function __construct(){
             if($this->insertar('delete from tb_grupoprivilegio where id_grupoUsuario='.$this->_idGrupo)){
 
                 if($this->insertar('DELETE FROM tb_grupousuario WHERE id_grupoUsuario='.$this->_idGrupo.';')){
-                    echo "1";//eliminado correctamente
+                  return true;
                 }else{
-                    echo "2";//ocurrio un error
+                  return false;
                 }
 
             }else{
-                echo "2";//ocurrio un error
+              return false;//ocurrio un error
             }
       }
 
