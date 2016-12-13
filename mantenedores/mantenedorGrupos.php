@@ -1,17 +1,9 @@
 <?php
-session_start();
-
-if(isset($_SESSION['run'])==false &&
-   isset($_SESSION['nombre'])==false &&
-   isset($_SESSION['idDepartamento'])==false &&
-   isset($_SESSION['descripcionDepartamento'])==false){
-
-          header("location: ../index.php");
-
-}else{
+require_once '../clases/Usuario.php';
+$UsuarioValidar= new Usuario();
+$UsuarioValidar->verificarSesion();
 
     include("../principal/comun.php");
-    conectarBD();
     cargarEncabezado();
     cargarMenuMantenedores();
 
@@ -113,7 +105,7 @@ var pagina;
         url:"controladorMantenedores.php",
         data:"mant=5&func=3&buscar="+busqueda+"&pag="+pagina+"&cantidadReg="+$("#cmb_cantidadRegistros").val(),
         success:function(resultado){
-  
+
           if(resultado==0){
                  swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
                  setTimeout(function(){
@@ -355,8 +347,3 @@ var pagina;
 </body>
 
 </html>
-
-<?php
-
-}
-?>

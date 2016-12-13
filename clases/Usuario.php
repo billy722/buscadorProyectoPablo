@@ -133,7 +133,7 @@ class Usuario extends Conexion{
                     session_start();
                     $_SESSION['run']=$filas[0]['run'];
                     $_SESSION['nombre']=$filas[0]['nombre']." ".$filas[0]['apellidoPaterno']." ".$filas[0]['apellidoMaterno'];
-                    $_SESSION['grupo']=$filas[0]['id_grupoUsuario'];
+                    //$_SESSION['grupo']=$filas[0]['id_grupoUsuario'];
                 return true;
               }else{
                 return false;
@@ -143,14 +143,12 @@ class Usuario extends Conexion{
       }
   }
 
-  public function verificarSesion($rutaRecibida){
+  public function verificarSesion(){
 
     @session_start();
 
-    if(!isset($_SESSION['correo'])){
-        header("location: ".$rutaRecibida);
-    }else{
-
+    if(!isset($_SESSION['run'])){
+        header("location: ../index.php");
     }
   }
   public function cerrarSesion($rutaInicial){

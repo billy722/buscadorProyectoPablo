@@ -1,20 +1,8 @@
 <?php
 session_start();
-
-
-if(isset($_SESSION['run'])==false &&
-
-   isset($_SESSION['nombre'])==false &&
-
-   isset($_SESSION['idDepartamento'])==false &&
-
-   isset($_SESSION['descripcionDepartamento'])==false){
-
-
-
-          header("location: ../index.php");
-
-}else{
+require_once '../clases/Usuario.php';
+$UsuarioValidar= new Usuario();
+$UsuarioValidar->verificarSesion();
 
 	include("./comun.php");
 	conectarBD();
@@ -499,5 +487,4 @@ function cargarImagenesActuales(run){
 <?php
 	cargarFooter();
 
-}
  ?>

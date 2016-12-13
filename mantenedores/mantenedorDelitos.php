@@ -1,17 +1,10 @@
 <?php
-session_start();
+require_once '../clases/Usuario.php';
+$UsuarioValidar= new Usuario();
+$UsuarioValidar->verificarSesion();
 
-if(isset($_SESSION['run'])==false &&
-   isset($_SESSION['nombre'])==false &&
-   isset($_SESSION['idDepartamento'])==false &&
-   isset($_SESSION['descripcionDepartamento'])==false){
-
-          header("location: ../index.php");
-
-}else{
 
     include("../principal/comun.php");
-    conectarBD();
     cargarEncabezado();
     cargarMenuMantenedores();
 
@@ -314,5 +307,4 @@ var pagina;
 
 <?php
 cargarFooter();
-}
 ?>

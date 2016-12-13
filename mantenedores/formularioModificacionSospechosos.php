@@ -1,7 +1,10 @@
 <?php
+require_once '../clases/Usuario.php';
+$UsuarioValidar= new Usuario();
+$UsuarioValidar->verificarSesion();
+
 	include("../principal/comun.php");
 	require_once '../clases/Sospechoso.php';
-	conectarBD();
 	cargarEncabezado();
 
 	$soloRun=$_REQUEST['id'];
