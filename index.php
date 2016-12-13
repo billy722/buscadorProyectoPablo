@@ -8,6 +8,7 @@
 
 <head>
   <title>SOSPECHOSOS</title>
+  <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<script type="text/javascript" src="./js/jquery-3.1.0.min.js"></script>
@@ -93,7 +94,7 @@
                      url:"./principal/verificarDatosIngreso.php?u="+usuario+"&c="+contrasena,
                      data: $("#formularioLogin").serialize(),
                      success: function(respuesta){
-                         alert(respuesta);
+                         //alert(respuesta);
                            if(respuesta==1){
                              $('#botonIngreso').addClass("btn-success");
                              $('#botonIngreso').removeClass("btn-warning");

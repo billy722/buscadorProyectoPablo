@@ -36,7 +36,9 @@ public function __construct(){
   }
 
   public function consultaPrivilegiosDeGrupo(){
-     $grupos=$this->registros('select id_privilegio as id from tb_grupoprivilegio where id_grupoUsuario='.$this->_idGrupo);
+    $consulta='select id_privilegio as id from tb_grupoprivilegio where id_grupoUsuario='.$this->_idGrupo;
+
+     $grupos=$this->registros($consulta);
      return $grupos;
   }
 

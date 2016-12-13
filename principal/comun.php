@@ -14,9 +14,7 @@ function cargarEncabezado(){
 	<!DOCTYPE html>
 	<html>
 	<head>
-
 		<title>SOSPECHOSOS</title>
-		<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
 		<link rel="stylesheet" type="text/css" href="../css/principal.css">
 		<link rel="stylesheet" type="text/css" href="../css/configuraciones/estilosConfiguraciones.css">
 		<link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
@@ -29,7 +27,6 @@ function cargarEncabezado(){
 		<link rel="stylesheet" href="../sweetalert/sweet-alert.css">
 		<script src="../sweetalert/sweet-alert.min.js"></script>
 
-
 	</head>
 	<body>
 	<header class="fixed-nav">
@@ -38,35 +35,37 @@ function cargarEncabezado(){
 	<div class="container row" id="menu">
 			<div class="container btn btn-group">
 <?php
-  require_once '../clases/Usuario.php';
-	require_once '../clases/Grupos.php';
+@session_start();
 
-	$Usuario= new Usuario();
-	$Usuario->setRun($_SESSION['run']);
-	$resultadoUsuario= $Usuario->consultaUnUsuario();
-	if($resultadoUsuario){
+require_once '../clases/Usuario.php';
+require_once '../clases/Grupos.php';
 
-		$Grupo = new Grupos();
-		$Grupo->setIdGrupo($resultadoUsuario[0]['id_grupoUsuario']);
-		$privilegios=$Grupo->consultaPrivilegiosDeGrupo();
+$Usuario= new Usuario();
+$Usuario->setRun($_SESSION['run']);
+$resultadoUsuario= $Usuario->consultaUnUsuario();
+if($resultadoUsuario){
 
-		foreach($privilegios as $privilegio){
+	$Grupo = new Grupos();
+	$Grupo->setIdGrupo($resultadoUsuario[0]['id_grupoUsuario']);
+	$privilegios=$Grupo->consultaPrivilegiosDeGrupo();
 
-			switch($filas['id_privilegios']){
-				case 1: echo'<a class="btn btn-default col-xs-12 col-sm-6 col-md-3 col-lg-3"   href="../principal/formularioFiltrarSospechoso.php"><span class="glyphicon glyphicon-search"></span> FILTRAR SOSPECHOSOS</a>';
-				break;
-				case 2:	echo'<a class="btn btn-default col-xs-12 col-sm-6 col-md-3 col-lg-3"   href="../mantenedores/mantenedorSospechosos.php"><span class="glyphicon glyphicon-list-alt"></span> SOSPECHOSOS</a>';
-				break;
-				/*case 3:	echo'<a href="mantenedorSospechosos.php">SOSPECHOSOS</a>';
-				break;*/
-				case 4:	echo'<a class="btn btn-default col-xs-12 col-sm-6 col-md-3 col-lg-3"  href="../mantenedores/mantenedoresPrincipal.php"><span class="glyphicon glyphicon-cog"></span> CONFIGURACIONES</a>';
-				break;
-			}
+	foreach($privilegios as $privilegio){
+
+		switch($privilegio['id']){
+			case 1: echo'<a class="btn btn-default col-xs-12 col-sm-6 col-md-3 col-lg-3"   href="../principal/formularioFiltrarSospechoso.php"><span class="glyphicon glyphicon-search"></span> FILTRAR SOSPECHOSOS</a>';
+			break;
+			case 2:	echo'<a class="btn btn-default col-xs-12 col-sm-6 col-md-3 col-lg-3"   href="../mantenedores/mantenedorSospechosos.php"><span class="glyphicon glyphicon-list-alt"></span> SOSPECHOSOS</a>';
+			break;
+			/*case 3:	echo'<a href="mantenedorSospechosos.php">SOSPECHOSOS</a>';
+			break;*/
+			case 4:	echo'<a class="btn btn-default col-xs-12 col-sm-6 col-md-3 col-lg-3"  href="../mantenedores/mantenedoresPrincipal.php"><span class="glyphicon glyphicon-cog"></span> CONFIGURACIONES</a>';
+			break;
 		}
+	}
 
-		}else{
-			header("location: ../index.php");
-		}
+	}else{
+		header("location: ../index.php");
+	}
 								echo'<a class="btn btn-default col-xs-12 col-sm-6 col-md-3 col-lg-3"  href="../principal/cerrarSesion.php" ><span class="glyphicon glyphicon-remove-circle"></span> SALIR</a>';
 
 ?>
