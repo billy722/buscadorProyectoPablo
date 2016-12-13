@@ -5,14 +5,51 @@
 	cargarEncabezado();
 
 	$soloRun=$_REQUEST['id'];
-
+     if(is_numeric($soloRun)){
 
 				$Sospechoso= new Sospechoso();
         $listado= $Sospechoso->registros("select * from tb_sospechoso where run=".$soloRun);
 
-			foreach($listado as $filasPrincipal){
+				if($listado){
+						$filasPrincipal= $listado[0];
+				}else{
+					header("location: mantenedorSospechosos.php");
+				}
+     }else{
+			 header("location: mantenedorSospechosos.php");
+		 }
 
-			}
+
+
+		 $privilegioModificar=false;
+
+		 @session_start();
+		 require_once '../clases/Usuario.php';
+		 require_once '../clases/Grupos.php';
+		 $Usuario= new Usuario();
+		 $Usuario->setRun($_SESSION['run']);
+		 $resultadoUsuario= $Usuario->consultaUnUsuario();
+		 if($resultadoUsuario){
+
+		      $Grupo = new Grupos();
+		      $Grupo->setIdGrupo($resultadoUsuario[0]['id_grupoUsuario']);
+		      $privilegios=$Grupo->consultaPrivilegiosDeGrupo();
+
+		      foreach($privilegios as $privilegio){
+
+		         if($privilegio['id']==4){//privilegio modificar sospechosos
+		             $privilegioModificar=true;
+		         }
+		      }
+
+
+		      if($privilegioModificar==false){
+		         header("location: ../principal/menuPrincipal.php");
+		      }
+
+		  }else{
+		    echo "0";//usuario no existe
+		  }
  ?>
 
 

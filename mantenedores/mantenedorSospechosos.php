@@ -41,8 +41,48 @@ if(isset($_SESSION['run'])==false &&
                           </div>
 
                           <!--BOTON QUE ABRE MODAL DE CREAR NUEVO -->
+<?php
 
-                              <a href="./formularioIngresoSospechosos.php" class=" btn btn-success col-xs-1 pull-right">Nuevo</a>
+$privilegioVer=false;
+$privilegioIngresar=false;
+
+@session_start();
+require_once '../clases/Usuario.php';
+require_once '../clases/Grupos.php';
+$Usuario= new Usuario();
+$Usuario->setRun($_SESSION['run']);
+$resultadoUsuario= $Usuario->consultaUnUsuario();
+if($resultadoUsuario){
+
+     $Grupo = new Grupos();
+     $Grupo->setIdGrupo($resultadoUsuario[0]['id_grupoUsuario']);
+     $privilegios=$Grupo->consultaPrivilegiosDeGrupo();
+
+     foreach($privilegios as $privilegio){
+
+        if($privilegio['id']==2){//privilegio ver sospechosos
+            $privilegioVer=true;
+        }
+        if($privilegio['id']==3){//privilegio modificar sospechosos
+            $privilegioIngresar=true;
+        }
+     }
+
+
+     if($privilegioVer==true){
+           if($privilegioIngresar==true){
+                 echo '<a href="./formularioIngresoSospechosos.php" class=" btn btn-success col-xs-1 pull-right">Nuevo</a>';
+           }
+     }else{
+        header("location: ../principal/menuPrincipal.php");
+     }
+
+ }else{
+   echo "0";//usuario no existe
+ }
+
+ ?>
+
 
 
            		     </div>
@@ -72,7 +112,13 @@ if(isset($_SESSION['run'])==false &&
                   url:"controladorMantenedores.php",
                   data:"mant=7&func=3&buscar="+busqueda+"&pag="+pagina+"&cantidadReg="+$("#cmb_cantidadRegistros").val(),
                   success:function(respuesta){
-                        $("#contenedorMantenedor").html(respuesta);
+
+                    if(respuesta==0){
+                      //sweetAlert("Acceso Denegado", "No tiene los privilegios necesarios", "error");
+                      window.location="../principal/menuPrincipal.php";
+                    }else{
+                      $("#contenedorMantenedor").html(respuesta);
+                    }
                   }
                 });
 

@@ -5,6 +5,34 @@
 switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
 
     case '1'://MANTENEDOR USUARIOS
+
+    $privilegioMantenedor=false;
+
+    @session_start();
+    require_once '../clases/Usuario.php';
+    require_once '../clases/Grupos.php';
+    $Usuario= new Usuario();
+    $Usuario->setRun($_SESSION['run']);
+    $resultadoUsuario= $Usuario->consultaUnUsuario();
+    if($resultadoUsuario){
+
+         $Grupo = new Grupos();
+         $Grupo->setIdGrupo($resultadoUsuario[0]['id_grupoUsuario']);
+         $privilegios=$Grupo->consultaPrivilegiosDeGrupo();
+
+         foreach($privilegios as $privilegio){
+
+            if($privilegio['id']==6){//privilegio MANTENEDOR
+                $privilegioMantenedor=true;
+            }
+         }
+
+
+         if($privilegioMantenedor==true){
+
+
+
+
             require_once '../clases/Usuario.php';
             $Usuario= new Usuario();
 
@@ -167,9 +195,42 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                         }
                             break;
             }
+        }else{
+           echo "0";
+        }
 
-            break;
+      }else{
+        echo "0";//usuario no existe
+      }
+    break;
+
     case '2'://Mant delito
+
+    $privilegioMantenedor=false;
+
+    @session_start();
+    require_once '../clases/Usuario.php';
+    require_once '../clases/Grupos.php';
+    $Usuario= new Usuario();
+    $Usuario->setRun($_SESSION['run']);
+    $resultadoUsuario= $Usuario->consultaUnUsuario();
+    if($resultadoUsuario){
+
+         $Grupo = new Grupos();
+         $Grupo->setIdGrupo($resultadoUsuario[0]['id_grupoUsuario']);
+         $privilegios=$Grupo->consultaPrivilegiosDeGrupo();
+
+         foreach($privilegios as $privilegio){
+
+            if($privilegio['id']==8){//privilegio MANTENEDOR
+                $privilegioMantenedor=true;
+            }
+         }
+
+
+         if($privilegioMantenedor==true){
+
+
             require_once '../clases/Delito.php';
             $Delito=new Delito();
 
@@ -266,8 +327,45 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
               break;
 
             }
+
+          }else{
+             echo "0";//no tiene privilegios
+          }
+
+        }else{
+          echo "0";//usuario no existe
+        }
+
             break;
+
 case '3'://Mant Poblacion
+
+$privilegioMantenedor=false;
+
+@session_start();
+require_once '../clases/Usuario.php';
+require_once '../clases/Grupos.php';
+$Usuario= new Usuario();
+$Usuario->setRun($_SESSION['run']);
+$resultadoUsuario= $Usuario->consultaUnUsuario();
+if($resultadoUsuario){
+
+     $Grupo = new Grupos();
+     $Grupo->setIdGrupo($resultadoUsuario[0]['id_grupoUsuario']);
+     $privilegios=$Grupo->consultaPrivilegiosDeGrupo();
+
+     foreach($privilegios as $privilegio){
+
+        if($privilegio['id']==10){//privilegio MANTENEDOR
+            $privilegioMantenedor=true;
+        }
+     }
+
+
+     if($privilegioMantenedor==true){
+
+
+
             require_once '../clases/Poblacion.php';
             $Poblacion=new Poblacion();
 
@@ -275,7 +373,11 @@ case '3'://Mant Poblacion
               case '1': //Ingresar nueva poblacion
                 $Poblacion->setDescripcionPoblacion($_REQUEST['txt_descripcionPoblacionCrear']);
                 $Poblacion->setEstadoPoblacion("1");
-                $Poblacion->ingresarPoblacion();
+                if($Poblacion->ingresarPoblacion()){
+                  echo "2";
+                }else{
+                  echo "3";
+                }
               break;
               case '2'://Modificar Poblacion
                 $Poblacion->setIdPoblacion($_REQUEST['txt_idPoblacionModificar']);
@@ -293,6 +395,8 @@ case '3'://Mant Poblacion
 
                       if($verificarExito==true){
                             echo "2";
+                      }else{
+                        echo "3";
                       }
               break;
               case '4'://listar tabla
@@ -353,6 +457,16 @@ case '3'://Mant Poblacion
               break;
 
             }
+
+          }else{
+             echo "0";//no tiene privilegios
+          }
+
+        }else{
+          echo "0";//usuario no existe
+        }
+
+
             break;
   case '4'://Mant Equipos
             require_once '../clases/Equipo.php';
@@ -819,275 +933,283 @@ case "7": //mantenedor sospechosos
 
               case '1': // Ingresar sospechosos
 
-              $run=$_POST['run'];
+          if(isset($_POST['run'])){
+
+            $privilegioIngresar=false;
+
+            @session_start();
+            require_once '../clases/Usuario.php';
+            require_once '../clases/Grupos.php';
+            $Usuario= new Usuario();
+            $Usuario->setRun($_SESSION['run']);
+            $resultadoUsuario= $Usuario->consultaUnUsuario();
+            if($resultadoUsuario){
+
+                 $Grupo = new Grupos();
+                 $Grupo->setIdGrupo($resultadoUsuario[0]['id_grupoUsuario']);
+                 $privilegios=$Grupo->consultaPrivilegiosDeGrupo();
+
+                 foreach($privilegios as $privilegio){
+
+                    if($privilegio['id']==3){//privilegio modificar sospechosos
+                        $privilegioIngresar=true;
+                    }
+                 }
+
+
+                 if($privilegioIngresar==true){
+
+
+
+
+
+                $run=$_POST['run'];
+
                 $posicionGuion = strpos($run,'-');
                 $soloRun = substr($run,0,$posicionGuion);
                 $digitoVerificador = substr($run,$posicionGuion+1,strlen($run));
 
-           $nombre=$_POST['nombre'];
-           $apellidoP=$_POST['apellidoPaterno'];
-           $apellidoM=$_POST['apellidoMaterno'];
-           $fechaNacimiento=$_POST['edad'];
-           $apodo=$_POST['apodo'];
-           $lugarNacimiento=$_POST['lugarNacimiento'];
-           $colorPelo=$_REQUEST['colorPelo'];
-           $contextura=$_POST['contextura'];
-           $estadoCivil=$_POST['estadoCivil'];
-           $sexo=$_REQUEST['sexo'];
-           $tezPiel=$_REQUEST['tezPiel'];
-           $tipoOjos=$_REQUEST['tipoOjos'];
-           $tipoPelo=$_REQUEST['tipoPelo'];
-           $acne=$_REQUEST['acne'];
-           $barba=$_REQUEST['barba'];
-           $bigote=$_REQUEST['bigote'];
-           $manchas=$_REQUEST['manchas'];
-           $lentes=$_REQUEST['lentes'];
-           $pecas=$_REQUEST['pecas'];
-           $antecedentes=$_REQUEST['antecedentes'];
-           $estatura=$_REQUEST['estatura'];
+                 $nombre=$Sospechoso->limpiarTexto($_POST['nombre']);
+                 $apellidoP=$Sospechoso->limpiarTexto($_POST['apellidoPaterno']);
+                 $apellidoM=$Sospechoso->limpiarTexto($_POST['apellidoMaterno']);
+                 $fechaNacimiento=$Sospechoso->limpiarTexto($_POST['edad']);
+                 $apodo=$Sospechoso->limpiarTexto($_POST['apodo']);
+                 $lugarNacimiento=$Sospechoso->limpiarTexto($_POST['lugarNacimiento']);
+                 $colorPelo=$Sospechoso->limpiarNumeroEntero($_REQUEST['colorPelo']);
+                 $contextura=$Sospechoso->limpiarNumeroEntero($_POST['contextura']);
+                 $estadoCivil=$Sospechoso->limpiarNumeroEntero($_POST['estadoCivil']);
+                 $sexo=$Sospechoso->limpiarNumeroEntero($_REQUEST['sexo']);
+                 $tezPiel=$Sospechoso->limpiarNumeroEntero($_REQUEST['tezPiel']);
+                 $tipoOjos=$Sospechoso->limpiarNumeroEntero($_REQUEST['tipoOjos']);
+                 $tipoPelo=$Sospechoso->limpiarNumeroEntero($_REQUEST['tipoPelo']);
+                 $acne=$Sospechoso->limpiarNumeroEntero($_REQUEST['acne']);
+                 $barba=$Sospechoso->limpiarNumeroEntero($_REQUEST['barba']);
+                 $bigote=$Sospechoso->limpiarNumeroEntero($_REQUEST['bigote']);
+                 $manchas=$Sospechoso->limpiarNumeroEntero($_REQUEST['manchas']);
+                 $lentes=$Sospechoso->limpiarNumeroEntero($_REQUEST['lentes']);
+                 $pecas=$Sospechoso->limpiarNumeroEntero($_REQUEST['pecas']);
+                 $antecedentes=$Sospechoso->limpiarNumeroEntero($_REQUEST['antecedentes']);
+                 $estatura=$Sospechoso->limpiarNumeroEntero($_REQUEST['estatura']);
 
-           if($estatura==""){
-           	$estatura=0;
-           }
+                   if($estatura==""){
+                   	$estatura=0;
+                   }
 
-           /*INGRESAR NUEVO SOSPECHOSO*/
-           $consultaIngreso="INSERT INTO `pdisospechosos`.`tb_sospechoso`
-           (`run`,`dv`,`nombres`,`apellido_paterno`,`apellido_materno`,`lugar_deNacimiento`,`id_colorPelo`,`id_contextura`,`id_estadoCivil`,
-           `id_sexo`,`id_tezPiel`,`id_tipoOjos`,`id_tipoPelo`,`antecedentes_penales`,`apodos`,`barba`,`lentes`,`pecas`,`acne`,`bigote`,`manchas`,
-           `estatura`,`fecha_nacimiento`)
-           VALUES('$soloRun','$digitoVerificador','$nombre','$apellidoP','$apellidoM','$lugarNacimiento','$colorPelo','$contextura','$estadoCivil',
-           '$sexo','$tezPiel','$tipoOjos','$tipoPelo','$antecedentes','$apodo','$barba','$lentes','$pecas','$acne','$bigote','$manchas','$estatura','$fechaNacimiento');";
+                     /*INGRESAR NUEVO SOSPECHOSO*/
+                     $consultaIngreso="INSERT INTO `pdisospechosos`.`tb_sospechoso`
+                     (`run`,`dv`,`nombres`,`apellido_paterno`,`apellido_materno`,`lugar_deNacimiento`,`id_colorPelo`,`id_contextura`,`id_estadoCivil`,
+                     `id_sexo`,`id_tezPiel`,`id_tipoOjos`,`id_tipoPelo`,`antecedentes_penales`,`apodos`,`barba`,`lentes`,`pecas`,`acne`,`bigote`,`manchas`,
+                     `estatura`,`fecha_nacimiento`)
+                     VALUES('$soloRun','$digitoVerificador','$nombre','$apellidoP','$apellidoM','$lugarNacimiento','$colorPelo','$contextura','$estadoCivil',
+                     '$sexo','$tezPiel','$tipoOjos','$tipoPelo','$antecedentes','$apodo','$barba','$lentes','$pecas','$acne','$bigote','$manchas','$estatura','$fechaNacimiento');";
 
-           if($Sospechoso->insertar($consultaIngreso)){
-
-
-                     	$contadorDelitos= $_REQUEST['contadorDelitos'];
-                     	$contadorEquiposFutbol= $_REQUEST['contadorEquiposFutbol'];
-                     	$contadorOpcionesCicatriz= $_REQUEST['contadorOpcionesCicatriz'];
-                     	$contadorOpcionesTatuaje= $_REQUEST['contadorOpcionesTatuaje'];
-                     	$contadorOpcionesPiercing= $_REQUEST['contadorOpcionesPiercing'];
-                     	$contadorPoblaciones=$_REQUEST['contadorPoblaciones'];
-                     	$contadorFotos=$_REQUEST['contadorFotos'];
+                     if($Sospechoso->insertar($consultaIngreso)){
 
 
+                               	$contadorDelitos= $_REQUEST['contadorDelitos'];
+                               	$contadorEquiposFutbol= $_REQUEST['contadorEquiposFutbol'];
+                               	$contadorOpcionesCicatriz= $_REQUEST['contadorOpcionesCicatriz'];
+                               	$contadorOpcionesTatuaje= $_REQUEST['contadorOpcionesTatuaje'];
+                               	$contadorOpcionesPiercing= $_REQUEST['contadorOpcionesPiercing'];
+                               	$contadorPoblaciones=$_REQUEST['contadorPoblaciones'];
+                               	$contadorFotos=$_REQUEST['contadorFotos'];
 
-                     /*PREPARAR BUSQUEDA DELITOS*/
-                     	$delitos="";
-                     	for($c=1;$c<=$contadorDelitos;$c++){
 
-                     		if(isset($_REQUEST['delito'.$c])){
 
-                     				if($delitos==""){
-                     					$delitos= $delitos.$c;
-                     				}else{
-                     					$delitos= $delitos.";".$c;
-                     				}
+                               /*PREPARAR BUSQUEDA DELITOS*/
+                               	$delitos="";
+                               	for($c=1;$c<=$contadorDelitos;$c++){
 
-                     		}
-                     	}
-                     	$arrayDelitos= explode(";",$delitos);
-                      if($delitos!=""){
+                               		if(isset($_REQUEST['delito'.$c])){
 
-                         	foreach ($arrayDelitos as $key => $de) {
+                               				if($delitos==""){
+                               					$delitos= $delitos.$c;
+                               				}else{
+                               					$delitos= $delitos.";".$c;
+                               				}
 
-                         		//echo $de."\n";
-                         		$consultaDelitos= "INSERT INTO tb_delitosopechoso(id_delito,run_sospechoso) VALUES('$de','$soloRun');";
-                         		$Sospechoso->insertar($consultaDelitos);
-                         		//echo $consultaDelitos;
-                         	}
-                        }
-                     	/*FIN DELITOS*/
+                               		}
+                               	}
+                               	$arrayDelitos= explode(";",$delitos);
+                                if($delitos!=""){
 
-                     	/*PREPARAR BUSQUEDA EQUIPOS*/
-                     	$equipos="";
-                     	for($c=1;$c<=$contadorEquiposFutbol;$c++){
-                     		if(isset($_REQUEST['equipo'.$c])){
+                                   	foreach ($arrayDelitos as $key => $de) {
 
-                     				if($equipos==""){
-                     					$equipos= $equipos.$c;
-                     				}else{
-                     					$equipos= $equipos.";".$c;
-                     				}
+                                   		//echo $de."\n";
+                                   		$consultaDelitos= "INSERT INTO tb_delitosopechoso(id_delito,run_sospechoso) VALUES('$de','$soloRun');";
+                                   		$Sospechoso->insertar($consultaDelitos);
+                                   		//echo $consultaDelitos;
+                                   	}
+                                  }
+                               	/*FIN DELITOS*/
 
-                     		}
-                     	}
-                     	$arrayEquipos= explode(";",$equipos);
-                      if($equipos!=""){
-                       	foreach ($arrayEquipos as $key => $eq) {
+                               	/*PREPARAR BUSQUEDA EQUIPOS*/
+                               	$equipos="";
+                               	for($c=1;$c<=$contadorEquiposFutbol;$c++){
+                               		if(isset($_REQUEST['equipo'.$c])){
 
-                       		//echo $eq."\n";
-                       		$consultaDelitos= "insert into tb_equiposospechoso(id_equipo,run) VALUES('$eq','$soloRun');";
-                       		$Sospechoso->insertar($consultaDelitos);
-                       		//echo $consultaDelitos;
-                       	}
-                      }
-                     	/*FIN EQUIPOS*/
+                               				if($equipos==""){
+                               					$equipos= $equipos.$c;
+                               				}else{
+                               					$equipos= $equipos.";".$c;
+                               				}
 
-                     	/*PREPARAR BUSQUEDA POBLACIONES*/
-                     	$poblaciones="";
-                     	for($c=1;$c<=$contadorPoblaciones;$c++){
-                     		if(isset($_REQUEST['poblacion'.$c])){
+                               		}
+                               	}
+                               	$arrayEquipos= explode(";",$equipos);
+                                if($equipos!=""){
+                                 	foreach ($arrayEquipos as $key => $eq) {
 
-                     				if($poblaciones==""){
-                     					$poblaciones= $poblaciones.$c;
-                     				}else{
-                     					$poblaciones= $poblaciones.";".$c;
-                     				}
+                                 		//echo $eq."\n";
+                                 		$consultaDelitos= "insert into tb_equiposospechoso(id_equipo,run) VALUES('$eq','$soloRun');";
+                                 		$Sospechoso->insertar($consultaDelitos);
+                                 		//echo $consultaDelitos;
+                                 	}
+                                }
+                               	/*FIN EQUIPOS*/
 
-                     		}
-                     	}
-                     	$arrayPoblaciones= explode(";",$poblaciones);
-              if($poblaciones!=""){
-                     	foreach ($arrayPoblaciones as $key => $pob) {
+                               	/*PREPARAR BUSQUEDA POBLACIONES*/
+                               	$poblaciones="";
+                               	for($c=1;$c<=$contadorPoblaciones;$c++){
+                               		if(isset($_REQUEST['poblacion'.$c])){
 
-                     		//echo $pob."\n";
-                     		$consultaDelitos= "insert into tb_poblacionsospechoso(id_poblacion,run) VALUES('$pob','$soloRun');";
-                     		$Sospechoso->insertar($consultaDelitos);
-                     		//echo $consultaDelitos;
-                     	}
+                               				if($poblaciones==""){
+                               					$poblaciones= $poblaciones.$c;
+                               				}else{
+                               					$poblaciones= $poblaciones.";".$c;
+                               				}
+
+                               		}
+                               	}
+                               	$arrayPoblaciones= explode(";",$poblaciones);
+                        if($poblaciones!=""){
+                               	foreach ($arrayPoblaciones as $key => $pob) {
+
+                               		//echo $pob."\n";
+                               		$consultaDelitos= "insert into tb_poblacionsospechoso(id_poblacion,run) VALUES('$pob','$soloRun');";
+                               		$Sospechoso->insertar($consultaDelitos);
+                               		//echo $consultaDelitos;
+                               	}
+                          }
+                               	/*FIN POBLACIONES*/
+
+                               	/*PREPARAR BUSQUEDA CICATRIZ*/
+                               	$cicatriz="";
+                               	for($c=1;$c<=$contadorOpcionesCicatriz;$c++){
+                               		if(isset($_REQUEST['cicatriz'.$c])){
+
+                               				if($cicatriz==""){
+                               					$cicatriz= $cicatriz.$c;
+                               				}else{
+                               					$cicatriz= $cicatriz.";".$c;
+                               				}
+
+                               		}
+                               	}
+                               	$arrayCicatrices= explode(";",$cicatriz);
+                                if($cicatriz!=""){
+                               	foreach ($arrayCicatrices as $key => $cic) {
+
+                               		//echo $cic."\n";
+                               		$consultaDelitos= "insert into tb_cicatrizsospechoso(id_lugarCicatriz,run) VALUES('$cic','$soloRun');";
+                               		$Sospechoso->insertar($consultaDelitos);
+                               		//echo $consultaDelitos;
+                               	}
+                              }
+                               	/*FIN CICATRIZ*/
+
+                               	/*PREPARAR BUSQUEDA TATUAJE*/
+                               	$tatuaje="";
+                               	for($c=1;$c<=$contadorOpcionesTatuaje;$c++){
+                               		if(isset($_REQUEST['tatuaje'.$c])){
+
+                               				if($tatuaje==""){
+                               					$tatuaje= $tatuaje.$c;
+                               				}else{
+                               					$tatuaje= $tatuaje.";".$c;
+                               				}
+
+                               		}
+                               	}
+                               	$arrayTatuaje= explode(";",$tatuaje);
+                                if($tatuaje!=""){
+                               	foreach ($arrayTatuaje as $key => $tat) {
+
+                               		//echo $tat."\n";
+                               		$consultaDelitos= "insert into tb_tatuajesospechoso(id_lugarTatuaje,run) VALUES('$tat','$soloRun');";
+                               		$Sospechoso->insertar($consultaDelitos);
+                               		//echo $consultaDelitos;
+                               	}
+                              }
+                               	/*FIN TATUAJE*/
+
+                               	/*PREPARAR BUSQUEDA PIERCING*/
+                               	$piercing="";
+                               	for($c=1;$c<=$contadorOpcionesPiercing;$c++){
+                               		if(isset($_REQUEST['piercing'.$c])){
+
+                               				if($piercing==""){
+                               					$piercing= $piercing.$c;
+                               				}else{
+                               					$piercing= $piercing.";".$c;
+                               				}
+
+                               		}
+                               	}
+                               	$arrayPiercing= explode(";",$piercing);
+                  if($piercing!=""){
+                               	foreach ($arrayPiercing as $key => $pi) {
+
+                               		//echo $pi."\n";
+                               		$consultaDelitos= "insert into tb_piercingsospechoso(id_lugarPiercing,run) VALUES('$pi','$soloRun');";
+                               		$Sospechoso->insertar($consultaDelitos);
+                               		//echo $consultaDelitos;
+                               	}
                 }
-                     	/*FIN POBLACIONES*/
+                               	/*FIN PIERCING*/
 
-                     	/*PREPARAR BUSQUEDA CICATRIZ*/
-                     	$cicatriz="";
-                     	for($c=1;$c<=$contadorOpcionesCicatriz;$c++){
-                     		if(isset($_REQUEST['cicatriz'.$c])){
 
-                     				if($cicatriz==""){
-                     					$cicatriz= $cicatriz.$c;
-                     				}else{
-                     					$cicatriz= $cicatriz.";".$c;
-                     				}
 
-                     		}
-                     	}
-                     	$arrayCicatrices= explode(";",$cicatriz);
-                      if($cicatriz!=""){
-                     	foreach ($arrayCicatrices as $key => $cic) {
+                               		for($c=1;$c<=$contadorFotos;$c++){
+                               			$campo= "foto".$c;
+                               			$fechaFoto= "fechaFoto".$c;
+                               			$tipoFoto= "tipoFoto".$c;
 
-                     		//echo $cic."\n";
-                     		$consultaDelitos= "insert into tb_cicatrizsospechoso(id_lugarCicatriz,run) VALUES('$cic','$soloRun');";
-                     		$Sospechoso->insertar($consultaDelitos);
-                     		//echo $consultaDelitos;
-                     	}
+                               			if(isset($_REQUEST[$tipoFoto])){
+                               					$tipoFoto=1;
+                               			}else{
+                               					$tipoFoto=2;
+                               			}
+                               				$target_path = "../imagenes/";
+                               				$target_path = $target_path . basename( $_FILES[$campo]['name']);
+
+                               				str_replace("�","n",$target_path);
+
+                               				if(move_uploaded_file($_FILES[$campo]['tmp_name'], $target_path)) {
+                               				   //echo "El archivo ". basename( $_FILES[$campo]['name']). " ha sido subido";
+
+                               				  $consultaFotos="call guardarImagen('".basename( $_FILES[$campo]['name'])."','".$_REQUEST[$fechaFoto]."',".$tipoFoto.",".$soloRun.");";
+                               				          //echo $consultaFotos;
+                               				          $Sospechoso->insertar($consultaFotos);
+
+
+                               				} else{
+                               				echo "Ha ocurrido un error, trate de nuevo!";
+                               				}
+                               		}
+                                  echo "1";
+                       }//cierre de if que indica que se ingreso el sospechoso
+                   }else{
+                       echo "0";
                     }
-                     	/*FIN CICATRIZ*/
+                }else{
+                  echo "0";//usuario no existe
+                }
 
-                     	/*PREPARAR BUSQUEDA TATUAJE*/
-                     	$tatuaje="";
-                     	for($c=1;$c<=$contadorOpcionesTatuaje;$c++){
-                     		if(isset($_REQUEST['tatuaje'.$c])){
+          }else{
+           echo "0";
+          }
 
-                     				if($tatuaje==""){
-                     					$tatuaje= $tatuaje.$c;
-                     				}else{
-                     					$tatuaje= $tatuaje.";".$c;
-                     				}
-
-                     		}
-                     	}
-                     	$arrayTatuaje= explode(";",$tatuaje);
-                      if($tatuaje!=""){
-                     	foreach ($arrayTatuaje as $key => $tat) {
-
-                     		//echo $tat."\n";
-                     		$consultaDelitos= "insert into tb_tatuajesospechoso(id_lugarTatuaje,run) VALUES('$tat','$soloRun');";
-                     		$Sospechoso->insertar($consultaDelitos);
-                     		//echo $consultaDelitos;
-                     	}
-                    }
-                     	/*FIN TATUAJE*/
-
-                     	/*PREPARAR BUSQUEDA PIERCING*/
-                     	$piercing="";
-                     	for($c=1;$c<=$contadorOpcionesPiercing;$c++){
-                     		if(isset($_REQUEST['piercing'.$c])){
-
-                     				if($piercing==""){
-                     					$piercing= $piercing.$c;
-                     				}else{
-                     					$piercing= $piercing.";".$c;
-                     				}
-
-                     		}
-                     	}
-                     	$arrayPiercing= explode(";",$piercing);
-        if($piercing!=""){
-                     	foreach ($arrayPiercing as $key => $pi) {
-
-                     		//echo $pi."\n";
-                     		$consultaDelitos= "insert into tb_piercingsospechoso(id_lugarPiercing,run) VALUES('$pi','$soloRun');";
-                     		$Sospechoso->insertar($consultaDelitos);
-                     		//echo $consultaDelitos;
-                     	}
-      }
-                     	/*FIN PIERCING*/
-
-
-
-                     		for($c=1;$c<=$contadorFotos;$c++){
-                     			$campo= "foto".$c;
-                     			$fechaFoto= "fechaFoto".$c;
-                     			$tipoFoto= "tipoFoto".$c;
-
-                     			if(isset($_REQUEST[$tipoFoto])){
-                     					$tipoFoto=1;
-                     			}else{
-                     					$tipoFoto=2;
-                     			}
-                     				$target_path = "../imagenes/";
-                     				$target_path = $target_path . basename( $_FILES[$campo]['name']);
-
-                     				str_replace("�","n",$target_path);
-
-                     				if(move_uploaded_file($_FILES[$campo]['tmp_name'], $target_path)) {
-                     				   //echo "El archivo ". basename( $_FILES[$campo]['name']). " ha sido subido";
-
-                     				  $consultaFotos="call guardarImagen('".basename( $_FILES[$campo]['name'])."','".$_REQUEST[$fechaFoto]."',".$tipoFoto.",".$soloRun.");";
-                     				          //echo $consultaFotos;
-                     				          $Sospechoso->insertar($consultaFotos);
-
-
-                     				} else{
-                     				echo "Ha ocurrido un error, trate de nuevo!";
-                     				}
-                     		}
-                        echo "1";
-      }
-
-              //
-              //
-              //                 $img = $_FILES['txt_imagen'];
-              //                 $nombreImg = $img['name'];
-              //                 $tipoImg = $img['type'];
-              //                 $rutaPrevisional = $img['tmp_name'];
-              //                 $size = $img['size'];
-              //                 $dimensiones = getimagesize($rutaPrevisional);
-              //                 $width = $dimensiones[0];
-              //                 $height = $dimensiones[1];
-              //                 $carpeta = "../imagenes";
-              //
-              //
-              //                 $src = "../imagenes/".$nombreImg;
-              //
-              //                 if($tipoImg != 'image/jpeg' && $tipoImg != 'image/jpg' && $tipoImg != 'image/png'){
-              //                 	echo "El Archivo a subir no es una imagen";
-              //                 }else if($size > 1024*1024){
-              //                 	echo "Tamaño de imagen muy grande";
-              //                 }else if($width > 5000 || $height > 5000){
-              //                 	echo "La anchura y altura maxima para la imagen es 5000px";
-              //                 }else if($width < 60 || $height < 60){
-              //                 	echo "La anchura y altura minima para la imagen es de 60px";
-              //                 }else{
-              //
-              //                 	//consulta
-              //                         		//$file_upload_to= SITE_ROOT . DS . $carpeta;
-              //                         		if(move_uploaded_file($rutaPrevisional, $carpeta ."/". $nombreImg)){
-              //                                 echo "Portada actualizada con exito";
-              //                             }else{
-              //                                 echo "Error al subir";
-              //                             }
-              //                 }
 
                       break;
              case '2': // modificar sospechosos
@@ -1095,43 +1217,82 @@ case "7": //mantenedor sospechosos
 
                      break;
              case '3': // listar sospechosos
-             echo'<table class="table table-bordered tablaLista table-striped">
-                   <thead>
-                       <th>Rut</th>
-                       <th>Nombre</th>
-                       <th>Apellido Paterno</th>
-                       <th>Apellido Materno</th>
-                       <th>Lugar Nacimiento</th>
-                       <th>Editar</th>
-                   </thead>
-                   <tbody>
-             ';
-                     $retorno = $Sospechoso->BuscarFiltarRegistros("vistasospechoso","campoBuscar",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg'],"");
 
-                      $contadorFilas=0;
-                      foreach($retorno[0][0] as $column){
-                        $contadorFilas++;
+$privilegioVer=false;
+$privilegioModificar=false;
 
-                        echo'<tr>
-                                <td>'.$column["run"].'</td>
-                                <td class="text-uppercase">'.$column["nombres"].'</td>
-                                <td class="text-uppercase">'.$column["apellido_paterno"].'</td>
-                                <td class="text-uppercase">'.$column["apellido_materno"].'</td>
-                                <td class="text-uppercase">'.$column["lugar_deNacimiento"].'</td>
-                                <td><a href="formularioModificacionSospechosos.php?id='.$column['solorrun'].'"><span class="glyphicon glyphicon-pencil"></a></td>
-                            </tr>';
+             @session_start();
+             require_once '../clases/Usuario.php';
+             require_once '../clases/Grupos.php';
+             $Usuario= new Usuario();
+             $Usuario->setRun($_SESSION['run']);
+             $resultadoUsuario= $Usuario->consultaUnUsuario();
+             if($resultadoUsuario){
 
-                         }
-                          echo'<tr>
-                            <td colspan="7">
-                              <center>';
-                                echo $retorno[0][1];
-                            echo'</center>
-                            </td>
-                          </tr>
-                       </tbody>
-                    </table>';
+                 	$Grupo = new Grupos();
+                 	$Grupo->setIdGrupo($resultadoUsuario[0]['id_grupoUsuario']);
+                 	$privilegios=$Grupo->consultaPrivilegiosDeGrupo();
 
+                 	foreach($privilegios as $privilegio){
+
+                     if($privilegio['id']==2){//privilegio ver sospechosos
+                         $privilegioVer=true;
+                     }
+                     if($privilegio['id']==4){//privilegio modificar sospechosos
+                         $privilegioModificar=true;
+                     }
+                 	}
+
+             	}else{
+             		echo "0";//no tiene los privilegios
+             	}
+
+
+      if($privilegioVer==true){
+
+                     echo'<table class="table table-bordered tablaLista table-striped">
+                           <thead>
+                               <th>Rut</th>
+                               <th>Nombre</th>
+                               <th>Apellido Paterno</th>
+                               <th>Apellido Materno</th>
+                               <th>Lugar Nacimiento</th>
+                               <th></th>
+                           </thead>
+                           <tbody>
+                     ';
+                             $retorno = $Sospechoso->BuscarFiltarRegistros("vistasospechoso","campoBuscar",$_REQUEST['buscar'],$_REQUEST['pag'],$_REQUEST['cantidadReg'],"");
+
+                              $contadorFilas=0;
+                              foreach($retorno[0][0] as $column){
+                                $contadorFilas++;
+
+                                echo'<tr>
+                                        <td>'.$column["run"].'</td>
+                                        <td class="text-uppercase">'.$column["nombres"].'</td>
+                                        <td class="text-uppercase">'.$column["apellido_paterno"].'</td>
+                                        <td class="text-uppercase">'.$column["apellido_materno"].'</td>
+                                        <td class="text-uppercase">'.$column["lugar_deNacimiento"].'</td>';
+
+                                     if($privilegioModificar==true){
+                                          echo '<td><a href="formularioModificacionSospechosos.php?id='.$column['solorrun'].'"><span class="glyphicon glyphicon-pencil"></a></td>';
+                                        }
+                                echo '</tr>';
+
+                                 }
+                                  echo'<tr>
+                                    <td colspan="7">
+                                      <center>';
+                                        echo $retorno[0][1];
+                                    echo'</center>
+                                    </td>
+                                  </tr>
+                               </tbody>
+                            </table>';
+
+              }else{//SI NO TIENE EL PRIVILEGIO PARA VER SE DEVUELVE AL MENU PRINCIPAL
+                echo "0";//no tiene los privilegios
+              }
                      break;
 
           case '4'://MOSTRAR IMAGENES SOSPECHOSO

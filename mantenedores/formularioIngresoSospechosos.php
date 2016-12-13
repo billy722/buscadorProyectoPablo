@@ -4,17 +4,37 @@
 	cargarEncabezado();
 
 
-	if(isset($_REQUEST['correcto'])){
-			ECHO'<script type="text/javascript">
-				alert("GUARDADO CORRECTAMENTE");
-			</script>';
-	}
 
-    if(isset($_REQUEST['id'])){
 
-        $rs= $con->query("select * from tb_sospechoso where run=".$_REQUEST['id']);
-        $filasPrincipal= $rs->fetch_array();
-    }
+		 $privilegioIngresar=false;
+
+		 @session_start();
+		 require_once '../clases/Usuario.php';
+		 require_once '../clases/Grupos.php';
+		 $Usuario= new Usuario();
+		 $Usuario->setRun($_SESSION['run']);
+		 $resultadoUsuario= $Usuario->consultaUnUsuario();
+		 if($resultadoUsuario){
+
+		      $Grupo = new Grupos();
+		      $Grupo->setIdGrupo($resultadoUsuario[0]['id_grupoUsuario']);
+		      $privilegios=$Grupo->consultaPrivilegiosDeGrupo();
+
+		      foreach($privilegios as $privilegio){
+
+		         if($privilegio['id']==3){//privilegio modificar sospechosos
+		             $privilegioIngresar=true;
+		         }
+		      }
+
+
+		      if($privilegioIngresar==false){
+		         header("location: ../principal/menuPrincipal.php");
+		      }
+
+		  }else{
+		    echo "0";//usuario no existe
+		  }
  ?>
 
 
@@ -736,7 +756,13 @@
 													              processData:false,
 													              success:function(resultado){
 																				//	alert(resultado);
-													                if(resultado==1){
+                                        if(resultado==0){
+																					    swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
+																							setTimeout(function(){
+																										window.location="../principal/menuPrincipal.php";
+																							   },5000);
+
+																				}else if(resultado==1){
 																							swal("Operacion exitosa!", "Guardado correctamente.", "success");
 																							window.reload();
 																					}else if(resultado=="1062"){

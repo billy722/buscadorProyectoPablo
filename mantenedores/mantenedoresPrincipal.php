@@ -13,6 +13,37 @@ if(isset($_SESSION['run'])==false &&
     require("../principal/comun.php");
     conectarBD();
     cargarEncabezado();
+
+
+    $privilegioMantenedor=false;
+
+    @session_start();
+    require_once '../clases/Usuario.php';
+    require_once '../clases/Grupos.php';
+    $Usuario= new Usuario();
+    $Usuario->setRun($_SESSION['run']);
+    $resultadoUsuario= $Usuario->consultaUnUsuario();
+    if($resultadoUsuario){
+
+         $Grupo = new Grupos();
+         $Grupo->setIdGrupo($resultadoUsuario[0]['id_grupoUsuario']);
+         $privilegios=$Grupo->consultaPrivilegiosDeGrupo();
+
+         foreach($privilegios as $privilegio){
+
+            if($privilegio['id']==5){//privilegio MANTENEDOR
+                $privilegioMantenedor=true;
+            }
+         }
+
+
+         if($privilegioMantenedor==false){
+            header("location: ../principal/menuPrincipal.php");
+         }
+
+     }else{
+       echo "0";//usuario no existe
+     }
  ?>
 		<!-- <div id="contenedorMenuConfiguraciones" class="container">
         	<div class="container btn btn-group">

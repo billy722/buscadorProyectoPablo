@@ -15,6 +15,36 @@ if(isset($_SESSION['run'])==false &&
     cargarEncabezado();
     cargarMenuMantenedores();
 
+
+    $privilegioMantenedor=false;
+
+    @session_start();
+    require_once '../clases/Usuario.php';
+    require_once '../clases/Grupos.php';
+    $Usuario= new Usuario();
+    $Usuario->setRun($_SESSION['run']);
+    $resultadoUsuario= $Usuario->consultaUnUsuario();
+    if($resultadoUsuario){
+
+         $Grupo = new Grupos();
+         $Grupo->setIdGrupo($resultadoUsuario[0]['id_grupoUsuario']);
+         $privilegios=$Grupo->consultaPrivilegiosDeGrupo();
+
+         foreach($privilegios as $privilegio){
+
+            if($privilegio['id']==10){//privilegio MANTENEDOR
+                $privilegioMantenedor=true;
+            }
+         }
+
+
+         if($privilegioMantenedor==false){
+            header("location: ../mantenedores/mantenedoresPrincipal.php");
+         }
+
+     }else{
+       echo "0";//usuario no existe
+     }
 ?>
 <div class="container">
  <div class="container col-xs-12" id="contenedorMantenedorUsuario">
@@ -74,7 +104,15 @@ var pagina;
         url:"controladorMantenedores.php",
         data:"mant=3&func=4&buscar="+busqueda+"&pag="+pagina+"&cantidadReg="+$("#cmb_cantidadRegistros").val(),
         success:function(respuesta){
-              $("#contenedorMantenedor").html(respuesta);
+              if(respuesta==0){
+                   swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
+                   setTimeout(function(){
+                         window.location="../principal/menuPrincipal.php";
+                      },5000);
+
+             }else{
+                  $("#contenedorMantenedor").html(respuesta);
+             }
         }
       });
 
@@ -199,9 +237,20 @@ var pagina;
                         url:"./controladorMantenedores.php?mant=3&func=1",
                         data: $("#formularioCreacion").serialize(),
                         success:function(resultado){
-                          //alert("INGRESADO CORRECTAMENTE");
-                          swal("Operacion exitosa!", "Agregado Correctamente", "success");
-                          cambiarPagina(1);
+                            if(resultado==0){
+                                   swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
+                                   setTimeout(function(){
+                                         window.location="../principal/menuPrincipal.php";
+                                      },5000);
+
+                             }else if(resultado=="2"){
+                                         //alert("MODIFICADO CORRECTAMENTE");
+                                         swal("Operacion exitosa!", "Agregado Correctamente", "success");
+                                         cambiarPagina(1);
+                             }else{
+                                     swal("Ocurrio un error", "Recargue la página e intente nuevamente.", "error");
+                                     //$("#error").html(resultado);
+                             }
                         }
 
                     });
@@ -214,14 +263,20 @@ var pagina;
                         url:"./controladorMantenedores.php?mant=3&func=2",
                         data: $("#formularioModificacion").serialize(),
                         success:function(resultado){
-                              if(resultado=="2"){
+                        if(resultado==0){
+                               swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
+                               setTimeout(function(){
+                                     window.location="../principal/menuPrincipal.php";
+                                  },5000);
+
+                          }else if(resultado=="2"){
                                       //alert("MODIFICADO CORRECTAMENTE");
                                       swal("Operacion exitosa!", "Modificado Correctamente", "success");
                                       cambiarPagina(1);
-                              }else{
-                                  alert(resultado);
-                                  $("#error").html(resultado);
-                              }
+                          }else{
+                                  swal("Ocurrio un error", "Recargue la página e intente nuevamente.", "error");
+                                  //$("#error").html(resultado);
+                          }
                         }
                     });
             });
@@ -233,7 +288,13 @@ var pagina;
                   url:"controladorMantenedores.php",
                   data:"mant=3&func=3&id="+id,
                   success:function(respuesta){
-                          if(respuesta=="2"){
+                          if(respuesta==0){
+                               swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
+                               setTimeout(function(){
+                                     window.location="../principal/menuPrincipal.php";
+                                  },5000);
+
+                         }else if(respuesta=="2"){
                           //alert("ELIMINADO CORRECTAMENTE");
                           swal("Operacion exitosa!", "Eliminado Correctamente", "success");
                               cambiarPagina(1);

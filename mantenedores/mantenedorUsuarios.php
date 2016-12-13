@@ -14,6 +14,39 @@ if(isset($_SESSION['run'])==false &&
     conectarBD();
     cargarEncabezado();
     cargarMenuMantenedores();
+
+
+
+    $privilegioMantenedor=false;
+
+    @session_start();
+    require_once '../clases/Usuario.php';
+    require_once '../clases/Grupos.php';
+    $Usuario= new Usuario();
+    $Usuario->setRun($_SESSION['run']);
+    $resultadoUsuario= $Usuario->consultaUnUsuario();
+    if($resultadoUsuario){
+
+         $Grupo = new Grupos();
+         $Grupo->setIdGrupo($resultadoUsuario[0]['id_grupoUsuario']);
+         $privilegios=$Grupo->consultaPrivilegiosDeGrupo();
+
+         foreach($privilegios as $privilegio){
+
+            if($privilegio['id']==6){//privilegio MANTENEDOR
+                $privilegioMantenedor=true;
+            }
+         }
+
+
+         if($privilegioMantenedor==false){
+            header("location: ../mantenedores/mantenedoresPrincipal.php");
+         }
+
+     }else{
+       echo "0";//usuario no existe
+     }
+
 ?>
 
 <div class="container">
@@ -74,7 +107,15 @@ var pagina;
         url:"controladorMantenedores.php",
         data:"mant=1&func=3&buscar="+busqueda+"&pag="+pagina+"&cantidadReg="+$("#cmb_cantidadRegistros").val(),
         success:function(respuesta){
-              $("#contenedorMantenedor").html(respuesta);
+            if(respuesta==0){
+                 swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
+                 setTimeout(function(){
+                       window.location="../principal/menuPrincipal.php";
+                    },5000);
+
+           }else{
+             $("#contenedorMantenedor").html(respuesta);
+           }
         }
       });
 

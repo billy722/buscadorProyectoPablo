@@ -58,7 +58,7 @@ if($resultadoUsuario){
 			break;
 			/*case 3:	echo'<a href="mantenedorSospechosos.php">SOSPECHOSOS</a>';
 			break;*/
-			case 4:	echo'<a class="btn btn-default col-xs-12 col-sm-6 col-md-3 col-lg-3"  href="../mantenedores/mantenedoresPrincipal.php"><span class="glyphicon glyphicon-cog"></span> CONFIGURACIONES</a>';
+			case 5:	echo'<a class="btn btn-default col-xs-12 col-sm-6 col-md-3 col-lg-3"  href="../mantenedores/mantenedoresPrincipal.php"><span class="glyphicon glyphicon-cog"></span> CONFIGURACIONES</a>';
 			break;
 		}
 	}
@@ -78,16 +78,52 @@ if($resultadoUsuario){
 }
 
 function cargarMenuMantenedores(){
+	@session_start();
 
-		echo'<div class="btn-group col-xs-12">
-						<a class="btn btn-info col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorUsuarios.php" ><strong>Usuarios</strong></a>
-						<a class="btn btn-info col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorGrupos.php" ><strong>Privilegios</strong></a>
-						<a class="btn btn-info col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorDelitos.php" ><strong>Delitos</strong></a>
-						<a class="btn btn-info col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorZonas.php" ><strong>Zonas</strong></a>
-						<a class="btn btn-info col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorPoblacion.php" ><strong>Poblaciones</strong></a>
-						<a class="btn btn-info col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorEquipos.php" ><strong>Equipos</strong></a>
-			</div>
-	';
+	require_once '../clases/Usuario.php';
+	require_once '../clases/Grupos.php';
+
+	$Usuario= new Usuario();
+	$Usuario->setRun($_SESSION['run']);
+	$resultadoUsuario= $Usuario->consultaUnUsuario();
+	if($resultadoUsuario){
+
+		$Grupo = new Grupos();
+		$Grupo->setIdGrupo($resultadoUsuario[0]['id_grupoUsuario']);
+		$privilegios=$Grupo->consultaPrivilegiosDeGrupo();
+
+		  echo'<div class="btn-group col-xs-12">';
+			foreach($privilegios as $privilegio){
+
+						switch($privilegio['id']){
+
+									case 6:
+											echo'<a class="btn btn-info col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorUsuarios.php" ><strong>Usuarios</strong></a>';//mantenedor
+									break;
+									case 7:
+											echo'<a class="btn btn-info col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorGrupos.php" ><strong>Privilegios</strong></a>';//mantenedor
+									break;
+									case 8:
+											echo'<a class="btn btn-info col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorDelitos.php" ><strong>Delitos</strong></a>';//mantenedor
+									break;
+									case 9:
+											echo'<a class="btn btn-info col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorZonas.php" ><strong>Zonas</strong></a>';//mantenedor
+									break;
+									case 10:
+											echo'<a class="btn btn-info col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorPoblacion.php" ><strong>Poblaciones</strong></a>';//mantenedor
+									break;
+									case 11:
+											echo'<a class="btn btn-info col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorEquipos.php" ><strong>Equipos</strong></a>';//mantenedor
+									break;
+						}
+			}
+		  echo'</div>';
+
+		}else{
+			header("location: ../index.php");
+		}
+
+
 }
 
 function cargarFooter(){

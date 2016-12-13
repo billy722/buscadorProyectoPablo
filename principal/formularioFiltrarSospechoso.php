@@ -19,6 +19,38 @@ if(isset($_SESSION['run'])==false &&
 	include("./comun.php");
 	conectarBD();
 	cargarEncabezado();
+
+
+  $privilegioFiltrar=false;
+
+  @session_start();
+  require_once '../clases/Usuario.php';
+  require_once '../clases/Grupos.php';
+  $Usuario= new Usuario();
+  $Usuario->setRun($_SESSION['run']);
+  $resultadoUsuario= $Usuario->consultaUnUsuario();
+  if($resultadoUsuario){
+
+       $Grupo = new Grupos();
+       $Grupo->setIdGrupo($resultadoUsuario[0]['id_grupoUsuario']);
+       $privilegios=$Grupo->consultaPrivilegiosDeGrupo();
+
+       foreach($privilegios as $privilegio){
+
+          if($privilegio['id']==1){//privilegio ver sospechosos
+              $privilegioFiltrar=true;
+          }
+       }
+
+
+       if($privilegioFiltrar==false){
+          header("location: ../principal/menuPrincipal.php");
+       }
+
+   }else{
+     header("location: ../principal/menuPrincipal.php");//usuario no existe
+   }
+
  ?>
 
 <div class="container" id="filtros">
@@ -410,9 +442,18 @@ if(isset($_SESSION['run'])==false &&
 <script>
 
 function enviarFormulario(){
-		    $.post("./filtrarSospechosos.php",$("#formularioBusqueda").serialize(),function(respuesta){
+		    $.post("./filtrarSospechosos.php",
+        $("#formularioBusqueda").serialize(),
+        function(respuesta){
+             if(respuesta==0){
+               swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
+               setTimeout(function(){
+                     window.location="../principal/menuPrincipal.php";
+                  },5000);
+              }else{
                 $('#informacionSospechoso ').removeClass('informacionSospechoso');
-		             document.getElementById("resultadoBusqueda").innerHTML = respuesta;
+                document.getElementById("resultadoBusqueda").innerHTML = respuesta;
+              }
 		    });
 
             $('html,body').animate({
@@ -429,11 +470,17 @@ function limpiarResultados(){
 function mostrarInformacionSospechoso(run){
      //alert(run);
 
-      $.post("./informacionSospechoso.php?run="+run,$("#fis").serialize(),function(respuesta){
-                 //document.getElementById("informacionSospechoso").innerHTML = respuesta;
-                 //$('#informacionSospechoso ').addClass('informacionSospechoso');
-          //alert(respuesta);
-            document.getElementById("divInformacionSospechoso").innerHTML =respuesta;
+      $.post("./informacionSospechoso.php?run="+run,
+      $("#fis").serialize(),
+      function(respuesta){
+            if(respuesta==0){
+              swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
+              setTimeout(function(){
+                    window.location="../principal/menuPrincipal.php";
+                 },5000);
+            }else{
+              document.getElementById("divInformacionSospechoso").innerHTML =respuesta;
+            }
         });
 }
 function ocultarInformacionEmergente(){
