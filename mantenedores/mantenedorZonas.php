@@ -266,6 +266,7 @@ var pagina;
                            }else if(resultado=="1"){
                               swal("Operacion exitosa!", "Agregado Correctamente", "success");
                               cambiarPagina(1);
+                              limpiarCamposCrear();
                               $("#botonCerrarModalCrear").click();
                             }else if(resultado=="2"){
                               sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
@@ -295,9 +296,9 @@ var pagina;
                                     },5000);
 
                            }else if(resultado=="1"){
-                              swal("Operacion exitosa!", "Agregado Correctamente", "success");
+                              swal("Operacion exitosa!", "Modificado Correctamente", "success");
                               cambiarPagina(1);
-                              $("#botonCerrarModalCrear").click();
+                              $("#botonCerrarModalModificar").click();
                             }else if(resultado=="2"){
                               sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
 
@@ -323,7 +324,7 @@ var pagina;
                         },5000);
 
                }else if(resultado=="1"){
-                  swal("Operacion exitosa!", "Agregado Correctamente", "success");
+                  swal("Operacion exitosa!", "Eliminado Correctamente", "success");
                   cambiarPagina(1);
                   $("#botonCerrarModalCrear").click();
                 }else if(resultado=="2"){
