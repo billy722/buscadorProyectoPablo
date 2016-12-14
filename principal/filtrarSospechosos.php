@@ -26,7 +26,8 @@
 
 			 if($privilegioFiltrar==true){
 
-
+				 $UsuarioHistorial= new Usuario();
+				 $UsuarioHistorial->guardarHistorial($UsuarioHistorial->obtenerIpReal(),3,$_SESSION['run'],"");
 
 				$sexo=$_REQUEST['sexo'];
 				$contextura=$_REQUEST['contextura'];

@@ -115,6 +115,19 @@ class Usuario extends Conexion{
                 }
   }
 
+  public function guardarHistorial($arg_direccionip,$arg_tipoaccion,$arg_rut,$arg_informacionadicional){
+    $consulta="INSERT INTO registro_acciones (direccion_ip,tipo_accion,run_usuario,informacion_adicional)
+			 VALUES ('".$arg_direccionip."',".$arg_tipoaccion.",".$arg_rut.",'".$arg_informacionadicional."')";
+
+    $verificar= $this->insertar($consulta);
+
+                if($verificar){
+                      return true;
+                }else{
+                    return false;
+                }
+  }
+
   public function comprobarExisteRun(){
      $consulta="select run from tb_usuarios where run=".$this->run;
 
@@ -169,6 +182,22 @@ class Usuario extends Conexion{
       // Finalmente, destruir la sesión.
       session_destroy();
       header('location: '.$rutaInicial);
+  }
+
+    function obtenerIpReal(){
+      if(!empty($_SERVER['HTTP_CLIENT_IP'])){
+          $ip = $_SERVER['HTTP_CLIENT_IP'];
+      }else if(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
+          $ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+      }else{
+         if($_SERVER['REMOTE_ADDR']=="::1"){
+            $ip="127.0.0.1";
+         }else{
+           $ip = $_SERVER['REMOTE_ADDR'];
+         }
+      }
+      return $ip;
+
   }
 
 

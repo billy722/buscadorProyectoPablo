@@ -292,7 +292,7 @@ var pagina;
                                window.location="../principal/menuPrincipal.php";
                             },5000);
 
-                   }else if(respuesta=="2"){
+                   }else if(respuesta=="1"){
                           //alert("ELIMINADO CORRECTAMENTE");
                           swal("Operacion exitosa!", "Eliminado Correctamente", "success");
                               cambiarPagina(1);

@@ -38,7 +38,7 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
 
             switch($_REQUEST['func']){//SELECCIONAR ACCION
 
-                case '1'://Ingresar-Modificar usuario
+                case '1'://Ingresar usuario
                       $campoRut=$_REQUEST['txt_runCrear'];
                       $nombre= $_REQUEST['txt_nombreCrear'];
                       $apellidoPaterno= $_REQUEST['txt_apellidoPaternoCrear'];
@@ -79,6 +79,8 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                                $Usuario->setEstado("1");
                                 if($Usuario->insertarModificarUsuario()){
                                   echo "1";
+                                   $UsuarioHistorial= new Usuario();
+                         			  	 $UsuarioHistorial->guardarHistorial($UsuarioHistorial->obtenerIpReal(),7,$_SESSION['run'],"Usuario creado: ".$rut);
                                 }else{
                                   echo "3";//error
                                 }
@@ -114,6 +116,8 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                 $Usuario->setEstado($_REQUEST['select_estadoUsuarioModificar']);
                   if($Usuario->insertarModificarUsuario()){
                     echo "1";
+                    $UsuarioHistorial= new Usuario();
+                    $UsuarioHistorial->guardarHistorial($UsuarioHistorial->obtenerIpReal(),8,$_SESSION['run'],"Usuario modificado: ".$rut);
                   }else{
                     echo "3";//errors
                   }
@@ -200,6 +204,8 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
 
                         if($verificarExito==true){
                               echo "1";
+                              $UsuarioHistorial= new Usuario();
+                              $UsuarioHistorial->guardarHistorial($UsuarioHistorial->obtenerIpReal(),9,$_SESSION['run'],"Usuario eliminado: ".$rut);
                         }else{
                               echo "3";//error
                         }
@@ -251,9 +257,17 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                       echo "2";//HAY CAMPOS VACIOS
 
                 }else{
-                $Delito->setDescripcionDelito($_REQUEST['txt_descripcionDelitoCrear']);
+                $descripcion=$Delito->limpiarTexto($_REQUEST['txt_descripcionDelitoCrear']);
+
+                $Delito->setDescripcionDelito($descripcion);
                 $Delito->setEstadoDelito("1");
-                $Delito->ingresarDelito();
+                if($Delito->ingresarDelito()){
+                  echo "1";
+                  $UsuarioHistorial= new Usuario();
+                  $UsuarioHistorial->guardarHistorial($UsuarioHistorial->obtenerIpReal(),10,$_SESSION['run'],"Delito creado: ".$descripcion);
+                }else{
+                  echo "3";//error
+                }
 
               }
               break;
@@ -262,22 +276,34 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                     echo "2";//HAY CAMPOS VACIOS
 
               }else{
-                $Delito->setIdDelito($_REQUEST['txt_idDelitoModificar']);
-                $Delito->setDescripcionDelito($_REQUEST['txt_descripcionDelitoModificar']);
+               $idDelito=$Delito->limpiarNumeroEntero($_REQUEST['txt_idDelitoModificar']);
+               $descripcion=$Delito->limpiarTexto($_REQUEST['txt_descripcionDelitoModificar']);
+
+                $Delito->setIdDelito($idDelito);
+                $Delito->setDescripcionDelito($descripcion);
                 $Delito->setEstadoDelito($_REQUEST['cmb_estadoDelitoModificar']);
                 if($Delito->actualizarDelito()){
                   echo "1";
+                  $UsuarioHistorial= new Usuario();
+                  $UsuarioHistorial->guardarHistorial($UsuarioHistorial->obtenerIpReal(),11,$_SESSION['run'],"Delito modificado: ".$descripcion);
+                }else{
+                  echo "3";//error
                 }
               }
               break;
               case '3'://Eliminar delito
-                      $Delito->setIdDelito($_REQUEST['id']);
-                      $Delito->setEstadoDelito("3");
-                      $verificarExito= $Delito->eliminarDelito();
+                     $idDelito=$Delito->limpiarNumeroEntero($_REQUEST['id']);
 
-                      if($verificarExito==true){
-                            echo "2";
+                      $Delito->setIdDelito($idDelito);
+                      $Delito->setEstadoDelito("3");
+                      if($Delito->eliminarDelito()){
+                        echo "1";
+                        $UsuarioHistorial= new Usuario();
+                        $UsuarioHistorial->guardarHistorial($UsuarioHistorial->obtenerIpReal(),12,$_SESSION['run'],"Delito eliminado: ".$idDelito);
+                      }else{
+                        echo "3";//error
                       }
+
               break;
               case '4'://listar tabla
               ?>
@@ -384,12 +410,15 @@ if($resultadoUsuario){
               if($_REQUEST['txt_descripcionPoblacionCrear']==""){
                 echo "2"; //valores vacios.
               }else{
+                $descripcion=$Poblacion->limpiarTexto($_REQUEST['txt_descripcionPoblacionCrear']);
 
-                $Poblacion->setDescripcionPoblacion($_REQUEST['txt_descripcionPoblacionCrear']);
+                $Poblacion->setDescripcionPoblacion($descripcion);
                 $Poblacion->setEstadoPoblacion("1");
 
                 if($Poblacion->ingresarPoblacion()){
                   echo "1";
+                  $UsuarioHistorial= new Usuario();
+                  $UsuarioHistorial->guardarHistorial($UsuarioHistorial->obtenerIpReal(),13,$_SESSION['run'],"Poblacion creada: ".$descripcion);
                 }else{
                   echo "3";//ERROR
                 }
@@ -400,23 +429,33 @@ if($resultadoUsuario){
               if($_REQUEST['txt_idPoblacionModificar']=="" || $_REQUEST['txt_descripcionPoblacionModificar']=="" || $_REQUEST['cmb_estadoPoblacionModificar']==""){
                 echo "2";
               }else{
-                $Poblacion->setIdPoblacion($_REQUEST['txt_idPoblacionModificar']);
-                $Poblacion->setDescripcionPoblacion($_REQUEST['txt_descripcionPoblacionModificar']);
-                $Poblacion->setEstadoPoblacion($_REQUEST['cmb_estadoPoblacionModificar']);
+                $idPoblacion=$Poblacion->limpiarNumeroEntero($_REQUEST['txt_idPoblacionModificar']);
+                $descripcion=$Poblacion->limpiarTexto($_REQUEST['txt_descripcionPoblacionModificar']);
+                $estadoPoblacion=$Poblacion->limpiarTexto($_REQUEST['cmb_estadoPoblacionModificar']);
+
+                $Poblacion->setIdPoblacion($idPoblacion);
+                $Poblacion->setDescripcionPoblacion($descripcion);
+                $Poblacion->setEstadoPoblacion($estadoPoblacion);
                 if($Poblacion->actualizarPoblacion()){
                   echo "1";
+                  $UsuarioHistorial= new Usuario();
+                  $UsuarioHistorial->guardarHistorial($UsuarioHistorial->obtenerIpReal(),14,$_SESSION['run'],"Poblacion modificada: ".$descripcion);
                 }else{
                   echo "3";
                 }
               }
               break;
               case '3'://Eliminar Poblacion
-                      $Poblacion->setIdPoblacion($_REQUEST['id']);
+                      $idPoblacion=$Poblacion->limpiarNumeroEntero($_REQUEST['id']);
+
+                      $Poblacion->setIdPoblacion($idPoblacion);
                       $Poblacion->setEstadoPoblacion("3");
                       $verificarExito= $Poblacion->eliminarPoblacion();
 
                       if($verificarExito==true){
                             echo "1";
+                            $UsuarioHistorial= new Usuario();
+                            $UsuarioHistorial->guardarHistorial($UsuarioHistorial->obtenerIpReal(),15,$_SESSION['run'],"Poblacion eliminada: ".$idPoblacion);
                       }else{
                         echo "3";
                       }
@@ -529,6 +568,8 @@ if($resultadoUsuario){
                 $Equipo->setEstadoEquipo("1");
                 if($Equipo->ingresarEquipo()){
                     echo "1";
+                    $UsuarioHistorial= new Usuario();
+                    $UsuarioHistorial->guardarHistorial($UsuarioHistorial->obtenerIpReal(),16,$_SESSION['run'],"Equipo creado: ".$Equipo->limpiarTexto($_REQUEST['txt_descripcionEquipoCrear']));
                 }else{
                     echo "3";
                 }
@@ -543,6 +584,8 @@ if($resultadoUsuario){
                 $Equipo->setEstadoEquipo($Equipo->limpiarNumeroEntero($_REQUEST['cmb_estadoEquipoModificar']));
                 if($Equipo->actualizarEquipo()){
                   echo "1";
+                  $UsuarioHistorial= new Usuario();
+                  $UsuarioHistorial->guardarHistorial($UsuarioHistorial->obtenerIpReal(),17,$_SESSION['run'],"Equipo modificado: ".$Equipo->limpiarTexto($_REQUEST['txt_descripcionEquipoModificar']));
                 }else{
                   echo "3";
                 }
@@ -554,7 +597,9 @@ if($resultadoUsuario){
                       $verificarExito= $Equipo->eliminarEquipo();
 
                       if($verificarExito==true){
-                            echo "1";
+                        echo "1";
+                        $UsuarioHistorial= new Usuario();
+                        $UsuarioHistorial->guardarHistorial($UsuarioHistorial->obtenerIpReal(),18,$_SESSION['run'],"Equipo eliminado: ".$Equipo->limpiarNumeroEntero($_REQUEST['id']));
                       }else{
                            echo "3";
                       }
@@ -677,6 +722,9 @@ if($resultadoUsuario){
                                     $idGrupoIngresado= $Grupo->insertarGrupo();
                                     if($idGrupoIngresado){
                                           echo "1";
+                                          $UsuarioHistorial= new Usuario();
+                                          $UsuarioHistorial->guardarHistorial($UsuarioHistorial->obtenerIpReal(),19,$_SESSION['run'],"Grupo Creado: ".$nombreGrupo);
+
                                           $Grupo->setIdGrupo($idGrupoIngresado);
 
                                           require_once '../clases/Privilegio.php';
@@ -690,7 +738,7 @@ if($resultadoUsuario){
                                                   if(isset($_REQUEST[$priv])){
                                                          $Grupo->asignarPrivilegioAlGrupo($columna['id_privilegios']);
                                                   }
-                                          }        
+                                          }
                                       }else{
                                         echo "3";//error
                                       }
@@ -735,6 +783,8 @@ if($resultadoUsuario){
                                                   }
                                           }
                                            echo "1";
+                                           $UsuarioHistorial= new Usuario();
+                                           $UsuarioHistorial->guardarHistorial($UsuarioHistorial->obtenerIpReal(),20,$_SESSION['run'],"Grupo Modificado: ".$nombreGrupo);
 
                                       }else{
                                         echo "3";
@@ -795,6 +845,8 @@ if($resultadoUsuario){
                  $Grupo->setIdGrupo($Grupo->limpiarNumeroEntero($_REQUEST['id']));
                  if($Grupo->eliminarGrupo()){
                       echo "1";
+                      $UsuarioHistorial= new Usuario();
+                      $UsuarioHistorial->guardarHistorial($UsuarioHistorial->obtenerIpReal(),21,$_SESSION['run'],"Grupo Eliminado: ".$Grupo->limpiarNumeroEntero($_REQUEST['id']));
                  }else{
                       echo "3";//error
                  }
@@ -917,6 +969,11 @@ if($resultadoUsuario){
                                     $idZonaIngresada= $Zonas->insertarZona();
                                     if($idZonaIngresada){
                                           echo "1";
+                                          $UsuarioHistorial= new Usuario();
+                                          $UsuarioHistorial->guardarHistorial($UsuarioHistorial->obtenerIpReal(),22,$_SESSION['run'],"Zona Creada: ".$nombreZona);
+
+
+
                                           $Zonas->setIdZona($idZonaIngresada);
 
                                           require_once '../clases/Poblacion.php';
@@ -961,6 +1018,10 @@ if($resultadoUsuario){
                               $Zonas->actualizar();
                               if($Zonas->eliminarPoblacionesDeZona()){
                                    echo "1";
+                                   $UsuarioHistorial= new Usuario();
+                                   $UsuarioHistorial->guardarHistorial($UsuarioHistorial->obtenerIpReal(),23,$_SESSION['run'],"Zona Modificada: ".$nombreZona);
+
+
                                         require_once '../clases/Poblacion.php';
                                         $Poblacion= new Poblacion();
                                         $listaPoblaciones= $Poblacion->listarPoblacion();
@@ -1025,9 +1086,13 @@ if($resultadoUsuario){
             break;
 
             case '4'://ELIMINAR ZONA
-                 $Zonas->setIdZona($_REQUEST['id']);
+                 $idZona=$Zonas->limpiarNumeroEntero($_REQUEST['id']);
+
+                 $Zonas->setIdZona($idZona);
                  if($Zonas->eliminarZona()){
                    echo "1";
+                   $UsuarioHistorial= new Usuario();
+                   $UsuarioHistorial->guardarHistorial($UsuarioHistorial->obtenerIpReal(),24,$_SESSION['run'],"Zona Eliminada: ".$idZona);
                  }else{
                    echo "3";//error
                  }
@@ -1369,6 +1434,8 @@ case "7": //mantenedor sospechosos
                                				}
                                		}
                                   echo "1";
+                                  $UsuarioHistorial= new Usuario();
+                                  $UsuarioHistorial->guardarHistorial($UsuarioHistorial->obtenerIpReal(),4,$_SESSION['run'],"Sospechoso Creado: ".$soloRun);
                        }//cierre de if que indica que se ingreso el sospechoso
                    }else{
                        echo "0";

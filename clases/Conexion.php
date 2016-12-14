@@ -48,17 +48,19 @@ class Conexion{
     }
 
     public function registros($arg_consulta){
+
       $result = $this->con->query($arg_consulta);
         if(!$result){
           echo 'Error '. $this->con->error;
           exit;
         }else{
           $listado = $result->FETCH_ALL(MYSQLI_ASSOC);
+          $result->free_result();
           return $listado;
         }
 
 
-      return mysqli_fetch_array($resultado, MYSQLI_ASSOC);
+      //return mysqli_fetch_array($resultado, MYSQLI_ASSOC);
     }
 
     public function cantidadRegistros($arg_consulta){

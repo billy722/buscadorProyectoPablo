@@ -12,13 +12,13 @@ $Usuario = new Usuario();
                                   $_REQUEST["recaptcha_challenge_field"],
                                   $_REQUEST["recaptcha_response_field"]);
 
-    if (!$resp->is_valid){
-      // What happens when the CAPTCHA was entered incorrectly
-          // die ("The reCAPTCHA wasn't entered correctly. Go back and try it again." .
-          //      "(reCAPTCHA said: " . $resp->error . ")");
-        echo "4"; //EL CAPTCHA ES INCORRECTO
-        //echo "1";
-    }else{
+    // if (!$resp->is_valid){
+    //   // What happens when the CAPTCHA was entered incorrectly
+    //       // die ("The reCAPTCHA wasn't entered correctly. Go back and try it again." .
+    //       //      "(reCAPTCHA said: " . $resp->error . ")");
+    //     echo "4"; //EL CAPTCHA ES INCORRECTO
+    //     //echo "1";
+    // }else{
 
         $usuario= $Usuario->limpiarTexto($usuario);
         $usuario= $Usuario->limpiarNumeroEntero($usuario);
@@ -44,15 +44,21 @@ $Usuario = new Usuario();
                     $Usuario->setClave($contrasena);
 
                     if($Usuario->comprobarUsuario()){
-                          echo "1";
+                          echo "1";//correcto
+
+                          $UsuarioHistorial= new Usuario();
+                          $UsuarioHistorial->guardarHistorial($UsuarioHistorial->obtenerIpReal(),1,$soloRun,"");
+
                     }else{
-                          echo "2";
+                          echo "2";//incorrecto
+                          $UsuarioHistorial= new Usuario();
+                          $UsuarioHistorial->guardarHistorial($UsuarioHistorial->obtenerIpReal(),2,$soloRun,"Rut o clave incorrecta");
                     }
             }else{
               echo "2";//NO ES UN NUMERO, HAY LETRAS
             }
 
           }
-    }
+  //  }
 
  ?>

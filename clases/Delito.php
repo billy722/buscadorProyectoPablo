@@ -56,9 +56,9 @@ where ds.run_sospechoso='.$arg_run);
       $delitos=$this->insertar('INSERT INTO `tb_delito` (`id_delito`,`descripcion_delito`,`estado`) VALUES (null,\''.$this->_descripcion_delito.'\',\''.$this->_estado.'\');');
       //return $delitos;
       if($delitos){
-        echo "1";
+         return true;
       }else{
-        echo "2";
+        return false;
       }
   }
 
@@ -70,7 +70,7 @@ where ds.run_sospechoso='.$arg_run);
             return true;
         }else{
 
-           echo "ERROR AL MODIFICAR";
+           return false;
         }
   }
   // Funcion eliminar datos de la tabla region
@@ -80,13 +80,13 @@ where ds.run_sospechoso='.$arg_run);
         $verificar= $this->insertar("update tb_delito set
                                     estado=".$this->_estado."
                                     where id_delito=".$this->_idDelito.";");
-}else{
-    $verificar= $this->insertar("delete from tb_delito where id_delito=".$this->_idDelito."; ");
-}
+    }else{
+        $verificar= $this->insertar("delete from tb_delito where id_delito=".$this->_idDelito."; ");
+    }
                 if($verificar){
                       return true;
                 }else{
-                    echo "fallo al eliminar delito";
+                    return false;
                 }
   }
 

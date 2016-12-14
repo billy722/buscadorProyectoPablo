@@ -94,7 +94,7 @@
                      url:"./principal/verificarDatosIngreso.php?u="+usuario+"&c="+contrasena,
                      data: $("#formularioLogin").serialize(),
                      success: function(respuesta){
-                         //alert(respuesta);
+                         alert(respuesta);
                            if(respuesta==1){
                              $('#botonIngreso').addClass("btn-success");
                              $('#botonIngreso').removeClass("btn-warning");
