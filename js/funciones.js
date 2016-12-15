@@ -46,6 +46,17 @@ function soloNumerosyK(e)
         return /\d/.test(String.fromCharCode(keynum));
     }
 }
+function soloNumerosyKsinpuntos(e)
+{
+    var keynum = window.event ? window.event.keyCode : e.which;
+
+     if ((keynum == 8) || (keynum ==45) || (keynum ==107)|| (keynum ==75)){
+            return true;
+     }else{
+
+        return /\d/.test(String.fromCharCode(keynum));
+    }
+}
 function soloNumeros(e)
 {
     var keynum = window.event ? window.event.keyCode : e.which;

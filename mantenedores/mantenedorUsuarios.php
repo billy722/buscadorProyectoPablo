@@ -130,7 +130,7 @@ var pagina;
             <div class="form-group">
                   <label class="sr-only control-label col-lg-2" for="txt_runCrear">Run</label>
                   <div class="col-lg-9">
-                    <input  required minlenght="12" title="Complete este campo" placeholder="Ej.12123456-7" class="form-control" id="txt_runCrear" name="txt_runCrear" type="text" >
+                    <input  required minlenght="12" title="Complete este campo" placeholder="Ej.12123456-7" class="form-control" id="txt_runCrear" name="txt_runCrear" type="text" maxlength="10" onkeypress="return soloNumerosyKsinpuntos(event);">
                   </div>
             </div>
 
