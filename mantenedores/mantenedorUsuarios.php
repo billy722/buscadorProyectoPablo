@@ -44,7 +44,7 @@ $UsuarioValidar->verificarSesion();
 <div class="container">
  <div class="container col-xs-12" id="contenedorMantenedorUsuario">
 	<div class="row ">
-            <h1 class="col-xs-4 text text-primary">Lista de Usuarios</h1>
+            <h1 class="col-xs-3 text text-primary">Lista de Usuarios</h1>
 
     </div>
     <div class="container col-xs-12">
@@ -59,7 +59,7 @@ $UsuarioValidar->verificarSesion();
 			<div class="col-xs-4">
 
                     <label class="control-label col-xs-3" for="cmb_cantidadRegistros">Mostrar</label>
-                    <div class="col-xs-6">
+                    <div class="col-xs-4">
                         <select onChange="cambiarPagina(1)" name="cmb_cantidadRegistros" class="form-control" id="cmb_cantidadRegistros">
                           <option value="3">3</option>
                           <option value="10">10</option>
@@ -70,7 +70,7 @@ $UsuarioValidar->verificarSesion();
             </div>
 
                 <!--BOTON QUE ABRE MODAL DE CREAR NUEVO -->
-                <div class="col-xs-4">
+                <div class="col-xs-3">
                     <button class="pull-right col-xs-4 btn btn-success" data-toggle="modal" data-target="#ventanaModalCrear">Nuevo</button>
                 </div>
  		   </div>
@@ -158,14 +158,14 @@ var pagina;
             <div class="form-group">
                   <label class="sr-only control-label col-lg-2" for="txt_correoCrear">Correo</label>
                   <div class="col-lg-9">
-                    <input required title="Complete este campo" placeholder="Correo" id="txt_correoCrear" name="txt_correoCrear" type="text" class="form-control">
+                    <input required title="Complete este campo" placeholder="Correo" id="txt_correoCrear" name="txt_correoCrear" type="email" class="form-control">
                   </div>
             </div>
 
             <div class="form-group">
                   <label class="sr-only control-label col-lg-2" for="txt_telefonoCrear">Telefono</label>
                   <div class="col-lg-9">
-                    <input required title="Complete este campo" required maxlenght="9" placeholder="Telefono" id="txt_telefonoCrear" name="txt_telefonoCrear" type="number" class="form-control">
+                    <input required title="Complete este campo" required placeholder="Telefono" id="txt_telefonoCrear" name="txt_telefonoCrear" type="text" class="form-control" maxlength="9" minlength="9" onkeypress="return soloNumeros(event);">
                   </div>
             </div>
 
@@ -274,14 +274,14 @@ var pagina;
 						<div class="form-group">
 									<label class="sr-only control-label col-lg-2" for="txt_correoModificar">Correo</label>
 									<div class="col-lg-9">
-										<input required title="Complete este campo" placeholder="Correo" id="txt_correoModificar" name="txt_correoModificar" type="text" class="form-control">
+										<input required title="Complete este campo" placeholder="Correo" id="txt_correoModificar" name="txt_correoModificar" type="email" class="form-control">
 									</div>
 						</div>
 
 						<div class="form-group">
 									<label class="sr-only control-label col-lg-2" for="txt_telefonoModificar">Telefono</label>
 									<div class="col-lg-9">
-										<input required title="Complete este campo" placeholder="Telefono" id="txt_telefonoModificar" name="txt_telefonoModificar" type="text" class="form-control">
+										<input required title="Complete este campo" placeholder="Telefono" id="txt_telefonoModificar" name="txt_telefonoModificar" type="text" minlength="9" maxlength="9" onkeypress="return soloNumeros(event);" class="form-control">
 									</div>
 						</div>
 
@@ -378,6 +378,7 @@ swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowO
                       swal("Operacion exitosa!", "Agregado Correctamente", "success");
                       cambiarPagina(1);
                       $("#botonCerrarModalCrear").click();
+                      $("#formularioCreacion")[0].reset();
                     }else if(resultado=="2"){
                       sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
 
@@ -471,6 +472,50 @@ swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowO
               swal("Cancelado", "No se eliminó el registro :)", "error");
             }
           });
+      }
+      function validaRut(str)
+      {
+          var rut = str.replace(/\./gi, "");
+
+          //Valor acumulado para el calculo de la formula
+          var nAcumula = 0;
+          //Factor por el cual se debe multiplicar el valor de la posicion
+          var nFactor = 2;
+          //Dígito verificador
+          var nDv = 0;
+
+          //extraemos el digito verificador (La K corresponde a 10)
+          if(rut.charAt(rut.length-1).toUpperCase()=='K'){
+              nDvReal = 10;
+          //el 0 corresponde a 11
+          }else{
+                  if(rut.charAt(rut.length-1)==0){
+                      nDvReal = 11;
+                  }else{
+                      nDvReal = rut.charAt(rut.length-1);
+                  }
+          }
+
+                 for(nPos=rut.length-2; nPos>0; nPos--){
+
+                          var numero = rut.charAt(nPos-1).valueOf();
+                          nAcumula =nAcumula+( numero*nFactor);
+
+                          nFactor= nFactor+1;
+                          if (nFactor==8){
+                               nFactor = 2;
+                          }
+
+                  }
+
+         nDv = 11-(nAcumula%11);
+
+          if (nDv == nDvReal){
+                  return true;
+          }else{
+              return false;
+          }
+
       }
 
   </script>

@@ -144,6 +144,7 @@
             $('#botonIngreso').addClass("btn-danger");
             $('#botonIngreso').removeClass("btn-warning");
             $('.info-login').text("El Rut Ingresado no es valido.");
+            $('#txt_rut').focus();
             $('#botonIngreso').html('Validar');
             setTimeout(function(){
               $('.info-login').text("");

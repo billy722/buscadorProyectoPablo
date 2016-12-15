@@ -268,6 +268,7 @@ var pagina;
                               cambiarPagina(1);
                               limpiarCamposCrear();
                               $("#botonCerrarModalCrear").click();
+                              $("#formularioCreacion")[0].reset();
                             }else if(resultado=="2"){
                               sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
 

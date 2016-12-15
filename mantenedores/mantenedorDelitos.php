@@ -241,6 +241,7 @@ var pagina;
                                   swal("Operacion exitosa!", "Agregado Correctamente", "success");
                                   cambiarPagina(1);
                                   $("#botonCerrarModalCrear").click();
+                                  $("#formularioCreacion")[0].reset();
                           }else if(resultado=="2"){
                                   sweetAlert("Ocurrió un error", "Hay campos vacios", "error");
                           }

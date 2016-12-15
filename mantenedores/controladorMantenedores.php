@@ -55,7 +55,7 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                             $posicionGuion= strpos($campoRut,"-");
                             $rut= substr($campoRut,0,$posicionGuion);
                             $dv= substr($campoRut,$posicionGuion+1,$posicionGuion+1);
-                            $Usuario->setRun($rut);
+                            $Usuario->setRun($Usuario->limpiarNumeroEntero($rut));
 
                            if($Usuario->comprobarExisteRun($rut)){
                                 echo "4"; //RUT QUE INTENTA INGRESAR YA EXISTE
@@ -104,16 +104,16 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                 $password = crypt($clave, '$2y$10$' . $salt);
 
 
-                $Usuario->setRun($rut);
+                $Usuario->setRun($Usuario->limpiarNumeroEntero($rut));
                 $Usuario->setDV($dv);
                 $Usuario->setNombre($Usuario->limpiarTexto($_REQUEST['txt_nombreModificar']));
                 $Usuario->setApellidoPaterno($Usuario->limpiarTexto($_REQUEST['txt_apellidoPaternoModificar']));
                 $Usuario->setApellidoMaterno($Usuario->limpiarTexto($_REQUEST['txt_apellidoMaternoModificar']));
                 $Usuario->setClave($password);
                 $Usuario->setTelefono($Usuario->limpiarTexto($_REQUEST['txt_telefonoModificar']));
-                $Usuario->setCorreo($_REQUEST['txt_correoModificar']);
-                $Usuario->setGrupoUsuario($_REQUEST['select_tipoUsuarioModificar']);
-                $Usuario->setEstado($_REQUEST['select_estadoUsuarioModificar']);
+                $Usuario->setCorreo($Usuario->limpiarCorreo($_REQUEST['txt_correoModificar']));
+                $Usuario->setGrupoUsuario($Usuario->limpiarNumeroEntero($_REQUEST['select_tipoUsuarioModificar']));
+                $Usuario->setEstado($Usuario->limpiarNumeroEntero($_REQUEST['select_estadoUsuarioModificar']));
                   if($Usuario->insertarModificarUsuario()){
                     echo "1";
                     $UsuarioHistorial= new Usuario();
@@ -125,7 +125,8 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                         break;
                 case '3'://Listar USUARIOS
                         ?>
-                        <table class="table">
+                        <div class="table-responsive">
+                        <table class="table table-striped">
                             <caption ></caption>
                             <thead>
                                       <th>Run</th>
@@ -188,6 +189,7 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                                             </tr>
                            </tbody>
                         </table>
+                      </div>
 <?php
                         break;
                         case '4'://validad rut
@@ -198,7 +200,7 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                         $posicionGuion= strpos($campoRut,"-");
                         $rut= substr($campoRut,0,$posicionGuion);
                         $dv= substr($campoRut,$posicionGuion+1,$posicionGuion+1);
-                        $Usuario->setRun($rut);
+                        $Usuario->setRun($Usuario->limpiarNumeroEntero($rut));
 
                         $verificarExito= $Usuario->eliminarUsuario();
 
@@ -281,7 +283,7 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
 
                 $Delito->setIdDelito($idDelito);
                 $Delito->setDescripcionDelito($descripcion);
-                $Delito->setEstadoDelito($_REQUEST['cmb_estadoDelitoModificar']);
+                $Delito->setEstadoDelito($Delito->limpiarNumeroEntero($_REQUEST['cmb_estadoDelitoModificar']));
                 if($Delito->actualizarDelito()){
                   echo "1";
                   $UsuarioHistorial= new Usuario();
@@ -307,7 +309,8 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
               break;
               case '4'://listar tabla
               ?>
-               <table class="table">
+              <div class="table-responsive">
+              <table class="table table-striped">
                             <caption ></caption>
                             <thead>
                                 <th>Codigo</th>
@@ -359,6 +362,7 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                                             </tr>
                            </tbody>
                         </table>
+                      </div>
                                  <?php
               break;
 
@@ -431,7 +435,7 @@ if($resultadoUsuario){
               }else{
                 $idPoblacion=$Poblacion->limpiarNumeroEntero($_REQUEST['txt_idPoblacionModificar']);
                 $descripcion=$Poblacion->limpiarTexto($_REQUEST['txt_descripcionPoblacionModificar']);
-                $estadoPoblacion=$Poblacion->limpiarTexto($_REQUEST['cmb_estadoPoblacionModificar']);
+                $estadoPoblacion=$Poblacion->limpiarNumeroEntero($_REQUEST['cmb_estadoPoblacionModificar']);
 
                 $Poblacion->setIdPoblacion($idPoblacion);
                 $Poblacion->setDescripcionPoblacion($descripcion);
@@ -462,7 +466,8 @@ if($resultadoUsuario){
               break;
               case '4'://listar tabla
               ?>
-               <table class="table">
+              <div class="table-responsive">
+              <table class="table table-striped">
                             <caption ></caption>
                             <thead>
                                 <th>Codigo</th>
@@ -514,6 +519,7 @@ if($resultadoUsuario){
                                             </tr>
                            </tbody>
                         </table>
+                      </div>
                                  <?php
               break;
 
@@ -606,7 +612,8 @@ if($resultadoUsuario){
               break;
               case '4'://listar tabla
               ?>
-               <table class="table">
+              <div class="table-responsive">
+              <table class="table table-striped">
                             <caption ></caption>
                             <thead>
                                 <th>Codigo</th>
@@ -658,6 +665,7 @@ if($resultadoUsuario){
                                             </tr>
                            </tbody>
                         </table>
+                      </div>
                                  <?php
               break;
 
@@ -801,7 +809,8 @@ if($resultadoUsuario){
 
                 break;
             case '3'://Listar registro en la tabla con paginador - GRUPO
-             echo'<table class="table">
+             echo'<div class="table-responsive">
+             <table class="table table-striped">
                 <thead>
                     <th>Nombre Grupo</th>
                     <th></th>
@@ -837,7 +846,8 @@ if($resultadoUsuario){
                             </td>
                           </tr>
                        </tbody>
-                    </table>';
+                    </table>
+                    </div>';
 
             break;
 
@@ -1045,7 +1055,8 @@ if($resultadoUsuario){
 
                 break;
             case '3'://Listar registro en la tabla con paginador - ZONA
-             echo'<table class="table">
+             echo'<div class="table-responsive">
+             <table class="table table-striped">
                 <thead>
                     <th>Nombre Zona</th>
                     <th></th>
@@ -1081,7 +1092,8 @@ if($resultadoUsuario){
                             </td>
                           </tr>
                        </tbody>
-                    </table>';
+                    </table>
+                    </div>';
 
             break;
 
@@ -1204,7 +1216,7 @@ case "7": //mantenedor sospechosos
                 $posicionGuion = strpos($run,'-');
                 $soloRun = substr($run,0,$posicionGuion);
                 $digitoVerificador = substr($run,$posicionGuion+1,strlen($run));
-
+                  $soloRun=$Sospechoso->limpiarNumeroEntero($soloRun);
                  $nombre=$Sospechoso->limpiarTexto($_POST['nombre']);
                  $apellidoP=$Sospechoso->limpiarTexto($_POST['apellidoPaterno']);
                  $apellidoM=$Sospechoso->limpiarTexto($_POST['apellidoMaterno']);
@@ -1488,7 +1500,8 @@ $privilegioModificar=false;
 
       if($privilegioVer==true){
 
-                     echo'<table class="table table-bordered tablaLista table-striped">
+                     echo'<div class="table-responsive">
+                     <table class="table table-bordered tablaLista table-striped">
                            <thead>
                                <th>Rut</th>
                                <th>Nombre</th>
@@ -1526,7 +1539,8 @@ $privilegioModificar=false;
                                     </td>
                                   </tr>
                                </tbody>
-                            </table>';
+                            </table>
+                            </div>';
 
               }else{//SI NO TIENE EL PRIVILEGIO PARA VER SE DEVUELVE AL MENU PRINCIPAL
                 echo "0";//no tiene los privilegios
