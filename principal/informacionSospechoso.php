@@ -1,6 +1,5 @@
 <?php
 include("./comun.php");
-conectarBD();
 
 
 if(isset($_REQUEST['run'])){
@@ -106,9 +105,9 @@ if(isset($_REQUEST['run'])){
 										 inner join tb_imagensospechoso on tb_imagen.id_imagen=tb_imagensospechoso.id_imagen
 										 where run_sospechoso=".$run;
 										 //echo $consulta2;
-										 $resultado2= $con->query($consulta2);
+										 $resultado2= $Sospechoso->registros($consulta2);
 
-										 while($filas2= $resultado2->fetch_array()){
+										 	foreach($resultado2 as $filas2){
 
 											 echo'<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 img-thumbnail alturaImage "
 												style="background-image: url(\'../imagenes/'.$filas2['nombre_imagen'].'\');

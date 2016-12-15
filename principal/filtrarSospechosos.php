@@ -1,6 +1,6 @@
 <?php
-	include("comun.php");
-	conectarBD();
+	require_once '../clases/Conexion.php';
+	$Conexion= new Conexion();
 
 	$privilegioFiltrar=false;
 
@@ -162,8 +162,8 @@
 				for($c=1;$c<=$contadorRangosEstatura;$c++){
 					if(isset($_REQUEST['estatura'.$c])){
 
-						$rangos= $con->query("select * from tb_rangoestatura where id_rangoEstatura=".$c);
-						while($filas= $rangos->fetch_array()){
+						$rangos= $Conexion->registros("select * from tb_rangoestatura where id_rangoEstatura=".$c);
+						foreach($rangos as $filas){
 
 							if($rangosEstatura==""){
 								$rangosEstatura= $rangosEstatura." (  estatura between ".$filas['limite_inferior']." and ".$filas['limite_superior']." )";
@@ -187,8 +187,8 @@
 				for($c=1;$c<=$contadorRangosEdad;$c++){
 					if(isset($_REQUEST['edad'.$c])){
 
-						$rangos= $con->query("select * from tb_rangoedad where id_rangoEdad=".$c);
-						while($filas= $rangos->fetch_array()){
+						$rangos= $Conexion->registros("select * from tb_rangoedad where id_rangoEdad=".$c);
+					   foreach($rangos as $filas){
 
 							if($rangosEdad==""){
 								$rangosEdad= $rangosEdad." (  edad(fecha_nacimiento) between ".$filas['limite_inferior']." and ".$filas['limite_superior']." )";
@@ -254,12 +254,16 @@
 				$consulta= $consulta.$enlacesConsulta.$condicionesConsulta;
 				//echo $consulta;
 
-				$resultado= $con->query($consulta);
+				$resultado= $Conexion->registros($consulta);
 
-				if($resultado->num_rows!=0){
+				if($Conexion->cantidadRegistros($consulta)!=0){
 
 				echo '<div class="container">';
-					while($filas= $resultado->fetch_array()){
+
+
+				//	$resultado= $Conexion->registros($consulta);
+
+					foreach($resultado as $filas){
 
 
 						echo'<div onclick="mostrarInformacionSospechoso('.$filas['run'].')" data-toggle="modal" data-target="#modalInfo">

@@ -115,9 +115,9 @@ $UsuarioValidar->verificarSesion();
 					<td>
 						<select class="form-control" name="colorPelo">
 							<?php
-								$resultado = $con->query("select * from tb_colorpelo");
+									$resultado = $Usuario->registros("select * from tb_colorpelo");
                                 if(isset($_REQUEST['id'])){
-                                    while ($filas= $resultado->fetch_array()){
+                                    foreach($resultado as $filas){
                                         echo'<option value="'.$filas['id_colorPelo'].'"';
                                             if($filas['id_colorPelo']==$filasPrincipal['id_colorPelo']){
                                                 echo'selected="selected" ';
@@ -125,7 +125,7 @@ $UsuarioValidar->verificarSesion();
                                         echo'>'.$filas['descripcion_colorPelo'].'</option>';
                                     }
                                 }else{
-                                    while ($filas= $resultado->fetch_array()){
+                                    foreach($resultado as $filas){
                                         echo'<option value="'.$filas['id_colorPelo'].'">'.$filas['descripcion_colorPelo'].'</option>';
                                     }
                                 }
@@ -137,10 +137,10 @@ $UsuarioValidar->verificarSesion();
 					<td><strong>Contextura</strong></td>
 					<td><select class="form-control" name="contextura">
 						<?php
-							$resultado = $con->query("select * from tb_contextura");
+							$resultado = $Usuario->registros("select * from tb_contextura");
                             if(isset($_REQUEST['id'])){
 
-                                while($filas = $resultado->fetch_array()){
+                                foreach($resultado as $filas){
                                     echo '<option value="'.$filas['id_contextura'].'" ';
                                             if($filas['id_contextura']==$filasPrincipal['id_contextura']){
                                                 echo'selected="selected" ';
@@ -148,7 +148,7 @@ $UsuarioValidar->verificarSesion();
                                     echo'>'.$filas['descripcion_contextura'].'</option>';
                                 }
                             }else{
-                                 while($filas = $resultado->fetch_array()){
+                                 foreach($resultado as $filas){
                                     echo '<option value="'.$filas['id_contextura'].'">'.$filas['descripcion_contextura'].'</option>';
                                 }
                             }
@@ -159,9 +159,9 @@ $UsuarioValidar->verificarSesion();
 					<td><strong>Estado Civil</strong></td>
 					<td><select class="form-control" name="estadoCivil">
 						<?php
-							$resultado = $con->query("select * from tb_estadoCivil");
+							$resultado = $Usuario->registros("select * from tb_estadoCivil");
                             if(isset($_REQUEST['id'])){
-                                while($filas = $resultado->fetch_array()){
+                                foreach($resultado as $filas){
                                     echo '<option value="'.$filas['id_estadoCivil'].'"  ';
                                             if($filas['id_estadoCivil']==$filasPrincipal['id_estadoCivil']){
                                                 echo'selected="selected" ';
@@ -169,7 +169,7 @@ $UsuarioValidar->verificarSesion();
                                     echo'>'.$filas['descripcion_estadoCivil'].'</option>';
                                 }
                             }else{
-                                while($filas = $resultado->fetch_array()){
+                                foreach($resultado as $filas){
                                     echo '<option value="'.$filas['id_estadoCivil'].'">'.$filas['descripcion_estadoCivil'].'</option>';
                                 }
                             }
@@ -180,9 +180,9 @@ $UsuarioValidar->verificarSesion();
 					<td><strong>Sexo</strong></td>
 					<td><select class="form-control" name="sexo">
 						<?php
-							$resultado = $con->query("select * from tb_sexo");
+							$resultado = $Usuario->registros("select * from tb_sexo");
                             if(isset($_REQUEST['id'])){
-                                while($filas = $resultado->fetch_array()){
+                                foreach($resultado as $filas){
                                     echo '<option value="'.$filas['id_sexo'].'" ';
                                             if($filas['id_sexo']==$filasPrincipal['id_sexo']){
                                                 echo'selected="selected" ';
@@ -190,7 +190,7 @@ $UsuarioValidar->verificarSesion();
                                     echo'>'.$filas['descripcion_sexo'].'</option>';
                                 }
                             }else{
-                                while($filas = $resultado->fetch_array()){
+                                foreach($resultado as $filas){
                                     echo '<option value="'.$filas['id_sexo'].'">'.$filas['descripcion_sexo'].'</option>';
                                 }
                             }
@@ -201,8 +201,8 @@ $UsuarioValidar->verificarSesion();
 					<td><strong>Tez De Piel</strong></td>
 					<td><select class="form-control" name="tezPiel">
 						<?php
-							$resultado = $con->query("select * from tb_tezpiel");                            if(isset($_REQUEST['id'])){
-                                while($filas = $resultado->fetch_array()){
+							$resultado = $Usuario->registros("select * from tb_tezpiel");                            if(isset($_REQUEST['id'])){
+                                foreach($resultado as $filas){
                                     echo '<option value="'.$filas['id_tezPiel'].'" ';
                                             if($filas['id_tezPiel']==$filasPrincipal['id_tezPiel']){
                                                 echo'selected="selected" ';
@@ -210,7 +210,7 @@ $UsuarioValidar->verificarSesion();
                                     echo'>'.$filas['descripcion_tezPiel'].'</option>';
                                 }
                             }else{
-                                while($filas = $resultado->fetch_array()){
+                                foreach($resultado as $filas){
                                     echo '<option value="'.$filas['id_tezPiel'].'">'.$filas['descripcion_tezPiel'].'</option>';
                                 }
                             }
@@ -221,9 +221,9 @@ $UsuarioValidar->verificarSesion();
 					<td><strong>Tipo de Ojos</strong></td>
 					<td><select class="form-control" name="tipoOjos">
 						<?php
-							$resultado = $con->query("select * from tb_colorojos");
+							$resultado = $Usuario->registros("select * from tb_colorojos");
                             if(isset($_REQUEST['id'])){
-                                while($filas = $resultado->fetch_array()){
+                                foreach($resultado as $filas){
                                     echo '<option value="'.$filas['id_colorOjos'].'" ';
                                             if($filas['id_colorOjos']==$filasPrincipal['id_tipoOjos']){
                                                 echo'selected="selected" ';
@@ -231,7 +231,7 @@ $UsuarioValidar->verificarSesion();
                                     echo'>'.$filas['descripcion_colorOjos'].'</option>';
                                 }
                             }else{
-                                while($filas = $resultado->fetch_array()){
+                                foreach($resultado as $filas){
                                     echo '<option value="'.$filas['id_colorOjos'].'">'.$filas['descripcion_colorOjos'].'</option>';
                                 }
                             }
@@ -242,9 +242,9 @@ $UsuarioValidar->verificarSesion();
 					<td><strong>Tipo de Pelo</strong></td>
 					<td><select class="form-control" name="tipoPelo">
 						<?php
-							$resultado = $con->query("select * from tb_tipopelo");
+							$resultado = $Usuario->registros("select * from tb_tipopelo");
                             if(isset($_REQUEST['id'])){
-                                while($filas = $resultado->fetch_array()){
+                                foreach($resultado as $filas){
                                     echo '<option value="'.$filas['id_tipoPelo'].'" ';
                                             if($filas['id_tipoPelo']==$filasPrincipal['id_tipoPelo']){
                                                 echo'selected="selected" ';
@@ -252,7 +252,7 @@ $UsuarioValidar->verificarSesion();
                                     echo'>'.$filas['descripcion_tipoPelo'].'</option>';
                                 }
                             }else{
-                                while($filas = $resultado->fetch_array()){
+                                foreach($resultado as $filas){
                                     echo '<option value="'.$filas['id_tipoPelo'].'">'.$filas['descripcion_tipoPelo'].'</option>';
                                 }
                             }
@@ -467,15 +467,15 @@ $UsuarioValidar->verificarSesion();
 				 			</thead>
 				 			<tbody>
 				 		<?php
-				 			$resultado= $con->query("select * from tb_delito");
+				 			$resultado= $Usuario->registros("select * from tb_delito");
 				 				$contadorDelitos=0;
 
-				 				while($filas= $resultado->fetch_array()){
+				 			foreach($resultado as $filas){
 				 						$contadorDelitos++;
 				 						echo'<tr>
 				 								<td><input class="" type="checkbox" value="'.$filas['id_delito'].'" name="delito'.$filas['id_delito'].'" ';
 
-                                        //$resultado2= $con->query("select * from tb_delitosopechoso where id_delito=".$filas['id_delito'].' and run_sospechoso='.$_REQUEST['id']);
+                                        //$resultado2= $Usuario->registros("select * from tb_delitosopechoso where id_delito=".$filas['id_delito'].' and run_sospechoso='.$_REQUEST['id']);
 
                                           //  if($resultado2->num_rows>0){
                                                 //echo' checked="checked" ';
@@ -530,16 +530,16 @@ $UsuarioValidar->verificarSesion();
 				 			</thead>
 				 			<tbody>
 				 		<?php
-				 			$resultado= $con->query("select * from tb_equipofutbol");
+				 			$resultado= $Usuario->registros("select * from tb_equipofutbol");
 				 				$contadorEquiposFutbol=0;
 
 								if(isset($_REQUEST['id'])){
-								 				while($filas= $resultado->fetch_array()){
+								 			foreach($resultado as $filas){
 								 						$contadorEquiposFutbol++;
 								 						echo'<tr>
 								 								<td><input type="checkbox" value="'.$filas['id_equipo'].'" name="equipo'.$filas['id_equipo'].'" ';
 
-				                                            $resultado2= $con->query("select * from tb_equiposospechoso where id_equipo=".$filas['id_equipo'].' and run='.$_REQUEST['id']);
+				                                            $resultado2= $Usuario->registros("select * from tb_equiposospechoso where id_equipo=".$filas['id_equipo'].' and run='.$_REQUEST['id']);
 
 				                                            if($resultado2->num_rows>0){
 				                                                echo' checked="checked" ';
@@ -550,7 +550,7 @@ $UsuarioValidar->verificarSesion();
 								 							 </tr>';
 								 				}
 								}else{
-								 				while($filas= $resultado->fetch_array()){
+								 			foreach($resultado as $filas){
 								 						$contadorEquiposFutbol++;
 								 						echo'<tr>
 								 								<td><input type="checkbox" value="'.$filas['id_equipo'].'" name="equipo'.$filas['id_equipo'].'" /><label for="'.$filas['id_equipo'].'" >'.$filas['descripcion_equipo'].'</label>
@@ -573,16 +573,16 @@ $UsuarioValidar->verificarSesion();
 						 			</thead>
 						 			<tbody>
 						 		<?php
-						 			$resultado= $con->query("select * from tb_cicatriz");
+						 			$resultado= $Usuario->registros("select * from tb_cicatriz");
 						 				$contadorOpcionesCicatriz=0;
 
 								if(isset($_REQUEST['id'])){
-										 				while($filas= $resultado->fetch_array()){
+										 			foreach($resultado as $filas){
 										 						$contadorOpcionesCicatriz++;
 										 						echo'<tr>
 										 								<td><input type="checkbox" value="'.$filas['id_lugarCicatriz'].'" name="cicatriz'.$filas['id_lugarCicatriz'].'" ';
 
-				                                                $resultado2= $con->query("select * from tb_cicatrizsospechoso where id_lugarCicatriz=".$filas['id_lugarCicatriz'].' and run='.$_REQUEST['id']);
+				                                                $resultado2= $Usuario->registros("select * from tb_cicatrizsospechoso where id_lugarCicatriz=".$filas['id_lugarCicatriz'].' and run='.$_REQUEST['id']);
 
 				                                                if($resultado2->num_rows>0){
 				                                                    echo' checked="checked" ';
@@ -593,7 +593,7 @@ $UsuarioValidar->verificarSesion();
 										 							 </tr>';
 										 				}
 								}else{
-														while($filas= $resultado->fetch_array()){
+													foreach($resultado as $filas){
 																$contadorOpcionesCicatriz++;
 																echo'<tr>
 																		<td><input type="checkbox" value="'.$filas['id_lugarCicatriz'].'" name="cicatriz'.$filas['id_lugarCicatriz'].'" /><label for="'.$filas['id_lugarCicatriz'].'" >'.$filas['descripcion_lugarCicatriz'].'</label>
@@ -614,16 +614,16 @@ $UsuarioValidar->verificarSesion();
 						 			</thead>
 						 			<tbody>
 						 		<?php
-						 			$resultado= $con->query("select * from tb_tatuaje");
+						 			$resultado= $Usuario->registros("select * from tb_tatuaje");
 						 				$contadorOpcionesTatuaje=0;
 
 								if(isset($_REQUEST['id'])){
-								 				while($filas= $resultado->fetch_array()){
+								 			foreach($resultado as $filas){
 								 						$contadorOpcionesTatuaje++;
 								 						echo'<tr>
 								 								<td><input type="checkbox" value="'.$filas['id_lugarTatuaje'].'" name="tatuaje'.$filas['id_lugarTatuaje'].'" ';
 
-		                                                $resultado2= $con->query("select * from tb_tatuajesospechoso where id_lugarTatuaje=".$filas['id_lugarTatuaje'].' and run='.$_REQUEST['id']);
+		                                                $resultado2= $Usuario->registros("select * from tb_tatuajesospechoso where id_lugarTatuaje=".$filas['id_lugarTatuaje'].' and run='.$_REQUEST['id']);
 
 		                                                if($resultado2->num_rows>0){
 		                                                    echo' checked="checked" ';
@@ -634,7 +634,7 @@ $UsuarioValidar->verificarSesion();
 								 							 </tr>';
 								 				}
 									}else{
-									 				while($filas= $resultado->fetch_array()){
+									 			foreach($resultado as $filas){
 									 						$contadorOpcionesTatuaje++;
 									 						echo'<tr>
 									 								<td><input type="checkbox" value="'.$filas['id_lugarTatuaje'].'" name="tatuaje'.$filas['id_lugarTatuaje'].'" /><label for="'.$filas['id_lugarTatuaje'].'" >'.$filas['descripcion_lugarTatuaje'].'</label>
@@ -655,16 +655,16 @@ $UsuarioValidar->verificarSesion();
 						 			</thead>
 						 			<tbody>
 						 		<?php
-						 			$resultado= $con->query("select * from tb_piercing");
+						 			$resultado= $Usuario->registros("select * from tb_piercing");
 						 				$contadorOpcionesPiercing=0;
 
 								if(isset($_REQUEST['id'])){
-									 				while($filas= $resultado->fetch_array()){
+									 			foreach($resultado as $filas){
 									 						$contadorOpcionesPiercing++;
 									 						echo'<tr>
 									 								<td><input type="checkbox" value="'.$filas['id_lugarPiercing'].'" name="piercing'.$filas['id_lugarPiercing'].'" ';
 
-			                                                $resultado2= $con->query("select * from tb_piercingsospechoso where id_lugarPiercing=".$filas['id_lugarPiercing'].' and run='.$_REQUEST['id']);
+			                                                $resultado2= $Usuario->registros("select * from tb_piercingsospechoso where id_lugarPiercing=".$filas['id_lugarPiercing'].' and run='.$_REQUEST['id']);
 
 			                                                if($resultado2->num_rows>0){
 			                                                    echo' checked="checked" ';
@@ -675,7 +675,7 @@ $UsuarioValidar->verificarSesion();
 									 							 </tr>';
 									 				}
 									}else{
-										 				while($filas= $resultado->fetch_array()){
+										 			foreach($resultado as $filas){
 										 						$contadorOpcionesPiercing++;
 										 						echo'<tr>
 										 								<td><input type="checkbox" value="'.$filas['id_lugarPiercing'].'" name="piercing'.$filas['id_lugarPiercing'].'" /><label for="'.$filas['id_lugarPiercing'].'" >'.$filas['descripcion_lugarPiercing'].'</label>
@@ -698,16 +698,16 @@ $UsuarioValidar->verificarSesion();
 				 			</thead>
 				 			<tbody>
 				 		<?php
-				 			$resultado= $con->query("SELECT * FROM tb_poblacion");
+				 			$resultado= $Usuario->registros("SELECT * FROM tb_poblacion");
 				 				$contadorPoblaciones=0;
 
 								if(isset($_REQUEST['id'])){
-						 				while($filas= $resultado->fetch_array()){
+						 			foreach($resultado as $filas){
 						 						$contadorPoblaciones++;
 						 						echo'<tr>
 						 								<td><input type="checkbox" value="'.$filas['id_poblacion'].'" name="poblacion'.$filas['id_poblacion'].'" ';
 
-		                                                $resultado2= $con->query("select * from tb_poblacionsospechoso where id_poblacion=".$filas['id_poblacion'].' and run='.$_REQUEST['id']);
+		                                                $resultado2= $Usuario->registros("select * from tb_poblacionsospechoso where id_poblacion=".$filas['id_poblacion'].' and run='.$_REQUEST['id']);
 
 		                                                if($resultado2->num_rows>0){
 		                                                    echo' checked="checked" ';
@@ -718,7 +718,7 @@ $UsuarioValidar->verificarSesion();
 						 							 </tr>';
 						 				}
 								}else{
-						 				while($filas= $resultado->fetch_array()){
+						 			foreach($resultado as $filas){
 						 						$contadorPoblaciones++;
 						 						echo'<tr>
 						 								<td><input type="checkbox" value="'.$filas['id_poblacion'].'" name="poblacion'.$filas['id_poblacion'].'" /><label for="'.$filas['id_poblacion'].'" >'.$filas['descripcion_poblacion'].'</label>
