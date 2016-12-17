@@ -48,7 +48,7 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                       $correo= $_REQUEST['txt_correoCrear'];
                       $tipoUsuario= $_REQUEST['select_tipoUsuarioCrear'];
 
-                      if($campoRut=="" || $nombre=="" || $apellidoPaterno=="" || $clave=="" || $tipoUsuario==""){
+                      if($campoRut=="" || $nombre=="" || $apellidoPaterno=="" || $apellidoMaterno=="" || $clave=="" || $tipoUsuario==""){
                             echo "2";//HAY CAMPOS VACIOS
 
                       }else{
@@ -95,7 +95,17 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                 $rut= substr($campoRut,0,$posicionGuion);
                 $dv= substr($campoRut,$posicionGuion+1,$posicionGuion+1);
                 $clave = $_REQUEST['txt_clave1Modificar'];
+                $estado = $_REQUEST['select_estadoUsuarioModificar'];
+                $tipo = $_REQUEST['select_tipoUsuarioModificar'];
+                $nombre = $_REQUEST['txt_nombreModificar'];
+                $apellidoP = $_REQUEST['txt_apellidoPaternoModificar'];
+                $apellidoM = $_REQUEST['txt_apellidoMaternoModificar'] ;
+                $telefono = $_REQUEST['txt_telefonoModificar'];
+                $correo = $_REQUEST['txt_correoModificar'];
+                if($campoRut=="" || $nombre=="" || $apellidoP=="" || $apellidoM=="" || $tipo=="" || $estado=="" || $telefono=="" || $correo==""){
+                      echo "2";//HAY CAMPOS VACIOS
 
+                }else{
                 // Generamos un salt aleatoreo, de 22 caracteres para Bcrypt
                 $salt = substr(base64_encode(openssl_random_pseudo_bytes('30')), 0, 22);
                 // A Crypt no le gustan los '+' así que los vamos a reemplazar por puntos.
@@ -103,16 +113,15 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                 // Generamos el hash
                 $password = crypt($clave, '$2y$10$' . $salt);
 
-                $estado = $_REQUEST['select_estadoUsuarioModificar'] ;
-                $tipo = $_REQUEST['select_tipoUsuarioModificar'];
+
                 $Usuario->setRun($Usuario->limpiarNumeroEntero($rut));
                 $Usuario->setDV($dv);
-                $Usuario->setNombre($Usuario->limpiarTexto($_REQUEST['txt_nombreModificar']));
-                $Usuario->setApellidoPaterno($Usuario->limpiarTexto($_REQUEST['txt_apellidoPaternoModificar']));
-                $Usuario->setApellidoMaterno($Usuario->limpiarTexto($_REQUEST['txt_apellidoMaternoModificar']));
+                $Usuario->setNombre($Usuario->limpiarTexto($nombre));
+                $Usuario->setApellidoPaterno($Usuario->limpiarTexto($apellidoP));
+                $Usuario->setApellidoMaterno($Usuario->limpiarTexto($apellidoM));
                 $Usuario->setClave($password);
-                $Usuario->setTelefono($Usuario->limpiarTexto($_REQUEST['txt_telefonoModificar']));
-                $Usuario->setCorreo($Usuario->limpiarCorreo($_REQUEST['txt_correoModificar']));
+                $Usuario->setTelefono($Usuario->limpiarTexto($telefono));
+                $Usuario->setCorreo($Usuario->limpiarCorreo($correo));
                 $Usuario->setGrupoUsuario($Usuario->limpiarNumeroEntero($tipo));
                 $Usuario->setEstado($Usuario->limpiarNumeroEntero($estado));
                 //
@@ -123,6 +132,7 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                 // {
                 //   $resultarray[] = $row['id_estado'];
                 // }
+
                 require_once '../clases/Estado.php';
                 $Estado= new Estado();
                 $Estado->setIdEstado($estado);
@@ -149,6 +159,7 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                 }else {
                     echo "3";//errors
                   }
+                }
 
                         break;
                 case '3'://Listar USUARIOS
@@ -306,7 +317,7 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
 
               break;
               case '2'://Modificar delito
-              if($_REQUEST['txt_descripcionDelitoModificar']=="" || $_REQUEST['txt_idDelitoModificar']=="" || $_REQUEST['cmb_estadoDelitoModificar']==""){
+              if($_REQUEST['txt_descripcionDelitoModificar']=="" || $_REQUEST['txt_idDelitoModificar']=="" || $_REQUEST['cmb_estadoDelitoModificar']==null){
                     echo "2";//HAY CAMPOS VACIOS
 
               }else{
