@@ -6,13 +6,28 @@ class Sospechoso extends Conexion{
   private $run;
   private $dv;
   private $nombre;
-  private $apellidoPaterno;
-  private $apellidoMaterno;
-  private $clave;
-  private $telefono;
-  private $correo;
-  private $grupoUsuario;
-  private $estado;
+  private $apellido_paterno;
+  private $apellido_materno;
+  private $lugar_nacimiento;
+  private $id_color_pelo;
+  private $id_contextura;
+  private $id_estado_civil;
+  private $id_sexo;
+  private $id_tez_piel;
+  private $id_tipo_ojos;
+  private $id_tipo_pelo;
+  private $antecedentes;//boolean
+  private $apodos;
+  private $barba;
+  private $lentes;
+  private $pecas;
+  private $acne;
+  private $bigote;
+  private $manchas;
+  private $estatura;
+  private $fecha_nacimiento;
+  private $cantidad_identificaciones;
+
 
   public function __construct(){
       parent::__construct();
@@ -28,91 +43,118 @@ class Sospechoso extends Conexion{
       $this->nombre= $arg_nombre;
   }
   public function setApellidoPaterno($arg_apellidoPaterno){
-    $this->apellidoPaterno= $arg_apellidoPaterno;
+    $this->apellido_paterno= $arg_apellidoPaterno;
   }
   public function setApellidoMaterno($arg_apellidoMaterno){
-    $this->apellidoMaterno= $arg_apellidoMaterno;
+    $this->apellido_materno= $arg_apellidoMaterno;
   }
-  public function setClave($arg_clave){
-    $this->clave= $arg_clave;
+  public function setLugarNacimiento($arg_variable){
+    $this->lugar_nacimiento= $arg_variable;
   }
-  public function setTelefono($arg_telefono){
-    $this->telefono= $arg_telefono;
+  public function setIdColorPelo($arg_variable){
+    $this->id_color_pelo= $arg_variable;
   }
-  public function setCorreo($arg_correo){
-      $this->correo= $arg_correo;
+  public function setContextura($arg_variable){
+    $this->id_contextura= $arg_variable;
   }
-  public function setGrupoUsuario($arg_grupoUsuario){
-     $this->grupoUsuario= $arg_grupoUsuario;
+  public function setIdEstadoCivil($arg_variable){
+    $this->id_estado_civil= $arg_variable;
   }
-  public function setEstado($arg_estado){
-      $this->estado= $arg_estado;
+  public function setIdSexo($arg_variable){
+    $this->id_sexo= $arg_variable;
+  }
+  public function setIdTezPiel($arg_variable){
+    $this->id_tez_piel= $arg_variable;
+  }
+  public function setIdTipoOjos($arg_variable){
+    $this->id_tipo_ojos= $arg_variable;
+  }
+  public function setIdTipoPelo($arg_variable){
+    $this->id_tipo_pelo= $arg_variable;
+  }
+  public function setAntecedentes($arg_variable){
+    $this->antecedentes= $arg_variable;
+  }
+  public function setApodos($arg_variable){
+    $this->apodos= $arg_variable;
+  }
+  public function setBarba($arg_variable){
+    $this->barba= $arg_variable;
+  }
+  public function setLentes($arg_variable){
+    $this->lentes= $arg_variable;
+  }
+  public function setPecas($arg_variable){
+    $this->pecas= $arg_variable;
+  }
+  public function setAcne($arg_variable){
+    $this->acne= $arg_variable;
+  }
+  public function setBigote($arg_variable){
+    $this->bigote= $arg_variable;
+  }
+  public function setManchas($arg_variable){
+    $this->manchas= $arg_variable;
+  }
+  public function setEstatura($arg_variable){
+    $this->estatura= $arg_variable;
+  }
+  public function setFechaNacimiento($arg_variable){
+    $this->fecha_nacimiento= $arg_variable;
+  }
+  public function setCantidadIdentificaciones($arg_variable){
+    $this->cantidad_identificaciones= $arg_variable;
   }
 
+  public function vistasospechoso(){
+    $consulta="select * from vistasospechoso where solorrun=".$this->run;
 
-public function vistasospechoso(){
-  $consulta="select * from vistasospechoso where solorrun=".$this->run;
-
-  $usuarios= $this->registros($consulta);
-  return $usuarios;
-}
-
-  public function validarRut($rut)
-  {
-      if (!preg_match("/^[0-9.]+[-]?+[0-9kK]{1}/", $rut)) {
-          return false;
-      }
-      $rut = preg_replace('/[\.\-]/i', '', $rut);
-      $dv = substr($rut, -1);
-      $numero = substr($rut, 0, strlen($rut) - 1);
-      $i = 2;
-      $suma = 0;
-      foreach (array_reverse(str_split($numero)) as $v){
-          if ($i == 8)
-              $i = 2;
-          $suma += $v * $i;
-          ++$i;
-      }
-      $dvr = 11 - ($suma % 11);
-      if ($dvr == 11)
-          $dvr = 0;
-      if ($dvr == 10)
-          $dvr = 'K';
-      if ($dvr == strtoupper($dv))
-          echo "1";
-      else
-          echo "2";
-  }
-  public function cantidadUsuarios(){
-    $cantidad= $this->cantidadRegistros("select run from tb_usuarios");
-    return $cantidad;
-  }
-
-  public function listarUsuarios(){
-    $usuarios= $this->consultaRegistros("select * from vistausuarios");
+    $usuarios= $this->registros($consulta);
     return $usuarios;
   }
 
-  public function insertarModificarUsuario(){
-        $verificar;
-        $verificar=$this->insertar("call insertarModificarUsuario($this->run,'$this->dv','$this->nombre','$this->apellidoPaterno','$this->apellidoMaterno','$this->clave','$this->telefono','$this->correo','$this->grupoUsuario',$this->estado)");
-        if($verificar){
-          echo "1";
-        }else{
-          echo "2";
-        }
-
+  public function consultarExisteSospechoso(){
+     $consulta="SELECT run FROM tb_sospechoso where run=".$this->run;
+     $resultado= $this->registros($consulta);
+     return $resultado;
   }
-  public function eliminarUsuario(){
-    $verificar;
 
-    $verificar= $this->insertar("delete from tb_usuarios where run=".$this->run.";");
+  public function insertarModificarSospechosos(){
+      $consulta="CALL insertarModificarSospechoso(
+                ".$this->run.",
+                '".$this->dv."',
+               '".$this->nombre."',
+               '".$this->apellido_paterno."',
+               '".$this->apellido_materno."',
+               '".$this->lugar_nacimiento."',
+                ".$this->id_color_pelo.",
+                ".$this->id_contextura.",
+                ".$this->id_estado_civil.",
+                ".$this->id_sexo.",
+                ".$this->id_tez_piel.",
+                ".$this->id_tipo_ojos.",
+                ".$this->id_tipo_pelo.",
+                ".$this->antecedentes.",
+               '".$this->apodos."',
+                ".$this->barba.",
+                ".$this->lentes.",
+                ".$this->pecas.",
+                ".$this->acne.",
+                ".$this->bigote.",
+                ".$this->manchas.",
+                ".$this->estatura.",
+               '".$this->fecha_nacimiento."');";
 
-                if($verificar){
-                      return true;
-                }else{
-                    echo "fallo al eliminar el Usuario";
-                }
+      //echo $consulta;
+      $resultado=$this->insertar($consulta);
+      return $resultado;
+  }
+
+  public function eliminarCaracteristicasSospechosos(){
+      $consulta="CALL eliminarCaracteristicasSospechosos(".$this->run.")";
+      //echo $consulta;
+      $resultado=$this->insertar($consulta);
+      return $resultado;
   }
 
 

@@ -105,7 +105,7 @@ $UsuarioValidar->verificarSesion();
 				</tr>
 				<tr>
 					<td><strong>Estatura(cm)</strong></td>
-					<td><input class="form-control" name="estatura" type="number" min="0"
+					<td><input required class="form-control" name="estatura" type="number" min="0"
 					     <?php if(isset($_REQUEST['id'])){ echo' value="'.$filasPrincipal['estatura'].'"'; } ?>
 					>
 					</td>
@@ -510,9 +510,9 @@ $UsuarioValidar->verificarSesion();
 								</thead>
 								<tbody>
 									<tr>
-										<td><input class="form-control" name="foto1" type="file"></input></td>
-										<td><input class="form-control" type="date" name="fechaFoto1"></td>
-										<td><input class="form-control" type="checkbox" name="tipoFoto1"></td>
+										<td><input required class="form-control" name="foto1" type="file"></input></td>
+										<td><input required class="form-control" type="date" name="fechaFoto1"></td>
+										<td><input class="form-control" type="checkbox" name="tipoFoto1" id="tipoFoto1" onclick="soloUnaPrincipal(1)" ></td>
 									</tr>
 							</tbody>
 							</table>
@@ -747,7 +747,8 @@ $UsuarioValidar->verificarSesion();
 	          $("#formularioIngresarSospechoso").submit(function(){
 								event.preventDefault();
 
-												          var formData = new FormData(document.getElementById("formularioIngresarSospechoso"));
+												      var formData = new FormData(document.getElementById("formularioIngresarSospechoso"));
+                              if(verificarPrincipal()){//verifica que se seleccione imagen principal
 
 													            $.ajax({
 													              url: "controladorMantenedores.php?mant=7&func=1",
@@ -758,21 +759,33 @@ $UsuarioValidar->verificarSesion();
 													              contentType: false,
 													              processData:false,
 													              success:function(resultado){
-																				//	alert(resultado);
-                                        if(resultado==0){
-																					    swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
-																							setTimeout(function(){
-																										window.location="../principal/menuPrincipal.php";
-																							   },5000);
+																					//alert(resultado);
+													                  if(resultado==0){
+													                         swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
+													                         setTimeout(function(){
+													                               window.location="../principal/menuPrincipal.php";
+													                            },5000);
 
-																				}else if(resultado==1){
-																							swal("Operacion exitosa!", "Guardado correctamente.", "success");
-																							window.reload();
-																					}else if(resultado=="1062"){
+													                   }else if(resultado=="1"){
+													                      swal("Operacion exitosa!", "Ingresado Correctamente", "success");
+													                      $("#botonCerrarModalModificar").click();
+																								$("#formularioIngresarSospechoso")[0].reset();
+																								
+													                    }else if(resultado=="2"){
+													                      sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
+
+													                    }else if(resultado=="1062"){
 																							swal("Error!", "El Rut ya existe.", "error");
-																					}
+
+																							}else{
+
+													                      sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "warning");
+													                    }
 													              }
 													            });
+																}else{
+																	    sweetAlert("Seleccione un imagen principal.", "", "error");
+																}
 	          });
 
 
@@ -781,7 +794,7 @@ $UsuarioValidar->verificarSesion();
 						  contadorTr++;
 
 						  //alert(contadorTr);
-						      $("#tablaFotosIngreso").append('<tr><td><input class="form-control" name="foto'+contadorTr+'" type="file"></input></td><td><input class="form-control" type="date" name="fechaFoto'+contadorTr+'"></td><td><input class="form-control" type="checkbox" name="tipoFoto'+contadorTr+'"></td></tr>');
+							$("#tablaFotosIngreso").append('<tr><td><input required class="form-control" name="foto'+contadorTr+'" type="file"></input></td><td><input required class="form-control" type="date" name="fechaFoto'+contadorTr+'"></td><td><input class="form-control" type="checkbox" onclick="soloUnaPrincipal('+contadorTr+')" name="tipoFoto'+contadorTr+'" id="tipoFoto'+contadorTr+'"></td></tr>');
 						      $("#contadorFotos").val(contadorTr);
 						}
 
@@ -795,6 +808,32 @@ $UsuarioValidar->verificarSesion();
 					           $("#contadorFotos").val(cantidad);
 					      }
 					}
+
+
+					function soloUnaPrincipal(id){//permite presionar solo un checkbox
+						 var cantidad= $("#contadorFotos").val();
+
+						 for(var c=1;c<=cantidad;c++){
+								 $('#tipoFoto'+c).prop('checked', false);
+						 }
+						 $("#tipoFoto"+id).prop('checked', true);
+
+					}
+
+
+					function verificarPrincipal(){//permite presionar solo un checkbox
+						 var cantidad= $("#contadorFotos").val();
+             var comprobarSeleccion=false;
+
+						 for(var c=1;c<=cantidad;c++){
+								 if($('#tipoFoto'+c).prop('checked')) {
+                    comprobarSeleccion=true;
+								}
+						 }
+
+						 return comprobarSeleccion;
+					}
+
 		</script>
 <?php
 	cargarFooter();

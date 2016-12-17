@@ -58,7 +58,7 @@
 								inner join tb_imagen on tb_imagensospechoso.id_imagen=tb_imagen.id_imagen ";
 
 				$condicionesConsulta="where (tb_imagensospechoso.run_sospechoso=tb_sospechoso.run
-				and fecha_imagen = (select max(fecha_imagen) from tb_imagen inner join tb_imagensospechoso on tb_imagen.id_imagen=tb_imagensospechoso.id_imagen  where tb_imagensospechoso.run_sospechoso=tb_sospechoso.run and foto_principal=1)) ";
+				and fecha_imagen = (select max(fecha_imagen) from tb_imagen inner join tb_imagensospechoso on tb_imagen.id_imagen=tb_imagensospechoso.id_imagen  where tb_imagensospechoso.run_sospechoso=tb_sospechoso.run and foto_principal=2)) ";
 
 
 

@@ -7,22 +7,6 @@ $UsuarioValidar->verificarSesion();
 	require_once '../clases/Sospechoso.php';
 	cargarEncabezado();
 
-	$soloRun=$_REQUEST['id'];
-     if(is_numeric($soloRun)){
-
-				$Sospechoso= new Sospechoso();
-        $listado= $Sospechoso->registros("select * from tb_sospechoso where run=".$soloRun);
-
-				if($listado){
-						$filasPrincipal= $listado[0];
-				}else{
-					header("location: mantenedorSospechosos.php");
-				}
-     }else{
-			 header("location: mantenedorSospechosos.php");
-		 }
-
-
 
 		 $privilegioModificar=false;
 
@@ -53,6 +37,27 @@ $UsuarioValidar->verificarSesion();
 		  }else{
 		    echo "0";//usuario no existe
 		  }
+
+
+
+
+			$soloRun=$_REQUEST['id'];
+				 if(is_numeric($soloRun)){
+
+						$Sospechoso= new Sospechoso();
+						$listado= $Sospechoso->registros("select * from tb_sospechoso where run=".$soloRun);
+
+						if($listado){
+								$filasPrincipal= $listado[0];
+								$_SESSION['sospechosoModificando']=$filasPrincipal['run'].'-'.$filasPrincipal['dv'];
+								//echo "run sosp mod: ".$_SESSION['sospechosoModificando'];
+						}else{
+							header("location: mantenedorSospechosos.php");
+						}
+				 }else{
+					 header("location: mantenedorSospechosos.php");
+				 }
+
  ?>
 
 
@@ -71,35 +76,35 @@ $UsuarioValidar->verificarSesion();
 
 				<tr>
 					<td><strong>Run</strong></td>
-					<td><input class="form-control" name="run" placeholder="12345678-1" type="text"
-					    <?php if(isset($soloRun)){ echo' value="'.$filasPrincipal['run'].'" readonly '; } ?>
+					<td><input required class="form-control" name="run" placeholder="12345678-1" type="text"
+					    <?php if(isset($soloRun)){ echo' value="'.$filasPrincipal['run'].'-'.$filasPrincipal['dv'].'" readonly '; } ?>
 					    >
 					</td>
 				</tr>
 				<tr>
 					<td><strong>Nombre</strong></td>
-					<td><input class="form-control text-uppercase" name="nombre" type="text"
+					<td><input required class="form-control text-uppercase" name="nombre" type="text"
 					     <?php if(isset($soloRun)){ echo' value="'.$filasPrincipal['nombres'].'"'; } ?>
 					>
 					</td>
 				</tr>
 				<tr>
 					<td><strong>Apellido Paterno</strong></td>
-					<td><input class="form-control text-uppercase" name="apellidoPaterno" type="text"
+					<td><input required class="form-control text-uppercase" name="apellidoPaterno" type="text"
 					     <?php if(isset($soloRun)){ echo' value="'.$filasPrincipal['apellido_paterno'].'"'; } ?>
 					>
 					</td>
 				</tr>
 				<tr>
 					<td><strong>Apellido Materno</strong></td>
-					<td><input class="form-control" name="apellidoMaterno" type="text"
+					<td><input required class="form-control" name="apellidoMaterno" type="text"
 					     <?php if(isset($soloRun)){ echo' value="'.$filasPrincipal['apellido_materno'].'"'; } ?>
 					>
 					</td>
 				</tr>
 				<tr>
 					<td><strong>Fecha Nacimiento</strong></td>
-					<td><input class="form-control" name="edad" type="date"
+					<td><input required class="form-control" name="edad" type="date"
 					     <?php if(isset($soloRun)){ echo' value="'.$filasPrincipal['fecha_nacimiento'].'"'; } ?>
 					>
 					</td>
@@ -120,7 +125,7 @@ $UsuarioValidar->verificarSesion();
 				</tr>
 				<tr>
 					<td><strong>Estatura(cm)</strong></td>
-					<td><input class="form-control" name="estatura" type="number" min="0"
+					<td><input required class="form-control" name="estatura" type="number" min="0"
 					     <?php if(isset($soloRun)){ echo' value="'.$filasPrincipal['estatura'].'"'; } ?>
 					>
 					</td>
@@ -514,9 +519,9 @@ $UsuarioValidar->verificarSesion();
 								<input class="btn btn-primary" type="button" id="botonAgregar" onclick="removerCampoFoto();" value="- Imagenes" />
 							</div>
 
-							<table class="table"id="tablaFotosIngreso">
+							<table class="table" id="tablaFotosIngreso">
 
-								<input type="hidden" id="contadorFotos" name="contadorFotos" value="1">
+								<input type="hidden" id="contadorFotos" name="contadorFotos" value="0">
 
 								<caption>IMAGENES</caption>
 								<thead>
@@ -525,11 +530,11 @@ $UsuarioValidar->verificarSesion();
 									<th>Principal</th>
 								</thead>
 								<tbody>
-									<tr>
+									<!-- <tr>
 										<td><input class="form-control" name="foto1" type="file"></input></td>
 										<td><input class="form-control" type="date" name="fechaFoto1"></td>
 										<td><input class="form-control" type="checkbox" name="tipoFoto1"></td>
-									</tr>
+									</tr> -->
 							</tbody>
 							</table>
 
@@ -765,25 +770,54 @@ $UsuarioValidar->verificarSesion();
 								event.preventDefault();
 
 
-										swal("Operacion exitosa!", "Modificado correctamente.", "success");
-										//window.location="mantenedorSospechosos.php";
+										swal("Cargando", "", "info");
 
-												          // var formData = new FormData(document.getElementById("formularioModificacionSospechoso"));
-																	//
-													        //     $.ajax({
-													        //       url: "controladorMantenedores.php?mant=7&func=1",
-													        //       dataType: "html",
-																	// 			type:'post',
-													        //       data: formData,
-													        //       cache: false,
-													        //       contentType: false,
-													        //       processData:false,
-													        //       success:function(resultado){
-													        //         alert(resultado);
-													        //         //location.reload();
-													        //       }
-													        //     });
+												          var formData = new FormData(document.getElementById("formularioModificacionSospechoso"));
+
+													            $.ajax({
+													              url: "controladorMantenedores.php?mant=7&func=1&mod=1",
+													              dataType: "html",
+																				type:'post',
+													              data: formData,
+													              cache: false,
+													              contentType: false,
+													              processData:false,
+													              success:function(resultado){
+																					//alert(resultado);
+													                  if(resultado==0){
+													                         swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
+													                         setTimeout(function(){
+													                               window.location="../principal/menuPrincipal.php";
+													                            },5000);
+
+													                   }else if(resultado=="1"){
+													                      swal("Operacion exitosa!", "Modificado Correctamente", "success");
+													                      $("#botonCerrarModalModificar").click();
+																								cargarImagenesActuales(<?php echo $filasPrincipal['run']; ?>);
+																								$("#tablaFotosIngreso").html('<input type="hidden" id="contadorFotos" name="contadorFotos" value="0"><caption>IMAGENES</caption><thead><th>Archivo</th><th>Fecha</th><th>Principal</th></thead><tbody></tbody></table>');
+													                    }else if(resultado=="2"){
+													                      sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
+
+													                    }else{
+
+													                      sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
+													                    }
+													              }
+													            });
 	          });
+
+
+  function soloUnaPrincipal(id){//permite presionar solo un checkbox
+     var cantidad= $("#contadorFotos").val();
+
+		 for(var c=1;c<=cantidad;c++){
+				 $('#tipoFoto'+c).prop('checked', false);
+		 }
+		 $("#tipoFoto"+id).prop('checked', true);
+
+	}
+
+
 
 
 					function agregarCampoFoto(){
@@ -791,14 +825,14 @@ $UsuarioValidar->verificarSesion();
 					  contadorTr++;
 
 					  //alert(contadorTr);
-					      $("#tablaFotosIngreso").append('<tr><td><input class="form-control" name="foto'+contadorTr+'" type="file"></input></td><td><input class="form-control" type="date" name="fechaFoto'+contadorTr+'"></td><td><input class="form-control" type="checkbox" name="tipoFoto'+contadorTr+'"></td></tr>');
+					      $("#tablaFotosIngreso").append('<tr><td><input required class="form-control" name="foto'+contadorTr+'" type="file"></input></td><td><input required class="form-control" type="date" name="fechaFoto'+contadorTr+'"></td><td><input class="form-control" type="checkbox" onclick="soloUnaPrincipal('+contadorTr+')" name="tipoFoto'+contadorTr+'" id="tipoFoto'+contadorTr+'"></td></tr>');
 					      $("#contadorFotos").val(contadorTr);
 					}
 
 					function removerCampoFoto(){
 					     var cantidad= $("#contadorFotos").val();
 
-					     if(cantidad!=1){
+					     if(cantidad!=0){
 					         $("#tablaFotosIngreso tr:last").remove();
 
 					          cantidad--;

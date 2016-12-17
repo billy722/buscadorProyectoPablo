@@ -1,4 +1,5 @@
 <?php
+@session_start();
 // defined("DS") ? null : define("DS", DIRECTORY_SEPARATOR);
 // defined("SITE_ROOT") ? null : define("SITE_ROOT", "D:".DS."XAMPP".DS."htdocs".DS."buscador");
 
@@ -206,7 +207,7 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
 
                                         ?>
                                             <tr>
-                                              <td colspan="7">
+                                              <td colspan="10">
                                                 <center>
                                                 <?php
                                                   echo $retorno[0][1];
@@ -1246,8 +1247,6 @@ break;
 
 
 case "7": //mantenedor sospechosos
-
-
         require_once '../clases/Sospechoso.php';
         $Sospechoso= new Sospechoso();
 
@@ -1281,14 +1280,16 @@ case "7": //mantenedor sospechosos
 
                  if($privilegioIngresar==true){
 
-
-
-
-
-                $run=$_POST['run'];
+                  $run="";
+                       if(isset($_REQUEST['mod'])){
+                         $run=$_SESSION['sospechosoModificando'];
+                       }else{
+                         $run=$_POST['run'];
+                      }
 
                 $posicionGuion = strpos($run,'-');
                 $soloRun = substr($run,0,$posicionGuion);
+
                 $digitoVerificador = substr($run,$posicionGuion+1,strlen($run));
                   $soloRun=$Sospechoso->limpiarNumeroEntero($soloRun);
                  $nombre=$Sospechoso->limpiarTexto($_POST['nombre']);
@@ -1297,6 +1298,8 @@ case "7": //mantenedor sospechosos
                  $fechaNacimiento=$Sospechoso->limpiarTexto($_POST['edad']);
                  $apodo=$Sospechoso->limpiarTexto($_POST['apodo']);
                  $lugarNacimiento=$Sospechoso->limpiarTexto($_POST['lugarNacimiento']);
+                 $estatura=$Sospechoso->limpiarNumeroEntero($_REQUEST['estatura']);
+                 //combobox
                  $colorPelo=$Sospechoso->limpiarNumeroEntero($_REQUEST['colorPelo']);
                  $contextura=$Sospechoso->limpiarNumeroEntero($_POST['contextura']);
                  $estadoCivil=$Sospechoso->limpiarNumeroEntero($_POST['estadoCivil']);
@@ -1304,6 +1307,7 @@ case "7": //mantenedor sospechosos
                  $tezPiel=$Sospechoso->limpiarNumeroEntero($_REQUEST['tezPiel']);
                  $tipoOjos=$Sospechoso->limpiarNumeroEntero($_REQUEST['tipoOjos']);
                  $tipoPelo=$Sospechoso->limpiarNumeroEntero($_REQUEST['tipoPelo']);
+                 //radiobuttons
                  $acne=$Sospechoso->limpiarNumeroEntero($_REQUEST['acne']);
                  $barba=$Sospechoso->limpiarNumeroEntero($_REQUEST['barba']);
                  $bigote=$Sospechoso->limpiarNumeroEntero($_REQUEST['bigote']);
@@ -1311,21 +1315,51 @@ case "7": //mantenedor sospechosos
                  $lentes=$Sospechoso->limpiarNumeroEntero($_REQUEST['lentes']);
                  $pecas=$Sospechoso->limpiarNumeroEntero($_REQUEST['pecas']);
                  $antecedentes=$Sospechoso->limpiarNumeroEntero($_REQUEST['antecedentes']);
-                 $estatura=$Sospechoso->limpiarNumeroEntero($_REQUEST['estatura']);
 
                    if($estatura==""){
                    	$estatura=0;
                    }
 
-                     /*INGRESAR NUEVO SOSPECHOSO*/
-                     $consultaIngreso="INSERT INTO `pdisospechosos`.`tb_sospechoso`
-                     (`run`,`dv`,`nombres`,`apellido_paterno`,`apellido_materno`,`lugar_deNacimiento`,`id_colorPelo`,`id_contextura`,`id_estadoCivil`,
-                     `id_sexo`,`id_tezPiel`,`id_tipoOjos`,`id_tipoPelo`,`antecedentes_penales`,`apodos`,`barba`,`lentes`,`pecas`,`acne`,`bigote`,`manchas`,
-                     `estatura`,`fecha_nacimiento`)
-                     VALUES('$soloRun','$digitoVerificador','$nombre','$apellidoP','$apellidoM','$lugarNacimiento','$colorPelo','$contextura','$estadoCivil',
-                     '$sexo','$tezPiel','$tipoOjos','$tipoPelo','$antecedentes','$apodo','$barba','$lentes','$pecas','$acne','$bigote','$manchas','$estatura','$fechaNacimiento');";
 
-                     if($Sospechoso->insertar($consultaIngreso)){
+
+                  if($soloRun=="" || $digitoVerificador=="" || $nombre=="" || $apellidoP=="" || $apellidoM=="" || $fechaNacimiento=="" || $estatura==""
+                  || $colorPelo=="" || $contextura=="" || $estadoCivil=="" || $sexo=="" || $tezPiel=="" || $tipoOjos=="" || $tipoPelo==""
+                  || $acne=="" || $barba=="" || $bigote=="" || $manchas=="" || $lentes=="" || $pecas=="" || $antecedentes=="" ){
+
+                        echo "2";
+                  }else{//ENTRA SINO HAY CAMPOS VACIOS
+
+                    $Sospechoso->setRun($soloRun);
+
+                    $Sospechoso->setRun($soloRun);
+                    $Sospechoso->setDv($digitoVerificador);
+                    $Sospechoso->setNombre($nombre);
+                    $Sospechoso->setApellidoPaterno($apellidoP);
+                    $Sospechoso->setApellidoMaterno($apellidoM);
+
+                    $Sospechoso->setLugarNacimiento($lugarNacimiento);
+                    $Sospechoso->setIdColorPelo($colorPelo);
+                    $Sospechoso->setContextura($contextura);
+                    $Sospechoso->setIdEstadoCivil($estadoCivil);
+                    $Sospechoso->setIdSexo($sexo);
+                    $Sospechoso->setIdTezPiel($tezPiel);
+                    $Sospechoso->setIdTipoOjos($tipoOjos);
+                    $Sospechoso->setIdTipoPelo($tipoPelo);
+                    $Sospechoso->setAntecedentes($antecedentes);
+                    $Sospechoso->setApodos($apodo);
+                    $Sospechoso->setBarba($barba);
+                    $Sospechoso->setLentes($lentes);
+                    $Sospechoso->setPecas($pecas);
+                    $Sospechoso->setAcne($acne);
+                    $Sospechoso->setBigote($bigote);
+                    $Sospechoso->setManchas($manchas);
+                    $Sospechoso->setEstatura($estatura);
+                    $Sospechoso->setFechaNacimiento($fechaNacimiento);
+
+                       if($Sospechoso->insertarModificarSospechosos()){
+
+                           if($Sospechoso->eliminarCaracteristicasSospechosos()){
+
 
 
                                	$contadorDelitos= $_REQUEST['contadorDelitos'];
@@ -1479,7 +1513,7 @@ case "7": //mantenedor sospechosos
                                		}
                                	}
                                	$arrayPiercing= explode(";",$piercing);
-                  if($piercing!=""){
+                                if($piercing!=""){
                                	foreach ($arrayPiercing as $key => $pi) {
 
                                		//echo $pi."\n";
@@ -1487,42 +1521,54 @@ case "7": //mantenedor sospechosos
                                		$Sospechoso->insertar($consultaDelitos);
                                		//echo $consultaDelitos;
                                	}
-                }
+                               }
                                	/*FIN PIERCING*/
 
 
 
                                		for($c=1;$c<=$contadorFotos;$c++){
-                               			$campo= "foto".$c;
-                               			$fechaFoto= "fechaFoto".$c;
-                               			$tipoFoto= "tipoFoto".$c;
+                                   			$campo= "foto".$c;
+                                   			$fechaFoto= "fechaFoto".$c;
+                                   			$tipoFoto= "tipoFoto".$c;
 
-                               			if(isset($_REQUEST[$tipoFoto])){
-                               					$tipoFoto=1;
-                               			}else{
-                               					$tipoFoto=2;
-                               			}
-                               				$target_path = "../imagenes/";
-                               				$target_path = $target_path . basename( $_FILES[$campo]['name']);
+                                   			if(isset($_REQUEST[$tipoFoto])){
+                                   					$tipoFoto=2;
+                                   			}else{
+                                   					$tipoFoto=1;
+                                   			}
+                                   				$target_path = "../imagenes/";
+                                   				$target_path = $target_path . basename( $_FILES[$campo]['name']);
 
-                               				str_replace("�","n",$target_path);
+                                   			//	str_replace("�","n",$target_path);
 
-                               				if(move_uploaded_file($_FILES[$campo]['tmp_name'], $target_path)) {
-                               				   //echo "El archivo ". basename( $_FILES[$campo]['name']). " ha sido subido";
+                                         				if(move_uploaded_file($_FILES[$campo]['tmp_name'], $target_path)) {
+                                         				   //echo "El archivo ". basename( $_FILES[$campo]['name']). " ha sido subido";
+                                                 //echo "tipo foto es: ".$tipoFoto;
+                                         				  $consultaFotos="call guardarImagen('".basename( $_FILES[$campo]['name'])."','".$_REQUEST[$fechaFoto]."',".$tipoFoto.",".$soloRun.");";
+                                         				          //echo $consultaFotos;
+                                         				          $Sospechoso->insertar($consultaFotos);
 
-                               				  $consultaFotos="call guardarImagen('".basename( $_FILES[$campo]['name'])."','".$_REQUEST[$fechaFoto]."',".$tipoFoto.",".$soloRun.");";
-                               				          //echo $consultaFotos;
-                               				          $Sospechoso->insertar($consultaFotos);
 
+                                         				} else{
+                                         				echo "Ha ocurrido un error al guardar imagen, trate de nuevo!";
+                                         				}
+                               		  }
 
-                               				} else{
-                               				echo "Ha ocurrido un error, trate de nuevo!";
-                               				}
-                               		}
                                   echo "1";
                                   $UsuarioHistorial= new Usuario();
                                   $UsuarioHistorial->guardarHistorial($UsuarioHistorial->obtenerIpReal(),4,$_SESSION['run'],"Sospechoso Creado: ".$soloRun);
+
+                          }else{
+                              echo "3";//NO SE BORRARON LAS CARACTERISTICAS ANTES DE ELIMINARLAS
+                          }
+
+                       }else{
+                            echo "3";
                        }//cierre de if que indica que se ingreso el sospechoso
+
+                     }//cierre de else de campos vacios
+
+
                    }else{
                        echo "0";
                     }
@@ -1572,7 +1618,7 @@ $privilegioModificar=false;
              	}
 
 
-      if($privilegioVer==true){
+              if($privilegioVer==true){
 
                      echo'<div class="table-responsive">
                      <table class="table table-bordered tablaLista table-striped">
@@ -1622,7 +1668,9 @@ $privilegioModificar=false;
                      break;
 
           case '4'://MOSTRAR IMAGENES SOSPECHOSO
-          $run= $_REQUEST['run'];
+                $run=$_SESSION['sospechosoModificando'];
+                $posicionGuion = strpos($run,'-');
+                $run = substr($run,0,$posicionGuion);
 
         			 echo' <div class="col-xs-12" id="fotosInformacionSospechoso">';
 
@@ -1654,7 +1702,7 @@ $privilegioModificar=false;
         									<label for="">Fecha: '.$filas2['fecha_imagen'].'</label>
         									<input class="col-xs-6 btn btn-danger" type="button" onclick="eliminarFoto('.$filas2['id_imagen'].','.$run.')" value="Eliminar">
         									<input ';
-                          if($filas2['foto_principal']==1){
+                          if($filas2['foto_principal']==2){
                             echo ' class="col-xs-6 btn btn-success" ';
                           }
                           else{
@@ -1670,26 +1718,37 @@ $privilegioModificar=false;
                   break;
 
             case '5'://ELIMINAR IMAGEN SOSPECHOSO
-            $idFoto= $_REQUEST['idFoto'];
-            $run=$_REQUEST['run'];
+            $idFoto=$Sospechoso->limpiarNumeroEntero($_REQUEST['idFoto']);
+
+            $run=$_SESSION['sospechosoModificando'];
+            $posicionGuion = strpos($run,'-');
+            $run = substr($run,0,$posicionGuion);
 
             $consultaE= "delete from tb_imagensospechoso where id_imagen=".$idFoto." and run_sospechoso=".$run;
             if($Sospechoso->insertar($consultaE)){
-              echo "1";//eliminada
+
+                $consultaE2= "delete from tb_imagen where id_imagen=".$idFoto;
+                if($Sospechoso->insertar($consultaE2)){
+                  echo "1";//eliminada
+                }
             }
             break;
 
             case '6'://CAMBIAR IMAGEN PRINCIPAL
-            $idFoto= $_REQUEST['idFoto'];
-            $run=$_REQUEST['run'];
+            $idFoto= $Sospechoso->limpiarNumeroEntero($_REQUEST['idFoto']);
+
+            $run=$_SESSION['sospechosoModificando'];
+            $posicionGuion = strpos($run,'-');
+            $run = substr($run,0,$posicionGuion);
 
             $quitaPrincipales= "UPDATE  tb_imagen
                         inner join tb_imagensospechoso on tb_imagen.id_imagen=tb_imagensospechoso.id_imagen
-                        set foto_principal=2
+                        set foto_principal=1
                         where tb_imagensospechoso.run_sospechoso=".$run;
 
             if($Sospechoso->insertar($quitaPrincipales)){
-                  $agregaPrincipal= "update tb_imagen set foto_principal=1 where id_imagen=".$idFoto;
+
+                  $agregaPrincipal= "update tb_imagen set foto_principal=2 where id_imagen=".$idFoto;
 
                   if($Sospechoso->insertar($agregaPrincipal)){
                     echo "1";//cambiada
