@@ -61,9 +61,9 @@ $UsuarioValidar->verificarSesion();
                     <label class="control-label col-xs-3" for="cmb_cantidadRegistros">Mostrar</label>
                     <div class="col-xs-4">
                         <select onChange="cambiarPagina(1)" name="cmb_cantidadRegistros" class="form-control" id="cmb_cantidadRegistros">
-                          <option value="3">3</option>
-                          <option value="10">10</option>
-                          <option value="20">20</option>
+                          <option value="5">5</option>
+                          <option value="15">15</option>
+                          <option value="30">30</option>
                           <option value="60">60</option>
                         </select>
                     </div>
@@ -425,7 +425,7 @@ swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowO
                       sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
 
                     }else{
-                      
+
                       sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
                     }
                 }

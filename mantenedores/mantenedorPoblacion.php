@@ -58,7 +58,7 @@ $UsuarioValidar->verificarSesion();
                     <label class="control-label col-xs-3" for="cmb_cantidadRegistros">Mostrar</label>
                     <div class="col-xs-6">
                         <select onChange="cambiarPagina(1)" name="cmb_cantidadRegistros" class="form-control" id="cmb_cantidadRegistros">
-                          <option value="7">7</option>
+                          <option value="5">5</option>
                           <option value="15">15</option>
                           <option value="30">30</option>
                           <option value="60">60</option>
