@@ -55,13 +55,41 @@ class Conexion{
           exit;
         }else{
           $listado = $result->FETCH_ALL(MYSQLI_ASSOC);
-          $result->free_result();
+          //$result->free_result();
           return $listado;
         }
 
 
       //return mysqli_fetch_array($resultado, MYSQLI_ASSOC);
     }
+    public function consultarBdR($arg_consulta){
+      $result = $this->con->query($arg_consulta);
+      if(!$result){
+        echo 'Error '. $this->con->error;
+        exit;
+      }else{
+        return $result;
+      }
+    }
+    public function reporte2(){
+      $result = $this->con->query("SELECT COUNT(tb_delitosopechoso.id_delito) AS cuenta, descripcion_zona,descripcion_delito FROM tb_delitosopechoso
+INNER JOIN tb_poblacionsospechoso ON tb_poblacionsospechoso.`run` = tb_delitosopechoso.run_sospechoso
+INNER JOIN tb_poblacionzonas ON tb_poblacionzonas.`id_poblacion` =  tb_poblacionsospechoso.`id_poblacion`
+INNER JOIN tb_zona ON tb_zona.`id_zona` = tb_poblacionzonas.`id_zona`
+INNER JOIN tb_delito ON tb_delito.`id_delito` = tb_delitosopechoso.`id_delito`
+GROUP BY descripcion_delito");
+      if(!$result){
+        echo 'Error '. $this->con->error;
+        exit;
+      }else{
+        return mysqli_fetch_array($result);
+      }
+    }
+
+    public function arregloDatosBd($result){
+        return mysqli_fetch_array($result);
+    }
+
 
     public function cantidadRegistros($arg_consulta){
       $resultado= $this->con->query($arg_consulta);

@@ -122,5 +122,22 @@ public function __construct(){
      $resultado= $this->consultaExistencia($consulta);
      return $resultado;
   }
+  public function comprobarGrupo(){
+    //$estados= $this->registros("select * from tb_estados where id_estado <> 3");
+
+
+    $comprobar = $this->consultarBdR("select id_grupoUsuario from tb_grupousuario");
+    $resultarray = array();
+    while ($row = mysqli_fetch_array($comprobar))
+    {
+      $resultarray[] = $row['id_grupoUsuario'];
+    }
+    if(in_array($this->_idGrupo,$resultarray)){
+      return true;
+    }else{
+      return false;
+    }
+
+  }
 }
 ?>

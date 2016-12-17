@@ -89,8 +89,16 @@ where ds.run_sospechoso='.$arg_run);
                     return false;
                 }
   }
+  public function comprobarNombre(){
+    $consulta;
+    if($this->_idDelito=="" || $this->_idDelito==null){
+          $consulta="select descripcion_delito from tb_delito where descripcion_delito='".$this->_descripcion_delito."' ;";
+    }else{
 
-
-
+    $consulta="select descripcion_delito from tb_delito where descripcion_delito='".$this->_descripcion_delito."' and id_delito<>".$this->_idDelito.";";
+    }
+     $resultado= $this->consultaExistencia($consulta);
+     return $resultado;
+  }
 }
 ?>

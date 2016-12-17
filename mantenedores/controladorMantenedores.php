@@ -103,7 +103,8 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                 // Generamos el hash
                 $password = crypt($clave, '$2y$10$' . $salt);
 
-
+                $estado = $_REQUEST['select_estadoUsuarioModificar'] ;
+                $tipo = $_REQUEST['select_tipoUsuarioModificar'];
                 $Usuario->setRun($Usuario->limpiarNumeroEntero($rut));
                 $Usuario->setDV($dv);
                 $Usuario->setNombre($Usuario->limpiarTexto($_REQUEST['txt_nombreModificar']));
@@ -112,13 +113,40 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                 $Usuario->setClave($password);
                 $Usuario->setTelefono($Usuario->limpiarTexto($_REQUEST['txt_telefonoModificar']));
                 $Usuario->setCorreo($Usuario->limpiarCorreo($_REQUEST['txt_correoModificar']));
-                $Usuario->setGrupoUsuario($Usuario->limpiarNumeroEntero($_REQUEST['select_tipoUsuarioModificar']));
-                $Usuario->setEstado($Usuario->limpiarNumeroEntero($_REQUEST['select_estadoUsuarioModificar']));
+                $Usuario->setGrupoUsuario($Usuario->limpiarNumeroEntero($tipo));
+                $Usuario->setEstado($Usuario->limpiarNumeroEntero($estado));
+                //
+                // $comprobar = $Usuario->consultarBdR("select id_estado from tb_estados");
+                // //$regis=$Usuario->arregloDatosBd($comprobar);
+                // $resultarray = array();
+                // while ($row = mysqli_fetch_array($comprobar))
+                // {
+                //   $resultarray[] = $row['id_estado'];
+                // }
+                require_once '../clases/Estado.php';
+                $Estado= new Estado();
+                $Estado->setIdEstado($estado);
+                if($Estado->comprobarEstado()){
+                  // $comprobar2 = $Usuario->consultarBdR("select id_grupoUsuario from tb_grupousuario");
+                  // $resultarray2 = array();
+                  // while ($row = mysqli_fetch_array($comprobar2))
+                  // {
+                  //   $resultarray2[] = $row['id_grupoUsuario'];
+                  // }
+                  require_once '../clases/Grupos.php';
+                  $Grupos= new Grupos();
+                  $Grupos->setIdGrupo($tipo);
+                  if($Grupos->comprobarGrupo()){
                   if($Usuario->insertarModificarUsuario()){
                     echo "1";
                     $UsuarioHistorial= new Usuario();
                     $UsuarioHistorial->guardarHistorial($UsuarioHistorial->obtenerIpReal(),8,$_SESSION['run'],"Usuario modificado: ".$rut);
                   }else{
+                    echo "3";//errors
+                  }}else{
+                    echo "3";
+                  }
+                }else {
                     echo "3";//errors
                   }
 
@@ -190,7 +218,7 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                            </tbody>
                         </table>
                       </div>
-<?php
+                    <?php
                         break;
                         case '4'://validad rut
                            $Usuario->validarRut($_REQUEST['txt_run']);
@@ -259,9 +287,11 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                       echo "2";//HAY CAMPOS VACIOS
 
                 }else{
-                $descripcion=$Delito->limpiarTexto($_REQUEST['txt_descripcionDelitoCrear']);
+                  $descripcion=$Delito->limpiarTexto($_REQUEST['txt_descripcionDelitoCrear']);
 
-                $Delito->setDescripcionDelito($descripcion);
+                  $Delito->setDescripcionDelito($descripcion);
+                if($Delito->comprobarNombre()==false){//comprueba nombre de usuario
+
                 $Delito->setEstadoDelito("1");
                 if($Delito->ingresarDelito()){
                   echo "1";
@@ -270,8 +300,10 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                 }else{
                   echo "3";//error
                 }
+              }else{
+                echo "4";//nombre ya existe
+              }}
 
-              }
               break;
               case '2'://Modificar delito
               if($_REQUEST['txt_descripcionDelitoModificar']=="" || $_REQUEST['txt_idDelitoModificar']=="" || $_REQUEST['cmb_estadoDelitoModificar']==""){
@@ -280,10 +312,16 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
               }else{
                $idDelito=$Delito->limpiarNumeroEntero($_REQUEST['txt_idDelitoModificar']);
                $descripcion=$Delito->limpiarTexto($_REQUEST['txt_descripcionDelitoModificar']);
+               $estado = $Delito->limpiarNumeroEntero($_REQUEST['cmb_estadoDelitoModificar']);
 
-                $Delito->setIdDelito($idDelito);
-                $Delito->setDescripcionDelito($descripcion);
-                $Delito->setEstadoDelito($Delito->limpiarNumeroEntero($_REQUEST['cmb_estadoDelitoModificar']));
+                require_once '../clases/Estado.php';
+                $Estado= new Estado();
+                $Estado->setIdEstado($estado);
+                if($Estado->comprobarEstado()){
+                  $Delito->setIdDelito($idDelito);
+                  $Delito->setDescripcionDelito($descripcion);
+                  $Delito->setEstadoDelito($estado);
+                  if($Delito->comprobarNombre()==false){//comprueba nombre de usuario
                 if($Delito->actualizarDelito()){
                   echo "1";
                   $UsuarioHistorial= new Usuario();
@@ -291,6 +329,12 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                 }else{
                   echo "3";//error
                 }
+              }else{
+                echo "4";
+              }
+              }else{
+                echo "3";
+              }
               }
               break;
               case '3'://Eliminar delito
@@ -415,8 +459,8 @@ if($resultadoUsuario){
                 echo "2"; //valores vacios.
               }else{
                 $descripcion=$Poblacion->limpiarTexto($_REQUEST['txt_descripcionPoblacionCrear']);
-
                 $Poblacion->setDescripcionPoblacion($descripcion);
+                if($Poblacion->comprobarNombre()==false){//comprueba nombre de usuario
                 $Poblacion->setEstadoPoblacion("1");
 
                 if($Poblacion->ingresarPoblacion()){
@@ -426,6 +470,9 @@ if($resultadoUsuario){
                 }else{
                   echo "3";//ERROR
                 }
+              }else{
+                echo "4";
+              }
               }
               break;
 
@@ -436,10 +483,15 @@ if($resultadoUsuario){
                 $idPoblacion=$Poblacion->limpiarNumeroEntero($_REQUEST['txt_idPoblacionModificar']);
                 $descripcion=$Poblacion->limpiarTexto($_REQUEST['txt_descripcionPoblacionModificar']);
                 $estadoPoblacion=$Poblacion->limpiarNumeroEntero($_REQUEST['cmb_estadoPoblacionModificar']);
+                require_once '../clases/Estado.php';
+                $Estado= new Estado();
+                $Estado->setIdEstado($estadoPoblacion);
+                if($Estado->comprobarEstado()){
+                  $Poblacion->setIdPoblacion($idPoblacion);
+                  $Poblacion->setDescripcionPoblacion($descripcion);
+                  $Poblacion->setEstadoPoblacion($estadoPoblacion);
+                  if($Poblacion->comprobarNombre()==false){
 
-                $Poblacion->setIdPoblacion($idPoblacion);
-                $Poblacion->setDescripcionPoblacion($descripcion);
-                $Poblacion->setEstadoPoblacion($estadoPoblacion);
                 if($Poblacion->actualizarPoblacion()){
                   echo "1";
                   $UsuarioHistorial= new Usuario();
@@ -447,6 +499,12 @@ if($resultadoUsuario){
                 }else{
                   echo "3";
                 }
+              }else{
+                echo "4";
+              }
+              }else{
+                echo "3";
+              }
               }
               break;
               case '3'://Eliminar Poblacion
@@ -571,6 +629,7 @@ if($resultadoUsuario){
                 echo "2";
               }else {
                 $Equipo->setDescripcionEquipo($Equipo->limpiarTexto($_REQUEST['txt_descripcionEquipoCrear']));
+                if($Equipo->comprobarNombre()==false){
                 $Equipo->setEstadoEquipo("1");
                 if($Equipo->ingresarEquipo()){
                     echo "1";
@@ -579,6 +638,9 @@ if($resultadoUsuario){
                 }else{
                     echo "3";
                 }
+              }else{
+                echo "4";
+              }
               }
               break;
               case '2'://Modificar equipo
@@ -587,7 +649,13 @@ if($resultadoUsuario){
               }else{
                 $Equipo->setIdEquipo($Equipo->limpiarNumeroEntero($_REQUEST['txt_idEquipoModificar']));
                 $Equipo->setDescripcionEquipo($Equipo->limpiarTexto($_REQUEST['txt_descripcionEquipoModificar']));
-                $Equipo->setEstadoEquipo($Equipo->limpiarNumeroEntero($_REQUEST['cmb_estadoEquipoModificar']));
+                $estado = $_REQUEST['cmb_estadoEquipoModificar'];
+                $Equipo->setEstadoEquipo($Equipo->limpiarNumeroEntero($estado));
+                require_once '../clases/Estado.php';
+                $Estado= new Estado();
+                $Estado->setIdEstado($estado);
+                if($Estado->comprobarEstado()){
+                  if($Equipo->comprobarNombre()==false){
                 if($Equipo->actualizarEquipo()){
                   echo "1";
                   $UsuarioHistorial= new Usuario();
@@ -595,6 +663,12 @@ if($resultadoUsuario){
                 }else{
                   echo "3";
                 }
+              }else{
+                echo "4";
+              }
+              }else{
+                echo "3";
+              }
               }
               break;
               case '3'://Eliminar equipo

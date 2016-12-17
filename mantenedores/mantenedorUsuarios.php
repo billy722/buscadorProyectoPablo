@@ -382,9 +382,15 @@ swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowO
                     }else if(resultado=="2"){
                       sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
 
-                    }else{
+                    }else if(resultado=="4"){
+
+                      $("#txt_runCrear").focus();
+                      sweetAlert("No permitido.", "El rut que intente ingresar ya existe.", "warning");
+                    }
+                    else{
                       sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
                     }
+
                 }
             });
           }else{
@@ -419,13 +425,16 @@ swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowO
                       sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
 
                     }else{
+                      
                       sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
                     }
                 }
             });
 
         }else{
+
             sweetAlert("Ocurrió un error", "No se pudo concretar la operacion, claves no coinciden!", "error");
+
         }
 
     });

@@ -273,6 +273,9 @@ var pagina;
                             }else if(resultado=="2"){
                               sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
 
+                            }else if(resultado=="4"){
+                              $("#txt_descripcionCrear").focus();
+                              sweetAlert("No permitido.", "Este grupo de usuario ya se encuentra registrado.", "warning");
                             }else{
                               sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
                             }
@@ -303,6 +306,9 @@ var pagina;
                             }else if(resultado=="2"){
                               sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
 
+                            }else if(resultado=="4"){
+                              $("#txt_nombreGrupo").focus();
+                              sweetAlert("No permitido.", "Este grupo de usuario ya se encuentra registrado.", "warning");
                             }else{
                               sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
                             }
@@ -313,36 +319,79 @@ var pagina;
           function eliminar(id){
             event.preventDefault();
       //alert cargando
-      swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowOutsideClick:false,showCancelButton: false,closeOnConfirm: false});
+      //swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowOutsideClick:false,showCancelButton: false,closeOnConfirm: false});
 
-                 $.ajax({
-                  url:"controladorMantenedores.php",
-                  data:"mant=5&func=4&id="+id,
-                  error:function(error){
-                      alert(error);
-                  },
-                  success:function(resultado){
-                    if(resultado==0){
-                           swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
-                           setTimeout(function(){
-                                 window.location="../principal/menuPrincipal.php";
-                              },5000);
+              //  $.ajax({
+              //   url:"controladorMantenedores.php",
+              //   data:"mant=5&func=4&id="+id,
+              //   error:function(error){
+              //       alert(error);
+              //   },
+              //   success:function(resultado){
+              //     if(resultado==0){
+              //            swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
+              //            setTimeout(function(){
+              //                  window.location="../principal/menuPrincipal.php";
+              //               },5000);
+              //
+              //      }else if(resultado=="1"){
+              //         swal("Operacion exitosa!", "Eliminado Correctamente", "success");
+              //         cambiarPagina(1);
+              //         $("#botonCerrarModalCrear").click();
+              //       }else if(resultado=="2"){
+              //         sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
+              //
+              //       }else{
+              //         sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
+              //       }
+              //
+              //   }
+              // });
 
-                     }else if(resultado=="1"){
-                        swal("Operacion exitosa!", "Eliminado Correctamente", "success");
-                        cambiarPagina(1);
-                        $("#botonCerrarModalCrear").click();
-                      }else if(resultado=="2"){
-                        sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
+                swal({
+                  title: "Está seguro?",
+                  text: "Una vez eliminada no podrá retroceder.",
+                  type: "warning",
+                  showCancelButton: true,
+                  confirmButtonClass: "btn-danger",
+                  confirmButtonText: "Si, Borrar!",
+                  cancelButtonText: "No, Detener!",
+                  closeOnConfirm: false,
+                  closeOnCancel: false
+                },
+                function(isConfirm) {
+                  if (isConfirm) {
+                            $.ajax({
+                              url:"controladorMantenedores.php",
+                              data:"mant=5&func=4&id="+id,
+                              error:function(error){
+                                  alert(error);
+                              },
+                              success:function(resultado){
+                                if(resultado==0){
+                                       swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
+                                       setTimeout(function(){
+                                             window.location="../principal/menuPrincipal.php";
+                                          },5000);
 
-                      }else{
-                        sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
-                      }
+                                 }else if(resultado=="1"){
+                                    swal("Operacion exitosa!", "Eliminado Correctamente", "success");
+                                    cambiarPagina(1);
+                                    $("#botonCerrarModalCrear").click();
+                                  }else if(resultado=="2"){
+                                    sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
 
+                                  }else{
+                                    sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
+                                  }
+
+                              }
+                           });
+                  } else {
+                    swal("Cancelado", "No se eliminó el registro :)", "error");
                   }
                 });
             }
-
 </script>
 
 <div id="error"></div>

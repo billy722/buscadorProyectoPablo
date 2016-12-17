@@ -272,6 +272,9 @@ var pagina;
                             }else if(resultado=="2"){
                               sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
 
+                            }else if(resultado=="4"){
+                              $("#txt_descripcionCrear").focus();
+                              sweetAlert("No permitido.", "Esta zona ya se encuentra registrada.", "warning");
                             }else{
                               sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
                             }
@@ -303,6 +306,9 @@ var pagina;
                             }else if(resultado=="2"){
                               sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
 
+                            }else if(resultado=="4"){
+                              $("#txt_nombreZonas").focus();
+                              sweetAlert("No permitido.", "Esta zona ya se encuentra registrada.", "warning");
                             }else{
                               sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
                             }

@@ -70,8 +70,16 @@ public function getEstadoEquipo(){
                     echo "fallo al eliminar equipo de futbol";
                 }
   }
+  public function comprobarNombre(){
+    $consulta;
+    if($this->_idEquipo=="" || $this->_idEquipo==null){
+          $consulta="select descripcion_equipo from tb_equipofutbol where descripcion_equipo='".$this->_descripcion_equipo."' ;";
+    }else{
 
-
-
+    $consulta="select descripcion_equipo from tb_equipofutbol where descripcion_equipo='".$this->_descripcion_equipo."' and id_equipo<>".$this->_idEquipo.";";
+    }
+     $resultado= $this->consultaExistencia($consulta);
+     return $resultado;
+  }
 }
 ?>

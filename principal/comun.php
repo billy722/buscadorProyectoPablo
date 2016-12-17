@@ -15,6 +15,11 @@ function cargarEncabezado(){
 		<script type="text/javascript" src="../js/scriptsConfiguraciones.js"></script>
 		<script type="text/javascript" src="../js/bootstrap.min.js"></script>
 
+		<script src="https://code.highcharts.com/highcharts.js"></script>
+		<script src="https://code.highcharts.com/highcharts-3d.js"></script>
+		<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+
 		<link rel="stylesheet" href="../sweetalert/sweet-alert.css">
 		<script src="../sweetalert/sweet-alert.min.js"></script>
 
@@ -47,8 +52,8 @@ if($resultadoUsuario){
 			break;
 			case 2:	echo'<a class="btn btn-default col-xs-12 col-sm-6 col-md-3 col-lg-3"   href="../mantenedores/mantenedorSospechosos.php"><span class="glyphicon glyphicon-list-alt"></span> SOSPECHOSOS</a>';
 			break;
-			/*case 3:	echo'<a href="mantenedorSospechosos.php">SOSPECHOSOS</a>';
-			break;*/
+			case 12:	echo'<a class="btn btn-default col-xs-12 col-sm-6 col-md-3 col-lg-3"   href="../principal/reportes.php"><span class="glyphicon glyphicon-list-alt"></span> Reportes</a>';
+			break;
 			case 5:	echo'<a class="btn btn-default col-xs-12 col-sm-6 col-md-3 col-lg-3"  href="../mantenedores/mantenedoresPrincipal.php"><span class="glyphicon glyphicon-cog"></span> CONFIGURACIONES</a>';
 			break;
 		}
@@ -57,7 +62,7 @@ if($resultadoUsuario){
 	}else{
 		header("location: ../index.php");
 	}
-								echo'<a class="btn btn-default col-xs-12 col-sm-6 col-md-3 col-lg-3"  href="../principal/cerrarSesion.php" ><span class="glyphicon glyphicon-remove-circle"></span> SALIR</a>';
+								echo'<a class="btn btn-default col-xs-12 col-sm-6 col-md-3 col-lg-1"  href="../principal/cerrarSesion.php" ><span class="glyphicon glyphicon-remove-circle"></span> SALIR</a>';
 
 ?>
 				</div>

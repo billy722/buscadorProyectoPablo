@@ -69,8 +69,16 @@ public function getEstadoPoblacion(){
                     echo "fallo al eliminar poblacion";
                 }
   }
+  public function comprobarNombre(){
+    $consulta;
+    if($this->_idPoblacion=="" || $this->_idPoblacion==null){
+          $consulta="select descripcion_poblacion from tb_poblacion where descripcion_poblacion='".$this->_descripcion_poblacion."' ;";
+    }else{
 
-
-
+    $consulta="select descripcion_poblacion from tb_poblacion where descripcion_poblacion='".$this->_descripcion_poblacion."' and id_poblacion<>".$this->_idPoblacion.";";
+    }
+     $resultado= $this->consultaExistencia($consulta);
+     return $resultado;
+  }
 }
 ?>
