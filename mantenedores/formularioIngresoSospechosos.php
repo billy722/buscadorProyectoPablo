@@ -770,7 +770,7 @@ $UsuarioValidar->verificarSesion();
 													                      swal("Operacion exitosa!", "Ingresado Correctamente", "success");
 													                      $("#botonCerrarModalModificar").click();
 																								$("#formularioIngresarSospechoso")[0].reset();
-																								
+
 													                    }else if(resultado=="2"){
 													                      sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
 
