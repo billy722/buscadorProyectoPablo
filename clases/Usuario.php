@@ -117,7 +117,7 @@ class Usuario extends Conexion{
 
   public function guardarHistorial($arg_direccionip,$arg_tipoaccion,$arg_rut,$arg_informacionadicional){
     $consulta="INSERT INTO registro_acciones (direccion_ip,tipo_accion,run_usuario,informacion_adicional)
-			 VALUES ('".$arg_direccionip."',".$arg_tipoaccion.",".$arg_rut.",'".$arg_informacionadicional."')";
+			 VALUES ('".$arg_direccionip."',".$arg_tipoaccion.",'".$arg_rut."','".$arg_informacionadicional."')";
 
     $verificar= $this->insertar($consulta);
 
