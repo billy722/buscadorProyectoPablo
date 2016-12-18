@@ -18,6 +18,8 @@ function cargarEncabezado(){
 		<script src="https://code.highcharts.com/highcharts.js"></script>
 		<script src="https://code.highcharts.com/highcharts-3d.js"></script>
 		<script src="https://code.highcharts.com/modules/exporting.js"></script>
+		<script src="https://code.highcharts.com/modules/data.js"></script>
+		<script src="https://code.highcharts.com/modules/drilldown.js"></script>
 
 
 		<link rel="stylesheet" href="../sweetalert/sweet-alert.css">
@@ -111,6 +113,42 @@ function cargarMenuMantenedores(){
 									case 11:
 											echo'<a class="btn btn-info col-xs-6 col-sm-6 col-md-2 botonesMenuConfiguraciones" href="mantenedorEquipos.php" ><strong>Equipos</strong></a>';//mantenedor
 									break;
+						}
+			}
+		  echo'</div>';
+
+		}else{
+			header("location: ../index.php");
+		}
+
+
+}
+
+function cargarMenuReportes(){
+	@session_start();
+
+	require_once '../clases/Usuario.php';
+	require_once '../clases/Grupos.php';
+
+	$Usuario= new Usuario();
+	$Usuario->setRun($_SESSION['run']);
+	$resultadoUsuario= $Usuario->consultaUnUsuario();
+	if($resultadoUsuario){
+
+		$Grupo = new Grupos();
+		$Grupo->setIdGrupo($resultadoUsuario[0]['id_grupoUsuario']);
+		$privilegios=$Grupo->consultaPrivilegiosDeGrupo();
+
+		  echo'<div class="btn-group col-xs-12">';
+			foreach($privilegios as $privilegio){
+
+						switch($privilegio['id']){
+
+									case 12:
+											echo'<a class="btn btn-info col-xs-12 col-sm-12 col-md-6 botonesMenuConfiguraciones" href="reportes.php" ><strong>Estadisticas de Delitos Cometidos</strong></a>';//mantenedor
+											echo'<a class="btn btn-info col-xs-12 col-sm-12 col-md-6 botonesMenuConfiguraciones" href="reportes2.php" ><strong>Delincuentes por zonas y poblacion</strong></a>';//mantenedor
+									break;
+
 						}
 			}
 		  echo'</div>';

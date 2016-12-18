@@ -287,7 +287,7 @@ var pagina;
               event.preventDefault();
 
       //alert cargando
-    //  swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowOutsideClick:false,showCancelButton: false,closeOnConfirm: false});
+     swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowOutsideClick:false,showCancelButton: false,closeOnConfirm: false});
 
                     $.ajax({
                         url:"controladorMantenedores.php?mant=5&func=2",
