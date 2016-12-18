@@ -64,7 +64,9 @@ $UsuarioValidar->verificarSesion();
 	 						<select class="form-control altoCampo" name="sexo">
 	 							<option value="0">Sin especificar</option>
 	 							<?php
-	 								$resultado= $Conexion->registros("select * from tb_sexo");
+								  require_once '../clases/Sexo.php';
+									$Sexo= new Sexo();
+	 								$resultado= $Sexo->listarSexo();
 	 								foreach($resultado as $filas){
 	 									echo'<option value="'.$filas['id_sexo'].'">'.$filas['descripcion_sexo'].'</option>';
 	 								}
@@ -79,7 +81,9 @@ $UsuarioValidar->verificarSesion();
 	 						<select class="form-control altoCampo" name="contextura">
 	 							<option value="0">Sin especificar</option>
 	 							<?php
-	 								$resultado= $Conexion->registros("select * from tb_contextura");
+								require_once '../clases/Contextura.php';
+								$Contextura= new Contextura();
+								$resultado= $Contextura->listarContextura();
 	 								foreach($resultado as $filas){
 	 									echo'<option value="'.$filas['id_contextura'].'">'.$filas['descripcion_contextura'].'</option>';
 	 								}
@@ -94,7 +98,9 @@ $UsuarioValidar->verificarSesion();
 	 						<select class="form-control altoCampo" name="tezPiel">
 	 							<option value="0">Sin especificar</option>
 	 							<?php
-	 								$resultado= $Conexion->registros("select * from tb_tezpiel");
+									require_once '../clases/TezPiel.php';
+									$TezPiel= new TezPiel();
+									$resultado= $TezPiel->listarTezPiel();
 	 								foreach($resultado as $filas){
 	 									echo'<option value="'.$filas['id_tezPiel'].'">'.$filas['descripcion_tezPiel'].'</option>';
 	 								}
@@ -109,7 +115,9 @@ $UsuarioValidar->verificarSesion();
 	 						<select class="form-control altoCampo" name="tipoPelo">
 	 							<option value="0">Sin especificar</option>
 	 							<?php
-	 								$resultado= $Conexion->registros("select * from tb_tipopelo");
+								require_once '../clases/TipoPelo.php';
+								$TipoPelo= new TipoPelo();
+								$resultado= $TipoPelo->listarTipoPelo();
 	 								foreach($resultado as $filas){
 	 									echo'<option value="'.$filas['id_tipoPelo'].'">'.$filas['descripcion_tipoPelo'].'</option>';
 	 								}
@@ -124,7 +132,9 @@ $UsuarioValidar->verificarSesion();
 	 						<select class="form-control altoCampo" name="colorPelo">
 	 							<option value="0">Sin especificar</option>
 	 							<?php
-	 								$resultado= $Conexion->registros("select * from tb_colorPelo");
+								require_once '../clases/ColorPelo.php';
+								$ColorPelo= new ColorPelo();
+								$resultado= $ColorPelo->listarColorPelo();
 	 								foreach($resultado as $filas){
 	 									echo'<option value="'.$filas['id_colorPelo'].'">'.$filas['descripcion_colorPelo'].'</option>';
 	 								}
@@ -139,7 +149,9 @@ $UsuarioValidar->verificarSesion();
 	 						<select class="form-control altoCampo" name="tipoOjos">
 	 							<option value="0">Sin especificar</option>
 	 							<?php
-	 								$resultado= $Conexion->registros("select * from tb_colorOjos");
+								require_once '../clases/ColorOjos.php';
+								$ColorOjos= new ColorOjos();
+								$resultado= $ColorOjos->listarColorOjos();
 	 								foreach($resultado as $filas){
 	 									echo'<option value="'.$filas['id_colorOjos'].'">'.$filas['descripcion_colorOjos'].'</option>';
 	 								}
@@ -210,7 +222,9 @@ $UsuarioValidar->verificarSesion();
 		 			</thead>
 		 			<tbody>
 		 		<?php
-		 			$resultado= $Conexion->registros("select * from tb_delito where estado=1 order by descripcion_delito ");
+						require_once '../clases/Delito.php';
+						$Delito= new Delito();
+						$resultado= $Delito->listarDelitosActivos();
 		 				$contadorDelitos=0;
 
 		 				foreach($resultado as $filas){
@@ -233,7 +247,9 @@ $UsuarioValidar->verificarSesion();
 		 			</thead>
 		 			<tbody>
 		 		<?php
-		 			$resultado= $Conexion->registros("select * from tb_rangoedad");
+						require_once '../clases/RangoEdad.php';
+						$RangoEdad= new RangoEdad();
+						$resultado= $RangoEdad->listarRangoEdad();
 		 				$contadorRangosEdad=0;
 		 				foreach($resultado as $filas){
 		 						$contadorRangosEdad++;
@@ -255,7 +271,9 @@ $UsuarioValidar->verificarSesion();
 		 			</thead>
 		 			<tbody>
 		 		<?php
-		 			$resultado= $Conexion->registros("select * from tb_equipofutbol where estado=1 order by descripcion_equipo");
+						require_once '../clases/Equipo.php';
+						$Equipo= new Equipo();
+						$resultado= $Equipo->listarEquiposActivos();
 		 				$contadorEquiposFutbol=0;
 		 			foreach($resultado as $filas){
 		 						$contadorEquiposFutbol++;
@@ -283,7 +301,9 @@ $UsuarioValidar->verificarSesion();
 				 			</thead>
 				 			<tbody>
 				 		<?php
-				 			$resultado= $Conexion->registros("select * from tb_cicatriz");
+						require_once '../clases/Cicatriz.php';
+						$Cicatriz= new Cicatriz();
+						$resultado= $Cicatriz->listarCicatriz();
 				 				$contadorOpcionesCicatriz=0;
 				 				foreach($resultado as $filas){
 				 						$contadorOpcionesCicatriz++;
@@ -305,7 +325,9 @@ $UsuarioValidar->verificarSesion();
 				 			</thead>
 				 			<tbody>
 				 		<?php
-				 			$resultado= $Conexion->registros("select * from tb_tatuaje");
+						require_once '../clases/Tatuaje.php';
+						$Tatuaje= new Tatuaje();
+						$resultado= $Tatuaje->listarTatuaje();
 				 				$contadorOpcionesTatuaje=0;
 				 				foreach($resultado as $filas){
 				 						$contadorOpcionesTatuaje++;
@@ -327,7 +349,9 @@ $UsuarioValidar->verificarSesion();
 				 			</thead>
 				 			<tbody>
 				 		<?php
-				 			$resultado= $Conexion->registros("select * from tb_piercing");
+						require_once '../clases/Piercing.php';
+						$Piercing= new Piercing();
+						$resultado= $Piercing->listarPiercing();
 				 				$contadorOpcionesPiercing=0;
 				 				foreach($resultado as $filas){
 				 						$contadorOpcionesPiercing++;
@@ -350,7 +374,9 @@ $UsuarioValidar->verificarSesion();
 		 			</thead>
 		 			<tbody>
 		 		<?php
-		 			$resultado= $Conexion->registros("SELECT * FROM tb_zona");
+						require_once '../clases/Zonas.php';
+						$Zonas= new Zonas();
+						$resultado= $Zonas->listarZonas();
 		 				$contadorZonas=0;
 
 		 				foreach($resultado as $filas){
@@ -374,7 +400,9 @@ $UsuarioValidar->verificarSesion();
 		 			</thead>
 		 			<tbody>
 		 		<?php
-		 			$resultado= $Conexion->registros("select * from tb_rangoestatura");
+				require_once '../clases/RangoEstatura.php';
+				$RangoEstatura= new RangoEstatura();
+				$resultado= $RangoEstatura->listarRangoEstatura();
 		 				$contadorRangosEstatura=0;
 
 		 				foreach($resultado as $filas){

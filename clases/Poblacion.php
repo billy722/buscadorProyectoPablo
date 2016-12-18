@@ -35,6 +35,10 @@ public function getEstadoPoblacion(){
     $poblacion=$this->registros('select * from tb_poblacion inner join tb_estados on tb_estados.id_estado=tb_poblacion.estado');
     return $poblacion;
  }
+ public function listarPoblacionesActivas(){
+    $poblacion=$this->registros('select * from tb_poblacion where estado=1 order by descripcion_poblacion asc');
+    return $poblacion;
+ }
    //Funcion ingresar datos a la tabla
   public function ingresarPoblacion(){
       $poblacion=$this->insertar('INSERT INTO `tb_poblacion` (`id_poblacion`,`descripcion_poblacion`,`estado`) VALUES (null,\''.$this->_descripcion_poblacion.'\',\''.$this->_estado.'\');');

@@ -12,7 +12,7 @@ class Cicatriz extends Conexion{
   }
 
   public function listarCicatriz(){
-    $estados= $this->registros("select * from tb_cicatriz");
+    $estados= $this->registros("select * from tb_cicatriz order by descripcion_lugarCicatriz asc");
     return $estados;
 
   }

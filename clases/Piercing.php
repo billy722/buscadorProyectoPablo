@@ -12,7 +12,7 @@ class Piercing extends Conexion{
   }
 
   public function listarPiercing(){
-    $estados= $this->registros("select * from tb_piercing");
+    $estados= $this->registros("select * from tb_piercing order by descripcion_lugarPiercing asc");
     return $estados;
   }
 

@@ -12,7 +12,7 @@ class Tatuaje extends Conexion{
   }
 
   public function listarTatuaje(){
-    $estados= $this->registros("select * from tb_tatuaje");
+    $estados= $this->registros("select * from tb_tatuaje order by descripcion_lugarTatuaje asc");
     return $estados;
   }
 
