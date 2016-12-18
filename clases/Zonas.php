@@ -27,6 +27,10 @@ public function __construct(){
      $grupos=$this->registros('select * from tb_zona where id_zona='.$this->_idZona);
      return $grupos;
   }
+  public function listarZonas(){
+     $grupos=$this->registros('SELECT * FROM tb_zona');
+     return $grupos;
+  }
 
   public function consultaPoblacionesDeZona(){
      $grupos=$this->registros('select id_poblacion as id from tb_poblacionzonas where id_zona='.$this->_idZona);

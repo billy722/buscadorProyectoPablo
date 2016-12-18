@@ -35,6 +35,10 @@ public function getEstadoEquipo(){
     $equipo=$this->registros('select * from tb_equipofutbol inner join tb_estados on tb_estados.id_estado=tb_equipofutbol.estado');
     return $equipo;
  }
+ public function listarEquiposActivos(){
+    $equipo=$this->registros('select * from tb_equipofutbol where estado=1 order by descripcion_equipo asc');
+    return $equipo;
+ }
    //Funcion ingresar datos a la tabla
   public function ingresarEquipo(){
       $equipo=$this->insertar('INSERT INTO `tb_equipofutbol` (`id_equipo`,`descripcion_equipo`,`estado`) VALUES (null,\''.$this->_descripcion_equipo.'\',\''.$this->_estado.'\');');

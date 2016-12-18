@@ -135,7 +135,9 @@ $UsuarioValidar->verificarSesion();
 					<td>
 						<select class="form-control" name="colorPelo">
 							<?php
-								$resultado = $Sospechoso->registros("select * from tb_colorpelo");
+							require_once '../clases/ColorPelo.php';
+							$ColorPelo= new ColorPelo();
+							$resultado= $ColorPelo->listarColorPelo();
                                 if(isset($soloRun)){
                                     foreach($resultado as $filas){
                                         echo'<option value="'.$filas['id_colorPelo'].'"';
@@ -143,10 +145,6 @@ $UsuarioValidar->verificarSesion();
                                                 echo'selected="selected" ';
                                             }
                                         echo'>'.$filas['descripcion_colorPelo'].'</option>';
-                                    }
-                                }else{
-                                    foreach($resultado as $filas){
-                                        echo'<option value="'.$filas['id_colorPelo'].'">'.$filas['descripcion_colorPelo'].'</option>';
                                     }
                                 }
 							 ?>
@@ -157,7 +155,9 @@ $UsuarioValidar->verificarSesion();
 					<td><strong>Contextura</strong></td>
 					<td><select class="form-control" name="contextura">
 						<?php
-							$resultado = $Sospechoso->registros("select * from tb_contextura");
+						require_once '../clases/Contextura.php';
+						$Contextura= new Contextura();
+						$resultado= $Contextura->listarContextura();
                             if(isset($soloRun)){
 
                                 foreach($resultado as $filas){
@@ -167,10 +167,6 @@ $UsuarioValidar->verificarSesion();
                                             }
                                     echo'>'.$filas['descripcion_contextura'].'</option>';
                                 }
-                            }else{
-                                 foreach($resultado as $filas){
-                                    echo '<option value="'.$filas['id_contextura'].'">'.$filas['descripcion_contextura'].'</option>';
-                                }
                             }
 						 ?>
 					</select></td>
@@ -179,7 +175,9 @@ $UsuarioValidar->verificarSesion();
 					<td><strong>Estado Civil</strong></td>
 					<td><select class="form-control" name="estadoCivil">
 						<?php
-							$resultado = $Sospechoso->registros("select * from tb_estadoCivil");
+						require_once '../clases/EstadoCivil.php';
+						$EstadoCivil= new EstadoCivil();
+						$resultado= $EstadoCivil->listarEstadoCivil();
                             if(isset($soloRun)){
                                 foreach($resultado as $filas){
                                     echo '<option value="'.$filas['id_estadoCivil'].'"  ';
@@ -187,10 +185,6 @@ $UsuarioValidar->verificarSesion();
                                                 echo'selected="selected" ';
                                             }
                                     echo'>'.$filas['descripcion_estadoCivil'].'</option>';
-                                }
-                            }else{
-                                foreach($resultado as $filas){
-                                    echo '<option value="'.$filas['id_estadoCivil'].'">'.$filas['descripcion_estadoCivil'].'</option>';
                                 }
                             }
 						 ?>
@@ -200,7 +194,9 @@ $UsuarioValidar->verificarSesion();
 					<td><strong>Sexo</strong></td>
 					<td><select class="form-control" name="sexo">
 						<?php
-							$resultado = $Sospechoso->registros("select * from tb_sexo");
+						require_once '../clases/Sexo.php';
+						$Sexo= new Sexo();
+						$resultado= $Sexo->listarSexo();
                             if(isset($soloRun)){
                                 foreach($resultado as $filas){
                                     echo '<option value="'.$filas['id_sexo'].'" ';
@@ -208,10 +204,6 @@ $UsuarioValidar->verificarSesion();
                                                 echo'selected="selected" ';
                                             }
                                     echo'>'.$filas['descripcion_sexo'].'</option>';
-                                }
-                            }else{
-                                foreach($resultado as $filas){
-                                    echo '<option value="'.$filas['id_sexo'].'">'.$filas['descripcion_sexo'].'</option>';
                                 }
                             }
 						 ?>
@@ -221,17 +213,16 @@ $UsuarioValidar->verificarSesion();
 					<td><strong>Tez De Piel</strong></td>
 					<td><select class="form-control" name="tezPiel">
 						<?php
-							$resultado = $Sospechoso->registros("select * from tb_tezpiel");                            if(isset($soloRun)){
+						require_once '../clases/TezPiel.php';
+						$TezPiel= new TezPiel();
+						$resultado= $TezPiel->listarTezPiel();
+							if(isset($soloRun)){
                                 foreach($resultado as $filas){
                                     echo '<option value="'.$filas['id_tezPiel'].'" ';
                                             if($filas['id_tezPiel']==$filasPrincipal['id_tezPiel']){
                                                 echo'selected="selected" ';
                                             }
                                     echo'>'.$filas['descripcion_tezPiel'].'</option>';
-                                }
-                            }else{
-                                foreach($resultado as $filas){
-                                    echo '<option value="'.$filas['id_tezPiel'].'">'.$filas['descripcion_tezPiel'].'</option>';
                                 }
                             }
 						 ?>
@@ -241,7 +232,9 @@ $UsuarioValidar->verificarSesion();
 					<td><strong>Tipo de Ojos</strong></td>
 					<td><select class="form-control" name="tipoOjos">
 						<?php
-							$resultado = $Sospechoso->registros("select * from tb_colorojos");
+						require_once '../clases/ColorOjos.php';
+						$ColorOjos= new ColorOjos();
+						$resultado= $ColorOjos->listarColorOjos();
                             if(isset($soloRun)){
                                 foreach($resultado as $filas){
                                     echo '<option value="'.$filas['id_colorOjos'].'" ';
@@ -249,10 +242,6 @@ $UsuarioValidar->verificarSesion();
                                                 echo'selected="selected" ';
                                             }
                                     echo'>'.$filas['descripcion_colorOjos'].'</option>';
-                                }
-                            }else{
-                                foreach($resultado as $filas){
-                                    echo '<option value="'.$filas['id_colorOjos'].'">'.$filas['descripcion_colorOjos'].'</option>';
                                 }
                             }
 						 ?>
@@ -262,7 +251,9 @@ $UsuarioValidar->verificarSesion();
 					<td><strong>Tipo de Pelo</strong></td>
 					<td><select class="form-control" name="tipoPelo">
 						<?php
-							$resultado = $Sospechoso->registros("select * from tb_tipopelo");
+						require_once '../clases/TipoPelo.php';
+						$TipoPelo= new TipoPelo();
+						$resultado= $TipoPelo->listarTipoPelo();
                             if(isset($soloRun)){
                                 foreach($resultado as $filas){
                                     echo '<option value="'.$filas['id_tipoPelo'].'" ';
@@ -270,10 +261,6 @@ $UsuarioValidar->verificarSesion();
                                                 echo'selected="selected" ';
                                             }
                                     echo'>'.$filas['descripcion_tipoPelo'].'</option>';
-                                }
-                            }else{
-                                foreach($resultado as $filas){
-                                    echo '<option value="'.$filas['id_tipoPelo'].'">'.$filas['descripcion_tipoPelo'].'</option>';
                                 }
                             }
 						 ?>
@@ -487,14 +474,16 @@ $UsuarioValidar->verificarSesion();
 				 			</thead>
 				 			<tbody>
 				 		<?php
-				 			$resultado= $Sospechoso->registros("select * from tb_delito order by descripcion_delito asc");
+						require_once '../clases/Delito.php';
+						$Delito= new Delito();
+						$resultado= $Delito->listarDelitosActivos();
 				 				$contadorDelitos=0;
 
 
 						 				foreach($resultado as $filas){
 						 						$contadorDelitos++;
 						 						echo'<tr>
-						 								<td><input class="" type="checkbox" value="'.$filas['id_delito'].'" name="delito'.$filas['id_delito'].'" ';
+						 								<td><input class="" type="checkbox" value="'.$filas['id_delito'].'" name="delito'.$contadorDelitos.'" id="delito'.$contadorDelitos.'" ';
 
 		                                        $resultado2= $Sospechoso->registros("select * from tb_delitosopechoso where id_delito=".$filas['id_delito'].' and run_sospechoso='.$soloRun);
 
@@ -502,7 +491,7 @@ $UsuarioValidar->verificarSesion();
 		                                                echo' checked="checked" ';
 		                                            }
 
-		                                        echo' /><label class="text-capitalize" for="'.$filas['id_delito'].'" >'.$filas['descripcion_delito'].'</label>
+		                                        echo' /><label class="text-capitalize" for="delito'.$contadorDelitos.'" >'.$filas['descripcion_delito'].'</label>
 		                                                    </td>
 		                                                 </tr>';
 						 				}
@@ -554,14 +543,15 @@ $UsuarioValidar->verificarSesion();
 				 			</thead>
 				 			<tbody>
 				 		<?php
-				 			$resultado= $Sospechoso->registros("select * from tb_equipofutbol");
+						require_once '../clases/Equipo.php';
+						$Equipo= new Equipo();
+						$resultado= $Equipo->listarEquiposActivos();
 				 				$contadorEquiposFutbol=0;
 
-								if(isset($soloRun)){
 								 				foreach($resultado as $filas){
 								 						$contadorEquiposFutbol++;
 								 						echo'<tr>
-								 								<td><input type="checkbox" value="'.$filas['id_equipo'].'" name="equipo'.$filas['id_equipo'].'" ';
+								 								<td><input type="checkbox" value="'.$filas['id_equipo'].'" name="equipo'.$contadorEquiposFutbol.'" id="equipo'.$contadorEquiposFutbol.'" ';
 
 				                                            $resultado2= $Sospechoso->registros("select * from tb_equiposospechoso where id_equipo=".$filas['id_equipo'].' and run='.$soloRun);
 
@@ -569,19 +559,10 @@ $UsuarioValidar->verificarSesion();
 				                                                echo' checked="checked" ';
 				                                            }
 
-				                                        echo'/><label for="'.$filas['id_equipo'].'" >'.$filas['descripcion_equipo'].'</label>
+				                                        echo'/><label for="equipo'.$contadorEquiposFutbol.'" >'.$filas['descripcion_equipo'].'</label>
 								 								</td>
 								 							 </tr>';
 								 				}
-								}else{
-								 				foreach($resultado as $filas){
-								 						$contadorEquiposFutbol++;
-								 						echo'<tr>
-								 								<td><input type="checkbox" value="'.$filas['id_equipo'].'" name="equipo'.$filas['id_equipo'].'" /><label for="'.$filas['id_equipo'].'" >'.$filas['descripcion_equipo'].'</label>
-								 								</td>
-								 							 </tr>';
-								 				}
-								}
 				 				echo'<input type="hidden" value="'.$contadorEquiposFutbol.'" name="contadorEquiposFutbol" >';
 				 		?>
 				 			</tbody>
@@ -597,14 +578,16 @@ $UsuarioValidar->verificarSesion();
 						 			</thead>
 						 			<tbody>
 						 		<?php
-						 			$resultado= $Sospechoso->registros("select * from tb_cicatriz");
+								require_once '../clases/Cicatriz.php';
+								$Cicatriz= new Cicatriz();
+								$resultado= $Cicatriz->listarCicatriz();
 						 				$contadorOpcionesCicatriz=0;
 
-								if(isset($soloRun)){
+
 										 				foreach($resultado as $filas){
 										 						$contadorOpcionesCicatriz++;
 										 						echo'<tr>
-										 								<td><input type="checkbox" value="'.$filas['id_lugarCicatriz'].'" name="cicatriz'.$filas['id_lugarCicatriz'].'" ';
+										 								<td><input type="checkbox" value="'.$filas['id_lugarCicatriz'].'" name="cicatriz'.$contadorOpcionesCicatriz.'" id="cicatriz'.$contadorOpcionesCicatriz.'"';
 
 				                                                $resultado2= $Sospechoso->registros("select * from tb_cicatrizsospechoso where id_lugarCicatriz=".$filas['id_lugarCicatriz'].' and run='.$soloRun);
 
@@ -612,19 +595,11 @@ $UsuarioValidar->verificarSesion();
 				                                                    echo' checked="checked" ';
 				                                                }
 
-				                                                echo'/><label for="'.$filas['id_lugarCicatriz'].'" >'.$filas['descripcion_lugarCicatriz'].'</label>
+				                                                echo'/><label for="cicatriz'.$contadorOpcionesCicatriz.'" >'.$filas['descripcion_lugarCicatriz'].'</label>
 										 								</td>
 										 							 </tr>';
 										 				}
-								}else{
-														foreach($resultado as $filas){
-																$contadorOpcionesCicatriz++;
-																echo'<tr>
-																		<td><input type="checkbox" value="'.$filas['id_lugarCicatriz'].'" name="cicatriz'.$filas['id_lugarCicatriz'].'" /><label for="'.$filas['id_lugarCicatriz'].'" >'.$filas['descripcion_lugarCicatriz'].'</label>
-																		</td>
-																	 </tr>';
-														}
-								}
+
 						 				echo'<input type="hidden" value="'.$contadorOpcionesCicatriz.'" name="contadorOpcionesCicatriz" >';
 						 		?>
 						 			</tbody>
@@ -638,14 +613,16 @@ $UsuarioValidar->verificarSesion();
 						 			</thead>
 						 			<tbody>
 						 		<?php
-						 			$resultado= $Sospechoso->registros("select * from tb_tatuaje");
+								require_once '../clases/Tatuaje.php';
+								$Tatuaje= new Tatuaje();
+								$resultado= $Tatuaje->listarTatuaje();
 						 				$contadorOpcionesTatuaje=0;
 
-								if(isset($soloRun)){
+
 								 				foreach($resultado as $filas){
 								 						$contadorOpcionesTatuaje++;
 								 						echo'<tr>
-								 								<td><input type="checkbox" value="'.$filas['id_lugarTatuaje'].'" name="tatuaje'.$filas['id_lugarTatuaje'].'" ';
+								 								<td><input type="checkbox" value="'.$filas['id_lugarTatuaje'].'" name="tatuaje'.$contadorOpcionesTatuaje.'" id="tatuaje'.$contadorOpcionesTatuaje.'" ';
 
 		                                                $resultado2= $Sospechoso->registros("select * from tb_tatuajesospechoso where id_lugarTatuaje=".$filas['id_lugarTatuaje'].' and run='.$soloRun);
 
@@ -653,19 +630,11 @@ $UsuarioValidar->verificarSesion();
 		                                                    echo' checked="checked" ';
 		                                                }
 
-		                                                echo'/><label for="'.$filas['id_lugarTatuaje'].'" >'.$filas['descripcion_lugarTatuaje'].'</label>
+		                                                echo'/><label for="tatuaje'.$contadorOpcionesTatuaje.'" >'.$filas['descripcion_lugarTatuaje'].'</label>
 								 								</td>
 								 							 </tr>';
 								 				}
-									}else{
-									 				foreach($resultado as $filas){
-									 						$contadorOpcionesTatuaje++;
-									 						echo'<tr>
-									 								<td><input type="checkbox" value="'.$filas['id_lugarTatuaje'].'" name="tatuaje'.$filas['id_lugarTatuaje'].'" /><label for="'.$filas['id_lugarTatuaje'].'" >'.$filas['descripcion_lugarTatuaje'].'</label>
-									 								</td>
-									 							 </tr>';
-									 				}
-										}
+
 						 				echo'<input type="hidden" value="'.$contadorOpcionesTatuaje.'" name="contadorOpcionesTatuaje" >';
 						 		?>
 						 			</tbody>
@@ -679,14 +648,16 @@ $UsuarioValidar->verificarSesion();
 						 			</thead>
 						 			<tbody>
 						 		<?php
-						 			$resultado= $Sospechoso->registros("select * from tb_piercing");
+								require_once '../clases/Piercing.php';
+								$Piercing= new Piercing();
+								$resultado= $Piercing->listarPiercing();
 						 				$contadorOpcionesPiercing=0;
 
-								if(isset($soloRun)){
+
 									 				foreach($resultado as $filas){
 									 						$contadorOpcionesPiercing++;
 									 						echo'<tr>
-									 								<td><input type="checkbox" value="'.$filas['id_lugarPiercing'].'" name="piercing'.$filas['id_lugarPiercing'].'" ';
+									 								<td><input type="checkbox" value="'.$filas['id_lugarPiercing'].'" name="piercing'.$contadorOpcionesPiercing.'" id="piercing'.$contadorOpcionesPiercing.'" ';
 
 			                                                $resultado2= $Sospechoso->registros("select * from tb_piercingsospechoso where id_lugarPiercing=".$filas['id_lugarPiercing'].' and run='.$soloRun);
 
@@ -694,19 +665,11 @@ $UsuarioValidar->verificarSesion();
 			                                                    echo' checked="checked" ';
 			                                                }
 
-			                                                echo'/><label for="'.$filas['id_lugarPiercing'].'" >'.$filas['descripcion_lugarPiercing'].'</label>
+			                                                echo'/><label for="piercing'.$contadorOpcionesPiercing.'" >'.$filas['descripcion_lugarPiercing'].'</label>
 									 								</td>
 									 							 </tr>';
 									 				}
-									}else{
-										 				foreach($resultado as $filas){
-										 						$contadorOpcionesPiercing++;
-										 						echo'<tr>
-										 								<td><input type="checkbox" value="'.$filas['id_lugarPiercing'].'" name="piercing'.$filas['id_lugarPiercing'].'" /><label for="'.$filas['id_lugarPiercing'].'" >'.$filas['descripcion_lugarPiercing'].'</label>
-										 								</td>
-										 							 </tr>';
-										 				}
-										}
+
 						 				echo'<input type="hidden" value="'.$contadorOpcionesPiercing.'" name="contadorOpcionesPiercing" >';
 						 		?>
 						 			</tbody>
@@ -722,14 +685,16 @@ $UsuarioValidar->verificarSesion();
 				 			</thead>
 				 			<tbody>
 				 		<?php
-				 			$resultado= $Sospechoso->registros("SELECT * FROM tb_poblacion");
+						require_once '../clases/Poblacion.php';
+						$Poblacion= new Poblacion();
+						$resultado= $Poblacion->listarPoblacionesActivas();
 				 				$contadorPoblaciones=0;
 
-								if(isset($soloRun)){
+
 						 				foreach($resultado as $filas){
 						 						$contadorPoblaciones++;
 						 						echo'<tr>
-						 								<td><input type="checkbox" value="'.$filas['id_poblacion'].'" name="poblacion'.$filas['id_poblacion'].'" ';
+						 								<td><input type="checkbox" value="'.$filas['id_poblacion'].'" name="poblacion'.$contadorPoblaciones.'" id="poblacion'.$contadorPoblaciones.'" ';
 
 		                                                $resultado2= $Sospechoso->registros("select * from tb_poblacionsospechoso where id_poblacion=".$filas['id_poblacion'].' and run='.$soloRun);
 
@@ -737,19 +702,11 @@ $UsuarioValidar->verificarSesion();
 		                                                    echo' checked="checked" ';
 		                                                }
 
-		                                        echo'/><label for="'.$filas['id_poblacion'].'" >'.$filas['descripcion_poblacion'].'</label>
+		                                        echo'/><label for="poblacion'.$contadorPoblaciones.'" >'.$filas['descripcion_poblacion'].'</label>
 						 								</td>
 						 							 </tr>';
 						 				}
-								}else{
-						 				foreach($resultado as $filas){
-						 						$contadorPoblaciones++;
-						 						echo'<tr>
-						 								<td><input type="checkbox" value="'.$filas['id_poblacion'].'" name="poblacion'.$filas['id_poblacion'].'" /><label for="'.$filas['id_poblacion'].'" >'.$filas['descripcion_poblacion'].'</label>
-						 								</td>
-						 							 </tr>';
-						 				}
-								}
+
 				 				echo'<input type="hidden" value="'.$contadorPoblaciones.'" name="contadorPoblaciones" >';
 				 		?>
 				 			</tbody>
@@ -783,7 +740,7 @@ $UsuarioValidar->verificarSesion();
 													              contentType: false,
 													              processData:false,
 													              success:function(resultado){
-																					//alert(resultado);
+																					alert(resultado);
 													                  if(resultado==0){
 													                         swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
 													                         setTimeout(function(){
@@ -847,6 +804,12 @@ $UsuarioValidar->verificarSesion();
 							success:function(respuesta){
 								 if(respuesta==1){
 									 cargarImagenesActuales(run);
+									 swal("Operacion exitosa!", "Imagen Eliminada", "success");
+								 }
+								 else if(respuesta==2){
+									 swal("Sospechoso debe tener al menos una imagen!", "", "warning");
+								 }
+								 else{
 									 swal("Operacion exitosa!", "Imagen Eliminada", "success");
 								 }
 							}

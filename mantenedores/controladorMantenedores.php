@@ -1390,9 +1390,9 @@ case "7": //mantenedor sospechosos
                                		if(isset($_REQUEST['delito'.$c])){
 
                                				if($delitos==""){
-                               					$delitos= $delitos.$c;
+                               					$delitos= $delitos.$_REQUEST['delito'.$c];
                                				}else{
-                               					$delitos= $delitos.";".$c;
+                               					$delitos= $delitos.";".$_REQUEST['delito'.$c];
                                				}
 
                                		}
@@ -1416,9 +1416,9 @@ case "7": //mantenedor sospechosos
                                		if(isset($_REQUEST['equipo'.$c])){
 
                                				if($equipos==""){
-                               					$equipos= $equipos.$c;
+                               					$equipos= $equipos.$_REQUEST['equipo'.$c];
                                				}else{
-                               					$equipos= $equipos.";".$c;
+                               					$equipos= $equipos.";".$_REQUEST['equipo'.$c];
                                				}
 
                                		}
@@ -1437,19 +1437,22 @@ case "7": //mantenedor sospechosos
 
                                	/*PREPARAR BUSQUEDA POBLACIONES*/
                                	$poblaciones="";
+
                                	for($c=1;$c<=$contadorPoblaciones;$c++){
                                		if(isset($_REQUEST['poblacion'.$c])){
 
                                				if($poblaciones==""){
-                               					$poblaciones= $poblaciones.$c;
+                               					$poblaciones= $poblaciones.$_REQUEST['poblacion'.$c];
                                				}else{
-                               					$poblaciones= $poblaciones.";".$c;
+                               					$poblaciones= $poblaciones.";".$_REQUEST['poblacion'.$c];
                                				}
 
                                		}
                                	}
+
+
                                	$arrayPoblaciones= explode(";",$poblaciones);
-                        if($poblaciones!=""){
+                            if($poblaciones!=""){
                                	foreach ($arrayPoblaciones as $key => $pob) {
 
                                		//echo $pob."\n";
@@ -1457,7 +1460,7 @@ case "7": //mantenedor sospechosos
                                		$Sospechoso->insertar($consultaDelitos);
                                		//echo $consultaDelitos;
                                	}
-                          }
+                             }
                                	/*FIN POBLACIONES*/
 
                                	/*PREPARAR BUSQUEDA CICATRIZ*/
@@ -1466,9 +1469,9 @@ case "7": //mantenedor sospechosos
                                		if(isset($_REQUEST['cicatriz'.$c])){
 
                                				if($cicatriz==""){
-                               					$cicatriz= $cicatriz.$c;
+                               					$cicatriz= $cicatriz.$_REQUEST['cicatriz'.$c];
                                				}else{
-                               					$cicatriz= $cicatriz.";".$c;
+                               					$cicatriz= $cicatriz.";".$_REQUEST['cicatriz'.$c];
                                				}
 
                                		}
@@ -1491,9 +1494,9 @@ case "7": //mantenedor sospechosos
                                		if(isset($_REQUEST['tatuaje'.$c])){
 
                                				if($tatuaje==""){
-                               					$tatuaje= $tatuaje.$c;
+                               					$tatuaje= $tatuaje.$_REQUEST['tatuaje'.$c];
                                				}else{
-                               					$tatuaje= $tatuaje.";".$c;
+                               					$tatuaje= $tatuaje.";".$_REQUEST['tatuaje'.$c];
                                				}
 
                                		}
@@ -1516,9 +1519,9 @@ case "7": //mantenedor sospechosos
                                		if(isset($_REQUEST['piercing'.$c])){
 
                                				if($piercing==""){
-                               					$piercing= $piercing.$c;
+                               					$piercing= $piercing.$_REQUEST['piercing'.$c];
                                				}else{
-                               					$piercing= $piercing.";".$c;
+                               					$piercing= $piercing.";".$_REQUEST['piercing'.$c];
                                				}
 
                                		}
@@ -1735,13 +1738,24 @@ $privilegioModificar=false;
             $posicionGuion = strpos($run,'-');
             $run = substr($run,0,$posicionGuion);
 
-            $consultaE= "delete from tb_imagensospechoso where id_imagen=".$idFoto." and run_sospechoso=".$run;
-            if($Sospechoso->insertar($consultaE)){
+             $compruebaCantidadImagenes=$Sospechoso->registros("select count(id_imagen) as cantidad from tb_imagensospechoso where run_sospechoso=".$run);
+            if($compruebaCantidadImagenes[0]['cantidad']>1){// SI HAY MAS DE UNA IMAGEN BORRA
 
-                $consultaE2= "delete from tb_imagen where id_imagen=".$idFoto;
-                if($Sospechoso->insertar($consultaE2)){
-                  echo "1";//eliminada
-                }
+                  $consultaE= "delete from tb_imagensospechoso where id_imagen=".$idFoto." and run_sospechoso=".$run;
+                  if($Sospechoso->insertar($consultaE)){
+
+                      $consultaE2= "delete from tb_imagen where id_imagen=".$idFoto;
+                      if($Sospechoso->insertar($consultaE2)){
+                        echo "1";//eliminada
+                      }else{
+                        echo "3";//error
+                      }
+                  }else{
+                    echo "3";//error
+                  }
+
+            }else{
+              echo "2";//el sospechoso debe tener al menos una imagen
             }
             break;
 

@@ -115,20 +115,14 @@ $UsuarioValidar->verificarSesion();
 					<td>
 						<select class="form-control" name="colorPelo">
 							<?php
-									$resultado = $Usuario->registros("select * from tb_colorpelo");
-                                if(isset($_REQUEST['id'])){
-                                    foreach($resultado as $filas){
-                                        echo'<option value="'.$filas['id_colorPelo'].'"';
-                                            if($filas['id_colorPelo']==$filasPrincipal['id_colorPelo']){
-                                                echo'selected="selected" ';
-                                            }
-                                        echo'>'.$filas['descripcion_colorPelo'].'</option>';
-                                    }
-                                }else{
-                                    foreach($resultado as $filas){
-                                        echo'<option value="'.$filas['id_colorPelo'].'">'.$filas['descripcion_colorPelo'].'</option>';
-                                    }
-                                }
+							require_once '../clases/ColorPelo.php';
+							$ColorPelo= new ColorPelo();
+							$resultado= $ColorPelo->listarColorPelo();
+
+                foreach($resultado as $filas){
+                  echo'<option value="'.$filas['id_colorPelo'].'">'.$filas['descripcion_colorPelo'].'</option>';
+                }
+
 							 ?>
 						</select>
 					</td>
@@ -137,21 +131,14 @@ $UsuarioValidar->verificarSesion();
 					<td><strong>Contextura</strong></td>
 					<td><select class="form-control" name="contextura">
 						<?php
-							$resultado = $Usuario->registros("select * from tb_contextura");
-                            if(isset($_REQUEST['id'])){
+						require_once '../clases/Contextura.php';
+						$Contextura= new Contextura();
+						$resultado= $Contextura->listarContextura();
 
-                                foreach($resultado as $filas){
-                                    echo '<option value="'.$filas['id_contextura'].'" ';
-                                            if($filas['id_contextura']==$filasPrincipal['id_contextura']){
-                                                echo'selected="selected" ';
-                                            }
-                                    echo'>'.$filas['descripcion_contextura'].'</option>';
-                                }
-                            }else{
                                  foreach($resultado as $filas){
                                     echo '<option value="'.$filas['id_contextura'].'">'.$filas['descripcion_contextura'].'</option>';
                                 }
-                            }
+
 						 ?>
 					</select></td>
 				</tr>
@@ -159,20 +146,13 @@ $UsuarioValidar->verificarSesion();
 					<td><strong>Estado Civil</strong></td>
 					<td><select class="form-control" name="estadoCivil">
 						<?php
-							$resultado = $Usuario->registros("select * from tb_estadoCivil");
-                            if(isset($_REQUEST['id'])){
-                                foreach($resultado as $filas){
-                                    echo '<option value="'.$filas['id_estadoCivil'].'"  ';
-                                            if($filas['id_estadoCivil']==$filasPrincipal['id_estadoCivil']){
-                                                echo'selected="selected" ';
-                                            }
-                                    echo'>'.$filas['descripcion_estadoCivil'].'</option>';
-                                }
-                            }else{
+						require_once '../clases/EstadoCivil.php';
+						$EstadoCivil= new EstadoCivil();
+						$resultado= $EstadoCivil->listarEstadoCivil();
                                 foreach($resultado as $filas){
                                     echo '<option value="'.$filas['id_estadoCivil'].'">'.$filas['descripcion_estadoCivil'].'</option>';
                                 }
-                            }
+
 						 ?>
 					</select></td>
 				</tr>
@@ -180,20 +160,13 @@ $UsuarioValidar->verificarSesion();
 					<td><strong>Sexo</strong></td>
 					<td><select class="form-control" name="sexo">
 						<?php
-							$resultado = $Usuario->registros("select * from tb_sexo");
-                            if(isset($_REQUEST['id'])){
-                                foreach($resultado as $filas){
-                                    echo '<option value="'.$filas['id_sexo'].'" ';
-                                            if($filas['id_sexo']==$filasPrincipal['id_sexo']){
-                                                echo'selected="selected" ';
-                                            }
-                                    echo'>'.$filas['descripcion_sexo'].'</option>';
-                                }
-                            }else{
+						require_once '../clases/Sexo.php';
+						$Sexo= new Sexo();
+						$resultado= $Sexo->listarSexo();
                                 foreach($resultado as $filas){
                                     echo '<option value="'.$filas['id_sexo'].'">'.$filas['descripcion_sexo'].'</option>';
                                 }
-                            }
+
 						 ?>
 					</select></td>
 				</tr>
@@ -201,40 +174,27 @@ $UsuarioValidar->verificarSesion();
 					<td><strong>Tez De Piel</strong></td>
 					<td><select class="form-control" name="tezPiel">
 						<?php
-							$resultado = $Usuario->registros("select * from tb_tezpiel");                            if(isset($_REQUEST['id'])){
-                                foreach($resultado as $filas){
-                                    echo '<option value="'.$filas['id_tezPiel'].'" ';
-                                            if($filas['id_tezPiel']==$filasPrincipal['id_tezPiel']){
-                                                echo'selected="selected" ';
-                                            }
-                                    echo'>'.$filas['descripcion_tezPiel'].'</option>';
-                                }
-                            }else{
+						require_once '../clases/TezPiel.php';
+						$TezPiel= new TezPiel();
+						$resultado= $TezPiel->listarTezPiel();
                                 foreach($resultado as $filas){
                                     echo '<option value="'.$filas['id_tezPiel'].'">'.$filas['descripcion_tezPiel'].'</option>';
                                 }
-                            }
+
 						 ?>
 					</select></td>
 				</tr>
 				<tr>
-					<td><strong>Tipo de Ojos</strong></td>
+					<td><strong>Ojos</strong></td>
 					<td><select class="form-control" name="tipoOjos">
 						<?php
-							$resultado = $Usuario->registros("select * from tb_colorojos");
-                            if(isset($_REQUEST['id'])){
-                                foreach($resultado as $filas){
-                                    echo '<option value="'.$filas['id_colorOjos'].'" ';
-                                            if($filas['id_colorOjos']==$filasPrincipal['id_tipoOjos']){
-                                                echo'selected="selected" ';
-                                            }
-                                    echo'>'.$filas['descripcion_colorOjos'].'</option>';
-                                }
-                            }else{
+						require_once '../clases/ColorOjos.php';
+						$ColorOjos= new ColorOjos();
+						$resultado= $ColorOjos->listarColorOjos();
                                 foreach($resultado as $filas){
                                     echo '<option value="'.$filas['id_colorOjos'].'">'.$filas['descripcion_colorOjos'].'</option>';
                                 }
-                            }
+
 						 ?>
 					</select></td>
 				</tr>
@@ -242,217 +202,74 @@ $UsuarioValidar->verificarSesion();
 					<td><strong>Tipo de Pelo</strong></td>
 					<td><select class="form-control" name="tipoPelo">
 						<?php
-							$resultado = $Usuario->registros("select * from tb_tipopelo");
-                            if(isset($_REQUEST['id'])){
-                                foreach($resultado as $filas){
-                                    echo '<option value="'.$filas['id_tipoPelo'].'" ';
-                                            if($filas['id_tipoPelo']==$filasPrincipal['id_tipoPelo']){
-                                                echo'selected="selected" ';
-                                            }
-                                    echo'>'.$filas['descripcion_tipoPelo'].'</option>';
-                                }
-                            }else{
+						require_once '../clases/TipoPelo.php';
+						$TipoPelo= new TipoPelo();
+						$resultado= $TipoPelo->listarTipoPelo();
                                 foreach($resultado as $filas){
                                     echo '<option value="'.$filas['id_tipoPelo'].'">'.$filas['descripcion_tipoPelo'].'</option>';
                                 }
-                            }
+
 						 ?>
 					</select></td>
 				</tr>
 						<tr>
 		 					<td><label>Acne</label></td>
 		 					<td>
-		 						<input type="radio" value="1" name="acne" id="acne1"
-                    <?php if(isset($_REQUEST['id'])){ if($filasPrincipal['acne']=="1"){echo' checked="checked" ';} } ?>
+		 						<input type="radio" value="1" name="acne" id="acne1" ><label for="acne1">Si</label>
 
-                    ><label for="acne1">Si</label>
+		 						<input type="radio" value="2" name="acne" id="acne2" ><label for="acne2">No</label>
 
-		 						<input type="radio" value="2" name="acne" id="acne2"
-                    <?php if(isset($_REQUEST['id'])){ if($filasPrincipal['acne']=="2"){echo' checked="checked" ';} } ?>
-
-                    ><label for="acne2">No</label>
-
-		 						<input type="radio" value="0" name="acne" id="acne3"
-		 	        <?php if(isset($_REQUEST['id'])){ if($filasPrincipal['acne']=="0"){echo' checked="checked" ';} }else{echo' checked="checked"';} ?>
-
-		 	        ><label for="acne3">Sin especificar</label>
+		 						<input type="radio" value="0" name="acne" id="acne3" ><label for="acne3">Sin especificar</label>
 		 					</td>
 		 				</tr>
 		 				<tr>
 		 					<td><label>Barba</label></td>
 		 					<td>
-		 						<input type="radio" value="1" name="barba" id="barba1"
-		 						<?php
-                                if(isset($_REQUEST['id'])){
-                                    if($filasPrincipal['barba']=="1"){
-                                        echo' checked="checked" ';
-                                    }
-                                } ?>
-		 						><label for="barba1">Si</label>
+		 						<input type="radio" value="1" name="barba" id="barba1" ><label for="barba1">Si</label>
 
-		 						<input type="radio" value="2" name="barba" id="barba2"
-		 						<?php
-                                if(isset($_REQUEST['id'])){
-                                    if($filasPrincipal['barba']=="2"){
-                                        echo' checked="checked" ';
-                                    }
-                                } ?>
-                                ><label for="barba2">No</label>
+		 						<input type="radio" value="2" name="barba" id="barba2" ><label for="barba2">No</label>
 
-		 						<input type="radio" value="0" name="barba" id="barba3"
-                                <?php if(isset($_REQUEST['id'])){
-                                    if($filasPrincipal['barba']=="0"){
-                                        echo' checked="checked" ';
-                                    }
-                                }else{
-                                    echo' checked="checked"';
-                                } ?>
-                                 ><label for="barba3">Sin especificar</label>
+		 						<input type="radio" value="0" name="barba" id="barba3" ><label for="barba3">Sin especificar</label>
 		 					</td>
 		 				</tr>
 		 				<tr>
 		 					<td><label>Bigote</label></td>
 		 					<td>
-		 						<input type="radio" value="1" name="bigote" id="bigote1"
-		 						<?php
-                                if(isset($_REQUEST['id'])){
-                                    if($filasPrincipal['bigote']=="1"){
-                                        echo' checked="checked" ';
-                                    }
-                                } ?>
-		 						><label for="bigote1">Si</label>
-		 						<input type="radio" value="2" name="bigote" id="bigote2"
-		 						<?php
-                                if(isset($_REQUEST['id'])){
-                                    if($filasPrincipal['bigote']=="2"){
-                                        echo' checked="checked" ';
-                                    }
-                                } ?>
-
-		 						><label for="bigote2">No</label>
-		 						<input type="radio" value="0" name="bigote" id="bigote3"
-                                <?php if(isset($_REQUEST['id'])){
-                                    if($filasPrincipal['bigote']=="0"){
-                                        echo' checked="checked" ';
-                                    }
-                                }else{
-                                    echo' checked="checked"';
-                                } ?>
-		 						><label for="bigote3">Sin especificar</label>
+		 						<input type="radio" value="1" name="bigote" id="bigote1" ><label for="bigote1">Si</label>
+		 						<input type="radio" value="2" name="bigote" id="bigote2" ><label for="bigote2">No</label>
+		 						<input type="radio" value="0" name="bigote" id="bigote3" ><label for="bigote3">Sin especificar</label>
 		 					</td>
 		 				</tr>
 		 				<tr>
 		 					<td><label>Manchas</label></td>
 		 					<td>
-		 						<input type="radio" value="1" name="manchas" id="manchas1"
-		 						<?php
-                                if(isset($_REQUEST['id'])){
-                                    if($filasPrincipal['manchas']=="1"){
-                                        echo' checked="checked" ';
-                                    }
-                                } ?>
-		 						><label for="manchas1">Si</label>
-		 						<input type="radio" value="2" name="manchas" id="manchas2"
-		 						<?php
-                                if(isset($_REQUEST['id'])){
-                                    if($filasPrincipal['manchas']=="2"){
-                                        echo' checked="checked" ';
-                                    }
-                                } ?>
-		 						><label for="manchas2">No</label>
-		 						<input type="radio" value="0" name="manchas" id="manchas3"
-                                <?php if(isset($_REQUEST['id'])){
-                                    if($filasPrincipal['manchas']=="0"){
-                                        echo' checked="checked" ';
-                                    }
-                                }else{
-                                    echo' checked="checked"';
-                                } ?>
-		 						><label for="manchas3">Sin especificar</label>
+		 						<input type="radio" value="1" name="manchas" id="manchas1" ><label for="manchas1">Si</label>
+		 						<input type="radio" value="2" name="manchas" id="manchas2" ><label for="manchas2">No</label>
+		 						<input type="radio" value="0" name="manchas" id="manchas3" ><label for="manchas3">Sin especificar</label>
 		 					</td>
 		 				</tr>
 		 				<tr>
 		 					<td><label>Lentes</label></td>
 		 					<td>
-		 						<input type="radio" value="1" name="lentes" id="lentes1"
-                                <?php if(isset($_REQUEST['id'])){
-                                    if($filasPrincipal['lentes']=="1"){
-                                        echo' checked="checked" ';
-                                    }
-                                }?>
-		 						><label for="lentes1">Si</label>
-		 						<input type="radio" value="2" name="lentes" id="lentes2"
-                                <?php if(isset($_REQUEST['id'])){
-                                    if($filasPrincipal['lentes']=="2"){
-                                        echo' checked="checked" ';
-                                    }
-                                }?>
-		 						><label for="lentes2">No</label>
-		 						<input type="radio" value="0" name="lentes" id="lentes3"
-                                <?php if(isset($_REQUEST['id'])){
-                                    if($filasPrincipal['lentes']=="0"){
-                                        echo' checked="checked" ';
-                                    }
-                                }else{
-                                    echo' checked="checked"';
-                                } ?>
-		 						><label for="lentes3">Sin especificar</label>
+		 						<input type="radio" value="1" name="lentes" id="lentes1" ><label for="lentes1">Si</label>
+		 						<input type="radio" value="2" name="lentes" id="lentes2" ><label for="lentes2">No</label>
+		 						<input type="radio" value="0" name="lentes" id="lentes3" ><label for="lentes3">Sin especificar</label>
 		 					</td>
 		 				</tr>
 		 				<tr>
 		 					<td><label>Pecas</label></td>
 		 					<td>
-		 						<input type="radio" value="1" name="pecas" id="pecas1"
-                                <?php if(isset($_REQUEST['id'])){
-                                    if($filasPrincipal['pecas']=="1"){
-                                        echo' checked="checked" ';
-                                    }
-                                }?>
-		 						><label for="pecas1">Si</label>
-		 						<input type="radio" value="2" name="pecas" id="pecas2"
-                                <?php if(isset($_REQUEST['id'])){
-                                    if($filasPrincipal['pecas']=="2"){
-                                        echo' checked="checked" ';
-                                    }
-                                }?>
-		 						><label for="pecas2">No</label>
-		 						<input type="radio" value="0" name="pecas" id="pecas3"
-                                <?php if(isset($_REQUEST['id'])){
-                                    if($filasPrincipal['pecas']=="0"){
-                                        echo' checked="checked" ';
-                                    }
-                                }else{
-                                    echo' checked="checked"';
-                                } ?>
-		 						><label for="pecas3">Sin especificar</label>
+		 						<input type="radio" value="1" name="pecas" id="pecas1" ><label for="pecas1">Si</label>
+		 						<input type="radio" value="2" name="pecas" id="pecas2" ><label for="pecas2">No</label>
+		 						<input type="radio" value="0" name="pecas" id="pecas3" ><label for="pecas3">Sin especificar</label>
 		 					</td>
 		 				</tr>
 						<tr>
 		 					<td><label>Antecedentes</label></td>
 		 					<td>
-		 						<input type="radio" value="1" name="antecedentes" id="antecedentes1"
-                                <?php if(isset($_REQUEST['id'])){
-                                    if($filasPrincipal['antecedentes_penales']=="1"){
-                                        echo' checked="checked" ';
-                                    }
-                                }?>
-		 						><label for="antecedentes1">Si</label>
-		 						<input type="radio" value="2" name="antecedentes" id="antecedentes2"
-                                <?php if(isset($_REQUEST['id'])){
-                                    if($filasPrincipal['antecedentes_penales']=="2"){
-                                        echo' checked="checked" ';
-                                    }
-                                }?>
-		 						><label for="antecedentes2">No</label>
-		 						<input type="radio" value="0" name="antecedentes" id="antecedentes3"
-                                <?php if(isset($_REQUEST['id'])){
-                                    if($filasPrincipal['antecedentes_penales']=="0"){
-                                        echo' checked="checked" ';
-                                    }
-                                }else{
-                                    echo' checked="checked"';
-                                } ?>
-		 						><label for="antecedentes3">Sin especificar</label>
+		 						<input type="radio" value="1" name="antecedentes" id="antecedentes1" ><label for="antecedentes1">Si</label>
+		 						<input type="radio" value="2" name="antecedentes" id="antecedentes2" ><label for="antecedentes2">No</label>
+		 						<input type="radio" value="0" name="antecedentes" id="antecedentes3" ><label for="antecedentes3">Sin especificar</label>
 		 					</td>
 		 				</tr>
 
@@ -467,23 +284,18 @@ $UsuarioValidar->verificarSesion();
 				 			</thead>
 				 			<tbody>
 				 		<?php
-				 			$resultado= $Usuario->registros("select * from tb_delito");
+						require_once '../clases/Delito.php';
+						$Delito= new Delito();
+						$resultado= $Delito->listarDelitosActivos();
 				 				$contadorDelitos=0;
 
 				 			foreach($resultado as $filas){
 				 						$contadorDelitos++;
 				 						echo'<tr>
-				 								<td><input class="" type="checkbox" value="'.$filas['id_delito'].'" name="delito'.$filas['id_delito'].'" ';
-
-                                        //$resultado2= $Usuario->registros("select * from tb_delitosopechoso where id_delito=".$filas['id_delito'].' and run_sospechoso='.$_REQUEST['id']);
-
-                                          //  if($resultado2->num_rows>0){
-                                                //echo' checked="checked" ';
-                                            //}
-
-                                        echo' /><label class="text-capitalize" for="'.$filas['id_delito'].'" >'.$filas['descripcion_delito'].'</label>
-                                                    </td>
-                                                 </tr>';
+				 								 <td><input class="" type="checkbox" value="'.$filas['id_delito'].'" name="delito'.$contadorDelitos.'" id="delito'.$contadorDelitos.'" />
+												   <label class="text-capitalize" for="delito'.$contadorDelitos.'" >'.$filas['descripcion_delito'].'</label>
+                         </td>
+                       </tr>';
 				 				}
 				 				echo'<input type="hidden" value="'.$contadorDelitos.'" name="contadorDelitos" >';
 				 		?>
@@ -530,34 +342,21 @@ $UsuarioValidar->verificarSesion();
 				 			</thead>
 				 			<tbody>
 				 		<?php
-				 			$resultado= $Usuario->registros("select * from tb_equipofutbol");
+						require_once '../clases/Equipo.php';
+						$Equipo= new Equipo();
+						$resultado= $Equipo->listarEquiposActivos();
 				 				$contadorEquiposFutbol=0;
 
-								if(isset($_REQUEST['id'])){
+
 								 			foreach($resultado as $filas){
 								 						$contadorEquiposFutbol++;
 								 						echo'<tr>
-								 								<td><input type="checkbox" value="'.$filas['id_equipo'].'" name="equipo'.$filas['id_equipo'].'" ';
-
-				                                            $resultado2= $Usuario->registros("select * from tb_equiposospechoso where id_equipo=".$filas['id_equipo'].' and run='.$_REQUEST['id']);
-
-				                                            if($resultado2->num_rows>0){
-				                                                echo' checked="checked" ';
-				                                            }
-
-				                                        echo'/><label for="'.$filas['id_equipo'].'" >'.$filas['descripcion_equipo'].'</label>
+								 								<td><input type="checkbox" value="'.$filas['id_equipo'].'" name="equipo'.$contadorEquiposFutbol.'" id="equipo'.$contadorEquiposFutbol.'" />
+																      <label for="equipo'.$contadorEquiposFutbol.'" >'.$filas['descripcion_equipo'].'</label>
 								 								</td>
 								 							 </tr>';
 								 				}
-								}else{
-								 			foreach($resultado as $filas){
-								 						$contadorEquiposFutbol++;
-								 						echo'<tr>
-								 								<td><input type="checkbox" value="'.$filas['id_equipo'].'" name="equipo'.$filas['id_equipo'].'" /><label for="'.$filas['id_equipo'].'" >'.$filas['descripcion_equipo'].'</label>
-								 								</td>
-								 							 </tr>';
-								 				}
-								}
+
 				 				echo'<input type="hidden" value="'.$contadorEquiposFutbol.'" name="contadorEquiposFutbol" >';
 				 		?>
 				 			</tbody>
@@ -573,34 +372,20 @@ $UsuarioValidar->verificarSesion();
 						 			</thead>
 						 			<tbody>
 						 		<?php
-						 			$resultado= $Usuario->registros("select * from tb_cicatriz");
+								require_once '../clases/Cicatriz.php';
+								$Cicatriz= new Cicatriz();
+								$resultado= $Cicatriz->listarCicatriz();
 						 				$contadorOpcionesCicatriz=0;
 
-								if(isset($_REQUEST['id'])){
-										 			foreach($resultado as $filas){
-										 						$contadorOpcionesCicatriz++;
-										 						echo'<tr>
-										 								<td><input type="checkbox" value="'.$filas['id_lugarCicatriz'].'" name="cicatriz'.$filas['id_lugarCicatriz'].'" ';
-
-				                                                $resultado2= $Usuario->registros("select * from tb_cicatrizsospechoso where id_lugarCicatriz=".$filas['id_lugarCicatriz'].' and run='.$_REQUEST['id']);
-
-				                                                if($resultado2->num_rows>0){
-				                                                    echo' checked="checked" ';
-				                                                }
-
-				                                                echo'/><label for="'.$filas['id_lugarCicatriz'].'" >'.$filas['descripcion_lugarCicatriz'].'</label>
-										 								</td>
-										 							 </tr>';
-										 				}
-								}else{
 													foreach($resultado as $filas){
 																$contadorOpcionesCicatriz++;
 																echo'<tr>
-																		<td><input type="checkbox" value="'.$filas['id_lugarCicatriz'].'" name="cicatriz'.$filas['id_lugarCicatriz'].'" /><label for="'.$filas['id_lugarCicatriz'].'" >'.$filas['descripcion_lugarCicatriz'].'</label>
+																		<td><input type="checkbox" value="'.$filas['id_lugarCicatriz'].'" name="cicatriz'.$contadorOpcionesCicatriz.'" id="cicatriz'.$contadorOpcionesCicatriz.'" />
+																		     <label for="cicatriz'.$contadorOpcionesCicatriz.'" >'.$filas['descripcion_lugarCicatriz'].'</label>
 																		</td>
 																	 </tr>';
 														}
-								}
+
 						 				echo'<input type="hidden" value="'.$contadorOpcionesCicatriz.'" name="contadorOpcionesCicatriz" >';
 						 		?>
 						 			</tbody>
@@ -614,34 +399,20 @@ $UsuarioValidar->verificarSesion();
 						 			</thead>
 						 			<tbody>
 						 		<?php
-						 			$resultado= $Usuario->registros("select * from tb_tatuaje");
+								require_once '../clases/Tatuaje.php';
+								$Tatuaje= new Tatuaje();
+								$resultado= $Tatuaje->listarTatuaje();
 						 				$contadorOpcionesTatuaje=0;
 
-								if(isset($_REQUEST['id'])){
-								 			foreach($resultado as $filas){
-								 						$contadorOpcionesTatuaje++;
-								 						echo'<tr>
-								 								<td><input type="checkbox" value="'.$filas['id_lugarTatuaje'].'" name="tatuaje'.$filas['id_lugarTatuaje'].'" ';
-
-		                                                $resultado2= $Usuario->registros("select * from tb_tatuajesospechoso where id_lugarTatuaje=".$filas['id_lugarTatuaje'].' and run='.$_REQUEST['id']);
-
-		                                                if($resultado2->num_rows>0){
-		                                                    echo' checked="checked" ';
-		                                                }
-
-		                                                echo'/><label for="'.$filas['id_lugarTatuaje'].'" >'.$filas['descripcion_lugarTatuaje'].'</label>
-								 								</td>
-								 							 </tr>';
-								 				}
-									}else{
 									 			foreach($resultado as $filas){
 									 						$contadorOpcionesTatuaje++;
 									 						echo'<tr>
-									 								<td><input type="checkbox" value="'.$filas['id_lugarTatuaje'].'" name="tatuaje'.$filas['id_lugarTatuaje'].'" /><label for="'.$filas['id_lugarTatuaje'].'" >'.$filas['descripcion_lugarTatuaje'].'</label>
+									 								<td><input type="checkbox" value="'.$filas['id_lugarTatuaje'].'" name="tatuaje'.$contadorOpcionesTatuaje.'" id="tatuaje'.$contadorOpcionesTatuaje.'" />
+																	       <label for="tatuaje'.$contadorOpcionesTatuaje.'" >'.$filas['descripcion_lugarTatuaje'].'</label>
 									 								</td>
 									 							 </tr>';
 									 				}
-										}
+
 						 				echo'<input type="hidden" value="'.$contadorOpcionesTatuaje.'" name="contadorOpcionesTatuaje" >';
 						 		?>
 						 			</tbody>
@@ -655,34 +426,20 @@ $UsuarioValidar->verificarSesion();
 						 			</thead>
 						 			<tbody>
 						 		<?php
-						 			$resultado= $Usuario->registros("select * from tb_piercing");
+								require_once '../clases/Piercing.php';
+								$Piercing= new Piercing();
+								$resultado= $Piercing->listarPiercing();
 						 				$contadorOpcionesPiercing=0;
 
-								if(isset($_REQUEST['id'])){
-									 			foreach($resultado as $filas){
-									 						$contadorOpcionesPiercing++;
-									 						echo'<tr>
-									 								<td><input type="checkbox" value="'.$filas['id_lugarPiercing'].'" name="piercing'.$filas['id_lugarPiercing'].'" ';
-
-			                                                $resultado2= $Usuario->registros("select * from tb_piercingsospechoso where id_lugarPiercing=".$filas['id_lugarPiercing'].' and run='.$_REQUEST['id']);
-
-			                                                if($resultado2->num_rows>0){
-			                                                    echo' checked="checked" ';
-			                                                }
-
-			                                                echo'/><label for="'.$filas['id_lugarPiercing'].'" >'.$filas['descripcion_lugarPiercing'].'</label>
-									 								</td>
-									 							 </tr>';
-									 				}
-									}else{
 										 			foreach($resultado as $filas){
 										 						$contadorOpcionesPiercing++;
 										 						echo'<tr>
-										 								<td><input type="checkbox" value="'.$filas['id_lugarPiercing'].'" name="piercing'.$filas['id_lugarPiercing'].'" /><label for="'.$filas['id_lugarPiercing'].'" >'.$filas['descripcion_lugarPiercing'].'</label>
+										 								<td><input type="checkbox" value="'.$filas['id_lugarPiercing'].'" name="piercing'.$contadorOpcionesPiercing.'" id="piercing'.$contadorOpcionesPiercing.'" />
+																		          <label for="piercing'.$contadorOpcionesPiercing.'" >'.$filas['descripcion_lugarPiercing'].'</label>
 										 								</td>
 										 							 </tr>';
 										 				}
-										}
+
 						 				echo'<input type="hidden" value="'.$contadorOpcionesPiercing.'" name="contadorOpcionesPiercing" >';
 						 		?>
 						 			</tbody>
@@ -698,34 +455,21 @@ $UsuarioValidar->verificarSesion();
 				 			</thead>
 				 			<tbody>
 				 		<?php
-				 			$resultado= $Usuario->registros("SELECT * FROM tb_poblacion");
+						require_once '../clases/Poblacion.php';
+						$Poblacion= new Poblacion();
+						$resultado= $Poblacion->listarPoblacionesActivas();
 				 				$contadorPoblaciones=0;
 
-								if(isset($_REQUEST['id'])){
+
 						 			foreach($resultado as $filas){
 						 						$contadorPoblaciones++;
 						 						echo'<tr>
-						 								<td><input type="checkbox" value="'.$filas['id_poblacion'].'" name="poblacion'.$filas['id_poblacion'].'" ';
-
-		                                                $resultado2= $Usuario->registros("select * from tb_poblacionsospechoso where id_poblacion=".$filas['id_poblacion'].' and run='.$_REQUEST['id']);
-
-		                                                if($resultado2->num_rows>0){
-		                                                    echo' checked="checked" ';
-		                                                }
-
-		                                        echo'/><label for="'.$filas['id_poblacion'].'" >'.$filas['descripcion_poblacion'].'</label>
+						 								<td><input type="checkbox" value="'.$filas['id_poblacion'].'" name="poblacion'.$contadorPoblaciones.'" id="poblacion'.$contadorPoblaciones.'" />
+														      <label for="poblacion'.$contadorPoblaciones.'" >'.$filas['descripcion_poblacion'].'</label>
 						 								</td>
 						 							 </tr>';
 						 				}
-								}else{
-						 			foreach($resultado as $filas){
-						 						$contadorPoblaciones++;
-						 						echo'<tr>
-						 								<td><input type="checkbox" value="'.$filas['id_poblacion'].'" name="poblacion'.$filas['id_poblacion'].'" /><label for="'.$filas['id_poblacion'].'" >'.$filas['descripcion_poblacion'].'</label>
-						 								</td>
-						 							 </tr>';
-						 				}
-								}
+
 				 				echo'<input type="hidden" value="'.$contadorPoblaciones.'" name="contadorPoblaciones" >';
 				 		?>
 				 			</tbody>

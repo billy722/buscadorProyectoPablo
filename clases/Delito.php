@@ -35,6 +35,11 @@ public function getEstadoDelito(){
     $delitos=$this->registros('select * from tb_delito inner join tb_estados on tb_estados.id_estado=tb_delito.estado');
     return $delitos;
  }
+
+ public function listarDelitosActivos(){
+    $delitos=$this->registros('select * from tb_delito where estado=1 order by descripcion_delito');
+    return $delitos;
+ }
  public function listarDelitosUnSospechoso($arg_run){
     $delitos=$this->registros('select d.descripcion_delito
 from tb_delito d

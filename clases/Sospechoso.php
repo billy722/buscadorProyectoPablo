@@ -1,13 +1,14 @@
 <?php
-require_once '../clases/Conexion.php';
+require_once '../clases/Persona.php';
 
-class Sospechoso extends Conexion{
+class Sospechoso extends Persona{
 
-  private $run;
-  private $dv;
-  private $nombre;
-  private $apellido_paterno;
-  private $apellido_materno;
+  // private $run;
+  // private $dv;
+  // private $nombre;
+  // private $apellido_paterno;
+  // private $apellido_materno;
+
   private $lugar_nacimiento;
   private $id_color_pelo;
   private $id_contextura;
@@ -33,21 +34,21 @@ class Sospechoso extends Conexion{
       parent::__construct();
   }
 
-  public function setRun($arg_run){
-      $this->run= $arg_run;
-  }
-  public function setDv($arg_dv){
-      $this->dv= $arg_dv;
-  }
-  public function setNombre($arg_nombre){
-      $this->nombre= $arg_nombre;
-  }
-  public function setApellidoPaterno($arg_apellidoPaterno){
-    $this->apellido_paterno= $arg_apellidoPaterno;
-  }
-  public function setApellidoMaterno($arg_apellidoMaterno){
-    $this->apellido_materno= $arg_apellidoMaterno;
-  }
+  // public function setRun($arg_run){
+  //     $this->run= $arg_run;
+  // }
+  // public function setDv($arg_dv){
+  //     $this->dv= $arg_dv;
+  // }
+  // public function setNombre($arg_nombre){
+  //     $this->nombre= $arg_nombre;
+  // }
+  // public function setApellidoPaterno($arg_apellidoPaterno){
+  //   $this->apellido_paterno= $arg_apellidoPaterno;
+  // }
+  // public function setApellidoMaterno($arg_apellidoMaterno){
+  //   $this->apellido_materno= $arg_apellidoMaterno;
+  // }
   public function setLugarNacimiento($arg_variable){
     $this->lugar_nacimiento= $arg_variable;
   }

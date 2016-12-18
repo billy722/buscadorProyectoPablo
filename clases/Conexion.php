@@ -72,6 +72,7 @@ class Conexion{
       }
     }
 
+
     public function arregloDatosBd($result){
         return mysqli_fetch_array($result);
     }
