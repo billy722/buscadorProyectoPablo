@@ -41,6 +41,8 @@ $UsuarioValidar->verificarSesion();
      header("location: ../principal/menuPrincipal.php");//usuario no existe
    }
 
+
+
  ?>
 
 <div class="container" id="filtros">
@@ -456,6 +458,7 @@ $UsuarioValidar->verificarSesion();
         </div>
       </div>
     </div>
+
 
 <script>
 

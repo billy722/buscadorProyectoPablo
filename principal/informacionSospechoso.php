@@ -53,7 +53,7 @@ if(isset($_REQUEST['run'])){
 							 				<input class="form-control" type="text" readonly value="'.$filas['run'].'" >
 
 
-							 				<strong>Nombre:</strong><class="text-uppercase"><input class="form-control" type="text" readonly value="'.$filas['nombres'].'" >
+							 				<strong>Nombre:</strong><class="text-uppercase"><input class="form-control" type="text" readonly value="'.$filas['nombres'].' '.$filas['apellido_paterno'].' '.$filas['apellido_materno'].'" >
 
 
 							 				<strong>Lugar Nacimiento:</strong>
@@ -82,13 +82,13 @@ if(isset($_REQUEST['run'])){
 
 
 							 				<strong>Delitos Cometidos:</strong>
-							 				<textarea name="" class="form-control" id="" cols="30" rows="10">';
+							 				<textarea readonly name="" class="form-control" id="" cols="30" rows="10">';
 												include "../clases/Delito.php";
 												$Delito= new Delito();
 
 												$resultado= $Delito->listarDelitosUnSospechoso($run);
 												foreach ($resultado as $filasD) {
-														echo $filasD['descripcion_delito']." \n";
+														echo "-".$filasD['descripcion_delito']." \n";
 												}
 							 				echo'</textarea>';
 

@@ -1,4 +1,6 @@
 <?php
+
+
     include("./principal/comun.php");
     require_once('recaptcha/recaptchalib.php');
     $publickey = "6LdQPg0UAAAAAHmaujbBm7E-2SSPhLJmHmffFhqz";

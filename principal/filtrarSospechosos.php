@@ -29,6 +29,23 @@
 				 $UsuarioHistorial= new Usuario();
 				 $UsuarioHistorial->guardarHistorial($UsuarioHistorial->obtenerIpReal(),3,$_SESSION['run'],"");
 
+
+
+/*PARA BUSQUEDA SEGUN PORCENTAGE*/
+$cantidadDeParametrosIngresados=0;
+/*PARA BUSQUEDA SEGUN PORCENTAGE*/
+require_once '../clases/Sospechoso.php';
+$Sospechoso= new Sospechoso();
+
+// $resultado=$Sospechoso->crearTablaTemporalBusqueda();
+// if($resultado){
+// 		 echo "SE CREO LA TABLA";
+//
+//
+// }else{
+// 	echo "NO SE PUDO CREAR TABLA TEMPORAL";
+// }
+
 				$sexo=$_REQUEST['sexo'];
 				$contextura=$_REQUEST['contextura'];
 				$tezPiel=$_REQUEST['tezPiel'];
@@ -62,18 +79,32 @@
 
 
 
-				if($sexo!=0){ $condicionesConsulta= $condicionesConsulta." and id_sexo=".$sexo; }
-				if($contextura!=0){ $condicionesConsulta= $condicionesConsulta." and id_contextura=".$contextura; }
-				if($tezPiel!=0){ $condicionesConsulta= $condicionesConsulta." and id_tezPiel=".$tezPiel; }
-				if($tipoPelo!=0){ $condicionesConsulta= $condicionesConsulta." and id_tipoPelo=".$tipoPelo; }
-				if($colorPelo!=0){ $condicionesConsulta= $condicionesConsulta." and id_colorPelo=".$colorPelo; }
-				if($tipoOjos!=0){ $condicionesConsulta= $condicionesConsulta." and id_tipoOjos=".$tipoOjos; }
-				if($acne!=0){ $condicionesConsulta= $condicionesConsulta." and acne=".$acne; }
-				if($barba!=0){ $condicionesConsulta= $condicionesConsulta." and barba=".$barba; }
-				if($bigote!=0){ $condicionesConsulta= $condicionesConsulta." and bigote=".$bigote; }
-				if($manchas!=0){ $condicionesConsulta= $condicionesConsulta." and manchas=".$manchas; }
-				if($lentes!=0){ $condicionesConsulta= $condicionesConsulta." and lentes=".$lentes; }
-				if($pecas!=0){ $condicionesConsulta= $condicionesConsulta." and pecas=".$pecas; }
+				if($sexo!=0){
+					$condicionesConsulta= $condicionesConsulta." and id_sexo=".$sexo;
+					$cantidadDeParametrosIngresados++;
+
+					// $res=$Usuario->registros("select run from tb_sospechoso where id_sexo=".$sexo);
+					// foreach($res as $col){
+          //     $Usuario->registros("update tb_sospechoso_temporal set puntaje=(puntaje+1) where run=".$col['run']);
+					// }
+				}
+
+        // $resultado=$Usuario->registros("select * from tb_sospechoso_temporal");
+				// foreach($resultado as $columna){
+				// 		echo "run: ".$columna['run']." puntaje: ".$columna['puntaje'];
+				// }
+
+				if($contextura!=0){ $condicionesConsulta= $condicionesConsulta." and id_contextura=".$contextura; $cantidadDeParametrosIngresados++;}
+				if($tezPiel!=0){ $condicionesConsulta= $condicionesConsulta." and id_tezPiel=".$tezPiel; $cantidadDeParametrosIngresados++;}
+				if($tipoPelo!=0){ $condicionesConsulta= $condicionesConsulta." and id_tipoPelo=".$tipoPelo; $cantidadDeParametrosIngresados++;}
+				if($colorPelo!=0){ $condicionesConsulta= $condicionesConsulta." and id_colorPelo=".$colorPelo; $cantidadDeParametrosIngresados++;}
+				if($tipoOjos!=0){ $condicionesConsulta= $condicionesConsulta." and id_tipoOjos=".$tipoOjos; $cantidadDeParametrosIngresados++;}
+				if($acne!=0){ $condicionesConsulta= $condicionesConsulta." and acne=".$acne; $cantidadDeParametrosIngresados++;}
+				if($barba!=0){ $condicionesConsulta= $condicionesConsulta." and barba=".$barba; $cantidadDeParametrosIngresados++;}
+				if($bigote!=0){ $condicionesConsulta= $condicionesConsulta." and bigote=".$bigote; $cantidadDeParametrosIngresados++;}
+				if($manchas!=0){ $condicionesConsulta= $condicionesConsulta." and manchas=".$manchas; $cantidadDeParametrosIngresados++;}
+				if($lentes!=0){ $condicionesConsulta= $condicionesConsulta." and lentes=".$lentes; $cantidadDeParametrosIngresados++;}
+				if($pecas!=0){ $condicionesConsulta= $condicionesConsulta." and pecas=".$pecas; $cantidadDeParametrosIngresados++;}
 
 
 
@@ -88,7 +119,7 @@
 							}else{
 								$cicatriz= $cicatriz." or id_lugarCicatriz=".$c;
 							}
-
+             $cantidadDeParametrosIngresados++;
 					}
 				}
 				if($cicatriz!=""){
@@ -108,7 +139,7 @@
 							}else{
 								$tatuaje= $tatuaje." or id_lugarTatuaje=".$c;
 							}
-
+           $cantidadDeParametrosIngresados++;
 					}
 				}
 				if($tatuaje!=""){
@@ -128,7 +159,7 @@
 							}else{
 								$piercing= $piercing." or id_lugarPiercing=".$c;
 							}
-
+            $cantidadDeParametrosIngresados++;
 					}
 				}
 				if($piercing!=""){
@@ -148,7 +179,7 @@
 							}else{
 								$delitos= $delitos." or id_delito=".$c;
 							}
-
+            $cantidadDeParametrosIngresados++;
 					}
 				}
 				if($delitos!=""){
@@ -171,7 +202,7 @@
 								$rangosEstatura= $rangosEstatura." or (  estatura between ".$filas['limite_inferior']." and ".$filas['limite_superior']." )";
 							}
 						}
-
+            $cantidadDeParametrosIngresados++;
 					}
 				}
 
@@ -196,7 +227,7 @@
 								$rangosEdad= $rangosEdad." or (  edad(fecha_nacimiento) between ".$filas['limite_inferior']." and ".$filas['limite_superior']." )";
 							}
 						}
-
+            $cantidadDeParametrosIngresados++;
 					}
 				}
 
@@ -217,7 +248,7 @@
 							}else{
 								$equipos= $equipos." or id_equipo=".$c;
 							}
-
+           $cantidadDeParametrosIngresados++;
 					}
 				}
 				if($equipos!=""){
@@ -240,7 +271,7 @@
 							}else{
 								$zonas= $zonas." or tb_zona.id_zona=".$c;
 							}
-
+            $cantidadDeParametrosIngresados++;
 					}
 				}
 				if($zonas!=""){
@@ -275,11 +306,12 @@
 								</div>
 							</div>';
 					}
-				echo'</div>';
+			  	echo'</div>';
 				}else{
 					echo'<center><label  style="color:white; font-size:40px;">NO SE ENCONTRARON COINCIDENCIAS</label></center>';
 				}
 
+				//echo'<center><label  style="color:white; font-size:40px;">CANTIDAD DE PARAMETROS SELECCIONADOS: '.$cantidadDeParametrosIngresados.'</label></center>';
 
 
 

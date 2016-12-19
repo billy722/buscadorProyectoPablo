@@ -186,6 +186,7 @@ class Usuario extends Persona{
   }
 
     function obtenerIpReal(){
+
       if(!empty($_SERVER['HTTP_CLIENT_IP'])){
           $ip = $_SERVER['HTTP_CLIENT_IP'];
       }else if(!empty($_SERVER['HTTP_X_FORWARDED_FOR'])){
@@ -199,7 +200,8 @@ class Usuario extends Persona{
       }
       return $ip;
 
-  }
+   }
+
 
 
 }

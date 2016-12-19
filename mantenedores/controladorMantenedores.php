@@ -1553,21 +1553,55 @@ case "7": //mantenedor sospechosos
                                    			}else{
                                    					$tipoFoto=1;
                                    			}
-                                   				$target_path = "../imagenes/";
-                                   				$target_path = $target_path . basename( $_FILES[$campo]['name']);
 
-                                   			//	str_replace("�","n",$target_path);
+
+                                        $numeroRandom= rand(5,1000).date("d").date("m").date("Y");
+                                        $nombreImagenActual=$numeroRandom.basename( $_FILES[$campo]['name']);
+                                        echo "nuevo nombre imagen: ".$nombreImagenActual;
+
+                                   				$target_path = "../imagenes/";
+                                   				$target_path = $target_path . $nombreImagenActual;
+
+                                   			str_replace("�","ñ",$target_path);
+
+                                        //--------------cambia a jpg---------------
+                                              $imagen=getimagesize($_FILES[$campo]['tmp_name']);//obtenemos el tipo
+                                              $extencion=image_type_to_extension($imagen[2],false);//aqui obtenemos la extencion de la imagen
+                                              $imagecreate=$Sospechoso->gen_fun_create($extencion);//generamos el nombre de la funcion a la que hay que llamar
+                                              $nimagent=$imagecreate($_FILES[$campo]['tmp_name']);//creamos la imagen con la funcion creada
+                                              $archivo='nuevo';
+                                              imagejpeg($nimagent,$archivo.'.jpg');//escribimos la imagen nueva como jpg
+
 
                                          				if(move_uploaded_file($_FILES[$campo]['tmp_name'], $target_path)) {
-                                         				   //echo "El archivo ". basename( $_FILES[$campo]['name']). " ha sido subido";
+                                         				   //echo "El archivo ". $nombreImagenActual. " ha sido subido";
                                                  //echo "tipo foto es: ".$tipoFoto;
-                                         				  $consultaFotos="call guardarImagen('".basename( $_FILES[$campo]['name'])."','".$_REQUEST[$fechaFoto]."',".$tipoFoto.",".$soloRun.");";
+                                         				  $consultaFotos="call guardarImagen('".$nombreImagenActual."','".$_REQUEST[$fechaFoto]."',".$tipoFoto.",".$soloRun.");";
                                          				          //echo $consultaFotos;
                                          				          $Sospechoso->insertar($consultaFotos);
 
 
-                                         				} else{
-                                         				echo "Ha ocurrido un error al guardar imagen, trate de nuevo!";
+
+                                                          //-------------comprime-----------------
+                                                          //
+                                                          // $origen=$target_path;
+                                                          // $destino="../imagenes/nuevaimagen.jpg";
+                                                          // $destino_temporal=tempnam("tmp/","tmp");
+                                                          // $Sospechoso->redimensionar_jpeg($origen, $destino_temporal, 300, 350, 100);
+                                                          //
+                                                          // // guardamos la imagen
+                                                          // $fp=fopen($destino,"w");
+                                                          // fputs($fp,fread(fopen($destino_temporal,"r"),filesize($destino_temporal)));
+                                                          // fclose($fp);
+                                                          //
+                                                          // // mostramos la imagen
+                                                          // echo "<img src='../imagenes/nuevaimagen.jpg'>";
+
+
+
+
+                                         				}else{
+                                         				  echo "Ha ocurrido un error al guardar imagen, trate de nuevo!";
                                          				}
                                		  }
 
