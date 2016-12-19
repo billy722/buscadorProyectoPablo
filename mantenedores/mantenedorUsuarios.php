@@ -130,28 +130,28 @@ var pagina;
             <div class="form-group">
                   <label class="sr-only control-label col-lg-2" for="txt_runCrear">Run</label>
                   <div class="col-lg-9">
-                    <input  required minlenght="12" title="Complete este campo" placeholder="Ej.12123456-7" class="form-control" id="txt_runCrear" name="txt_runCrear" type="text" maxlength="10" onkeypress="return soloNumerosyKsinpuntos(event);">
+                    <input  required minlenght="9" title="Complete este campo" placeholder="Ej.12123456-7" class="form-control" id="txt_runCrear" name="txt_runCrear" type="text" maxlength="10" onkeypress="return soloNumerosyKsinpuntos(event);" onblur="validaRutt(this.value)">
                   </div>
             </div>
 
             <div class="form-group">
-                  <label class="sr-only control-label col-lg-2" for="txt_nombreCrear">Nombres</label>
+                  <label class="sr-only control-label col-lg-2" for="txt_nombreCrear" >Nombres</label>
                   <div class="col-lg-9">
-                    <input required title="Complete este campo" placeholder="Nombre" id="txt_nombreCrear" name="txt_nombreCrear" type="text" class="form-control">
+                    <input required title="Complete este campo" placeholder="Nombre" id="txt_nombreCrear" onkeypress="return soloLetras(event);" name="txt_nombreCrear" type="text" class="form-control">
                   </div>
             </div>
 
             <div class="form-group">
                   <label class="sr-only control-label col-lg-2" for="txt_apellidoPaternoCrear">Apellido Paterno</label>
                   <div class="col-lg-9">
-                    <input required title="Complete este campo" placeholder="Apellido Paterno" id="txt_apellidoPaternoCrear" name="txt_apellidoPaternoCrear" type="text" class="form-control">
+                    <input required title="Complete este campo" placeholder="Apellido Paterno" onkeypress="return soloLetras(event);" id="txt_apellidoPaternoCrear" name="txt_apellidoPaternoCrear" type="text" class="form-control">
                   </div>
             </div>
 
 			<div class="form-group">
                   <label class="sr-only control-label col-lg-2" for="txt_apellidoMaternoCrear">Apellido Materno</label>
                   <div class="col-lg-9">
-                    <input required title="Complete este campo" placeholder="Apellido Materno" id="txt_apellidoMaternoCrear" name="txt_apellidoMaternoCrear" type="text" class="form-control">
+                    <input required title="Complete este campo" placeholder="Apellido Materno"  onkeypress="return soloLetras(event);" id="txt_apellidoMaternoCrear" name="txt_apellidoMaternoCrear" type="text" class="form-control">
                   </div>
             </div>
 
@@ -189,14 +189,14 @@ var pagina;
             <div id="divClave1" class="form-group">
                   <label class="sr-only control-label col-lg-2" for="txt_clave1Crear">Contraseña</label>
                   <div class="col-lg-9">
-                    <input required title="Complete este campo" placeholder="Contraseña" id="txt_clave1Crear" name="txt_clave1Crear" type="password" class="form-control">
+                    <input required title="Complete este campo" placeholder="Contraseña" minlength="6" id="txt_clave1Crear" name="txt_clave1Crear" type="password" class="form-control">
                   </div>
             </div>
 
               <div id="divClave2" class="form-group">
                   <label class="sr-only control-label col-lg-2" for="txt_clave2Crear">Repita Contraseña</label>
                   <div class="col-lg-9">
-                    <input required title="Complete este campo" placeholder="Confirme Contraseña" id="txt_clave2Crear" name="txt_clave2Crear" type="password" class="form-control">
+                    <input required title="Complete este campo" placeholder="Confirme Contraseña" minlenght="6" id="txt_clave2Crear" name="txt_clave2Crear" type="password" class="form-control">
                   </div>
               </div>
 
@@ -246,7 +246,7 @@ var pagina;
 						<div class="form-group">
 									<label class="sr-only control-label col-lg-2" for="txt_runModificar">Run</label>
 									<div class="col-lg-9">
-										<input  required minlenght="12" readonly title="Complete este campo" placeholder="Run" class="form-control" id="txt_runModificar" name="txt_runModificar" type="text" >
+										<input  required minlength="10" maxlength="12" readonly title="Complete este campo" placeholder="Run" class="form-control" id="txt_runModificar" name="txt_runModificar" type="text" >
 									</div>
 						</div>
 
@@ -288,7 +288,7 @@ var pagina;
             <div class="form-group">
                               <label class="sr-only control-label col-lg-2" for="select_tipoUsuarioModificar">Tipo Usuario</label>
                               <div class="col-lg-9">
-                                  <select class="form-control" name="select_tipoUsuarioModificar" id="select_tipoUsuarioModificar">
+                                  <select required class="form-control" name="select_tipoUsuarioModificar" id="select_tipoUsuarioModificar">
                                       <?php
                                           require_once '../clases/Grupos.php';
                                           $Tipo= new Grupos();
@@ -305,7 +305,7 @@ var pagina;
               <div class="form-group">
                   <label class="sr-only control-label col-lg-2" for="select_estadoUsuarioModificar">Estado Usuario</label>
                   <div class="col-lg-9">
-                      <select class="form-control" name="select_estadoUsuarioModificar" id="select_estadoUsuarioModificar">
+                      <select required class="form-control" name="select_estadoUsuarioModificar" id="select_estadoUsuarioModificar">
                           <?php
                               require_once '../clases/Estado.php';
                               $Estado= new Estado();
@@ -364,6 +364,8 @@ var pagina;
         var clave2= $("#txt_clave2Crear").val();
 swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowOutsideClick:false,showCancelButton: false,closeOnConfirm: false});
         if(clave1==clave2){
+          var usuario= $("#txt_runCrear").val();
+          if(validaRutt(usuario)){
             $.ajax({
                 url:"./controladorMantenedores.php?mant=1&func=1",
                 data: $("#formularioCreacion").serialize(),
@@ -394,6 +396,9 @@ swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowO
                 }
             });
           }else{
+            $("#txt_runCrear").focus();
+          }
+          }else{
             //alert("claves no coinciden");
           sweetAlert("Ocurrió un error", "No se pudo concretar la operacion, claves no coinciden!", "error");
           }
@@ -406,7 +411,6 @@ swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowO
       var clave2= $("#txt_clave2Modificar").val();
 
       if(clave1==clave2){
-
             $.ajax({
                 url:"./controladorMantenedores.php?mant=1&func=2",
                 data: $("#formularioModificacion").serialize(),
@@ -430,11 +434,9 @@ swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowO
                     }
                 }
             });
-
-        }else{
+      }else{
 
             sweetAlert("Ocurrió un error", "No se pudo concretar la operacion, claves no coinciden!", "error");
-
         }
 
     });
@@ -482,46 +484,16 @@ swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowO
             }
           });
       }
-      function validaRut(str)
+      function validaRutt(str)
       {
-          var rut = str.replace(/\./gi, "");
+          if (validaRut(str)){
 
-          //Valor acumulado para el calculo de la formula
-          var nAcumula = 0;
-          //Factor por el cual se debe multiplicar el valor de la posicion
-          var nFactor = 2;
-          //Dígito verificador
-          var nDv = 0;
-
-          //extraemos el digito verificador (La K corresponde a 10)
-          if(rut.charAt(rut.length-1).toUpperCase()=='K'){
-              nDvReal = 10;
-          //el 0 corresponde a 11
-          }else{
-                  if(rut.charAt(rut.length-1)==0){
-                      nDvReal = 11;
-                  }else{
-                      nDvReal = rut.charAt(rut.length-1);
-                  }
-          }
-
-                 for(nPos=rut.length-2; nPos>0; nPos--){
-
-                          var numero = rut.charAt(nPos-1).valueOf();
-                          nAcumula =nAcumula+( numero*nFactor);
-
-                          nFactor= nFactor+1;
-                          if (nFactor==8){
-                               nFactor = 2;
-                          }
-
-                  }
-
-         nDv = 11-(nAcumula%11);
-
-          if (nDv == nDvReal){
                   return true;
+
           }else{
+
+            sweetAlert("ATENCION", "El rut ingresado no es valido", "warning");
+
               return false;
           }
 

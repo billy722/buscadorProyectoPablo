@@ -105,5 +105,20 @@ where ds.run_sospechoso='.$arg_run);
      $resultado= $this->consultaExistencia($consulta);
      return $resultado;
   }
+  public function comprobarDelitos(){
+    //$estados= $this->registros("select * from tb_estados where id_estado <> 3");
+    $comprobar = $this->consultarBdR("select id_delito from tb_delito");
+    $resultarray = array();
+    while ($row = mysqli_fetch_array($comprobar))
+    {
+      $resultarray[] = $row['id_delito'];
+    }
+    if(in_array($this->_idDelito,$resultarray)){
+      return true;
+    }else{
+      return false;
+    }
+
+  }
 }
 ?>

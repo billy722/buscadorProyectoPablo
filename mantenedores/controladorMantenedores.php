@@ -137,26 +137,29 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                 require_once '../clases/Estado.php';
                 $Estado= new Estado();
                 $Estado->setIdEstado($estado);
-                if($Estado->comprobarEstado()){
+                require_once '../clases/Grupos.php';
+                $Grupos= new Grupos();
+                $Grupos->setIdGrupo($tipo);
+                if($Estado->comprobarEstado() || $Grupos->comprobarGrupo()){
                   // $comprobar2 = $Usuario->consultarBdR("select id_grupoUsuario from tb_grupousuario");
                   // $resultarray2 = array();
                   // while ($row = mysqli_fetch_array($comprobar2))
                   // {
                   //   $resultarray2[] = $row['id_grupoUsuario'];
                   // }
-                  require_once '../clases/Grupos.php';
-                  $Grupos= new Grupos();
-                  $Grupos->setIdGrupo($tipo);
-                  if($Grupos->comprobarGrupo()){
+
+                  //if($Grupos->comprobarGrupo()){
                   if($Usuario->insertarModificarUsuario()){
                     echo "1";
                     $UsuarioHistorial= new Usuario();
                     $UsuarioHistorial->guardarHistorial($UsuarioHistorial->obtenerIpReal(),8,$_SESSION['run'],"Usuario modificado: ".$rut);
                   }else{
                     echo "3";//errors
-                  }}else{
-                    echo "3";
                   }
+                //}
+                //else{
+                    //echo "3";
+                  //}
                 }else {
                     echo "3";//errors
                   }

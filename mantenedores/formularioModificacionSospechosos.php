@@ -76,28 +76,28 @@ $UsuarioValidar->verificarSesion();
 
 				<tr>
 					<td><strong>Run</strong></td>
-					<td><input required class="form-control" name="run" placeholder="12345678-1" type="text"
+					<td><input required class="form-control" name="run" placeholder="12345678-1" type="text" onkeypress="return soloNumerosyKsinpuntos(event);" onblur="validaRutt(this.value)"
 					    <?php if(isset($soloRun)){ echo' value="'.$filasPrincipal['run'].'-'.$filasPrincipal['dv'].'" readonly '; } ?>
 					    >
 					</td>
 				</tr>
 				<tr>
 					<td><strong>Nombre</strong></td>
-					<td><input required class="form-control text-uppercase" name="nombre" type="text"
+					<td><input required class="form-control text-uppercase" onkeypress="return soloLetras(event);" name="nombre" type="text"
 					     <?php if(isset($soloRun)){ echo' value="'.$filasPrincipal['nombres'].'"'; } ?>
 					>
 					</td>
 				</tr>
 				<tr>
 					<td><strong>Apellido Paterno</strong></td>
-					<td><input required class="form-control text-uppercase" name="apellidoPaterno" type="text"
+					<td><input required class="form-control text-uppercase" onkeypress="return soloLetras(event);" name="apellidoPaterno" type="text"
 					     <?php if(isset($soloRun)){ echo' value="'.$filasPrincipal['apellido_paterno'].'"'; } ?>
 					>
 					</td>
 				</tr>
 				<tr>
 					<td><strong>Apellido Materno</strong></td>
-					<td><input required class="form-control" name="apellidoMaterno" type="text"
+					<td><input required class="form-control text-uppercase" onkeypress="return soloLetras(event);" name="apellidoMaterno" type="text"
 					     <?php if(isset($soloRun)){ echo' value="'.$filasPrincipal['apellido_materno'].'"'; } ?>
 					>
 					</td>
@@ -125,7 +125,7 @@ $UsuarioValidar->verificarSesion();
 				</tr>
 				<tr>
 					<td><strong>Estatura(cm)</strong></td>
-					<td><input required class="form-control" name="estatura" type="number" min="0"
+					<td><input required class="form-control" name="estatura" type="number" min="80" max="210"
 					     <?php if(isset($soloRun)){ echo' value="'.$filasPrincipal['estatura'].'"'; } ?>
 					>
 					</td>
@@ -840,8 +840,22 @@ $UsuarioValidar->verificarSesion();
 				 }
 			 });
 		}
+		function validaRutt(str)
+		{
+				if (validaRut(str)){
 
+								return true;
+
+				}else{
+
+					sweetAlert("ATENCION", "El rut ingresado no es valido", "warning");
+
+						return false;
+				}
+
+		}
 		cargarImagenesActuales(<?php echo $soloRun; ?>);
+
 		</script>
 <?php
 	cargarFooter();

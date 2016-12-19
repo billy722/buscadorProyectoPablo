@@ -186,7 +186,7 @@ var pagina;
                 <div class="form-group">
                       <label class="control-label col-lg-2" for="cmb_estadoPoblacionModificar">Estado</label>
                       <div class="col-lg-5">
-                          <select class="form-control" name="cmb_estadoPoblacionModificar" id="cmb_estadoPoblacionModificar">
+                          <select required class="form-control" name="cmb_estadoPoblacionModificar" id="cmb_estadoPoblacionModificar">
                               <?php
                                   require_once '../clases/Estado.php';
                                   $Estados= new Estado();

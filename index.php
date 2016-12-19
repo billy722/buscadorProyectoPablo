@@ -35,11 +35,11 @@
               </div>
 
               <div class="inut-group">
-                  <input class="form-control" type="text" id="txt_rut" name="txt_rut" onkeypress="return soloNumerosyK(event);" maxlength="12" onBlur="formatearRut(this.value)" placeholder="Ingrese su rut"/>
+                  <input class="form-control" type="text" id="txt_rut" name="txt_rut" onkeypress="return soloNumerosyK(event);" maxlength="12" minlength="11" onBlur="formatearRut(this.value)" placeholder="Ingrese su rut"/>
               </div>
 
               <div class="inut-group">
-                <input class="form-control" type="password" id="txt_contrasena" name="txt_contrasena" placeholder="Contraseña"/>
+                <input class="form-control" type="password" id="txt_contrasena" name="txt_contrasena" minlength="1"placeholder="Contraseña"/>
               </div>
               <div class="inut-group">
                   <div id="idDivRecaptcha">

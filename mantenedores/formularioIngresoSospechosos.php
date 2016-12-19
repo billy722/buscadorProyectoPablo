@@ -56,28 +56,28 @@ $UsuarioValidar->verificarSesion();
 
 				<tr>
 					<td><strong>Run</strong></td>
-					<td><input required class="form-control" name="run" placeholder="12345678-1" type="text"
+					<td><input required class="form-control" name="run" id="run" placeholder="12345678-1" type="text" maxlength="10" minlength="9" onkeypress="return soloNumerosyKsinpuntos(event);" onblur="validaRutt(this.value)"
 					    <?php if(isset($_REQUEST['id'])){ echo' value="'.$filasPrincipal['run'].'"'; } ?>
 					    >
 					</td>
 				</tr>
 				<tr>
 					<td><strong>Nombre</strong></td>
-					<td><input required class="form-control text-uppercase" name="nombre" type="text"
+					<td><input required class="form-control text-uppercase" name="nombre" type="text" onkeypress="return soloLetras(event);"
 					     <?php if(isset($_REQUEST['id'])){ echo' value="'.$filasPrincipal['nombres'].'"'; } ?>
 					>
 					</td>
 				</tr>
 				<tr>
 					<td><strong>Apellido Paterno</strong></td>
-					<td><input required class="form-control text-uppercase" name="apellidoPaterno" type="text"
+					<td><input required class="form-control text-uppercase" onkeypress="return soloLetras(event);" name="apellidoPaterno" type="text"
 					     <?php if(isset($_REQUEST['id'])){ echo' value="'.$filasPrincipal['apellido_paterno'].'"'; } ?>
 					>
 					</td>
 				</tr>
 				<tr>
 					<td><strong>Apellido Materno</strong></td>
-					<td><input required class="form-control" name="apellidoMaterno" type="text"
+					<td><input required class="form-control text-uppercase" onkeypress="return soloLetras(event);" name="apellidoMaterno" type="text"
 					     <?php if(isset($_REQUEST['id'])){ echo' value="'.$filasPrincipal['apellido_materno'].'"'; } ?>
 					>
 					</td>
@@ -105,7 +105,7 @@ $UsuarioValidar->verificarSesion();
 				</tr>
 				<tr>
 					<td><strong>Estatura(cm)</strong></td>
-					<td><input required class="form-control" name="estatura" type="number" min="0"
+					<td><input required class="form-control" name="estatura" type="number" min="80" max="210"
 					     <?php if(isset($_REQUEST['id'])){ echo' value="'.$filasPrincipal['estatura'].'"'; } ?>
 					>
 					</td>
@@ -493,7 +493,8 @@ $UsuarioValidar->verificarSesion();
 
 												      var formData = new FormData(document.getElementById("formularioIngresarSospechoso"));
                               if(verificarPrincipal()){//verifica que se seleccione imagen principal
-
+																var usuario= $("#run").val();
+																if(validaRutt(usuario)){
 													            $.ajax({
 													              url: "controladorMantenedores.php?mant=7&func=1",
 													              dataType: "html",
@@ -527,6 +528,9 @@ $UsuarioValidar->verificarSesion();
 													                    }
 													              }
 													            });
+																		}else{
+																			$("#run").focus();
+																		}
 																}else{
 																	    sweetAlert("Seleccione un imagen principal.", "", "error");
 																}
@@ -577,6 +581,20 @@ $UsuarioValidar->verificarSesion();
 
 						 return comprobarSeleccion;
 					}
+					function validaRutt(str)
+		      {
+		          if (validaRut(str)){
+
+		                  return true;
+
+		          }else{
+
+		            sweetAlert("ATENCION", "El rut ingresado no es valido", "warning");
+
+		              return false;
+		          }
+
+		      }
 
 		</script>
 <?php

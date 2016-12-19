@@ -50,9 +50,9 @@ if($resultadoUsuario){
 	foreach($privilegios as $privilegio){
 
 		switch($privilegio['id']){
-			case 1: echo'<a class="btn btn-default col-xs-12 col-sm-6 col-md-2 col-lg-2"   href="../principal/formularioFiltrarSospechoso.php"><span class="glyphicon glyphicon-search"></span> FILTRAR SOSPECHOSOS</a>';
+			case 1: echo'<a class="btn btn-default col-xs-12 col-sm-6 col-md-2 col-lg-3"   href="../principal/formularioFiltrarSospechoso.php"><span class="glyphicon glyphicon-search"></span> FILTRAR SOSPECHOSOS</a>';
 			break;
-			case 2:	echo'<a class="btn btn-default col-xs-12 col-sm-6 col-md-2 col-lg-2"   href="../mantenedores/mantenedorSospechosos.php"><span class="glyphicon glyphicon-list-alt"></span> SOSPECHOSOS</a>';
+			case 2:	echo'<a class="btn btn-default col-xs-12 col-sm-6 col-md-2 col-lg-3"   href="../mantenedores/mantenedorSospechosos.php"><span class="glyphicon glyphicon-list-alt"></span> SOSPECHOSOS</a>';
 			break;
 			case 12:	echo'<a class="btn btn-default col-xs-12 col-sm-6 col-md-2 col-lg-2"   href="../principal/reportes.php"><span class="glyphicon glyphicon-list-alt"></span> Reportes</a>';
 			break;
@@ -64,7 +64,7 @@ if($resultadoUsuario){
 	}else{
 		header("location: ../index.php");
 	}
-								echo'<a class="btn btn-default col-xs-12 col-sm-6 col-md-3 col-lg-2"  href="../principal/cerrarSesion.php" ><span class="glyphicon glyphicon-remove-circle"></span> SALIR</a>';
+								echo'<a class="btn btn-default col-xs-12 col-sm-6 col-md-2 col-lg-2"  href="../principal/cerrarSesion.php" ><span class="glyphicon glyphicon-remove-circle"></span> SALIR</a>';
 
 ?>
 				</div>
@@ -145,8 +145,9 @@ function cargarMenuReportes(){
 						switch($privilegio['id']){
 
 									case 12:
-											echo'<a class="btn btn-info col-xs-12 col-sm-12 col-md-6 botonesMenuConfiguraciones" href="reportes.php" ><strong>Estadisticas de Delitos Cometidos</strong></a>';//mantenedor
-											echo'<a class="btn btn-info col-xs-12 col-sm-12 col-md-6 botonesMenuConfiguraciones" href="reportes2.php" ><strong>Delincuentes por zonas y poblacion</strong></a>';//mantenedor
+											echo'<a class="btn btn-info col-xs-12 col-sm-12 col-md-4 botonesMenuConfiguraciones" href="reportes.php" ><strong>Estadisticas de Delitos Cometidos</strong></a>';//mantenedor
+											echo'<a class="btn btn-info col-xs-12 col-sm-12 col-md-4 botonesMenuConfiguraciones" href="reportes2.php" ><strong>Delincuentes por zonas y poblacion</strong></a>';//mantenedor
+											echo'<a class="btn btn-info col-xs-12 col-sm-12 col-md-4 botonesMenuConfiguraciones" href="reportes3.php" ><strong>Top ten Delincuentes identificados</strong></a>';//mantenedor
 									break;
 
 						}
