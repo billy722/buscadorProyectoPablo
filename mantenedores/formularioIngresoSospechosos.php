@@ -219,7 +219,7 @@ $UsuarioValidar->verificarSesion();
 
 		 						<input type="radio" value="2" name="acne" id="acne2" ><label for="acne2">No</label>
 
-		 						<input type="radio" value="0" name="acne" id="acne3" ><label for="acne3">Sin especificar</label>
+		 						<input type="radio" value="0" checked name="acne" id="acne3" ><label for="acne3">Sin especificar</label>
 		 					</td>
 		 				</tr>
 		 				<tr>
@@ -229,7 +229,7 @@ $UsuarioValidar->verificarSesion();
 
 		 						<input type="radio" value="2" name="barba" id="barba2" ><label for="barba2">No</label>
 
-		 						<input type="radio" value="0" name="barba" id="barba3" ><label for="barba3">Sin especificar</label>
+		 						<input type="radio" value="0" checked name="barba" id="barba3" ><label for="barba3">Sin especificar</label>
 		 					</td>
 		 				</tr>
 		 				<tr>
@@ -237,7 +237,7 @@ $UsuarioValidar->verificarSesion();
 		 					<td>
 		 						<input type="radio" value="1" name="bigote" id="bigote1" ><label for="bigote1">Si</label>
 		 						<input type="radio" value="2" name="bigote" id="bigote2" ><label for="bigote2">No</label>
-		 						<input type="radio" value="0" name="bigote" id="bigote3" ><label for="bigote3">Sin especificar</label>
+		 						<input type="radio" value="0" checked name="bigote" id="bigote3" ><label for="bigote3">Sin especificar</label>
 		 					</td>
 		 				</tr>
 		 				<tr>
@@ -245,7 +245,7 @@ $UsuarioValidar->verificarSesion();
 		 					<td>
 		 						<input type="radio" value="1" name="manchas" id="manchas1" ><label for="manchas1">Si</label>
 		 						<input type="radio" value="2" name="manchas" id="manchas2" ><label for="manchas2">No</label>
-		 						<input type="radio" value="0" name="manchas" id="manchas3" ><label for="manchas3">Sin especificar</label>
+		 						<input type="radio" value="0" checked name="manchas" id="manchas3" ><label for="manchas3">Sin especificar</label>
 		 					</td>
 		 				</tr>
 		 				<tr>
@@ -253,7 +253,7 @@ $UsuarioValidar->verificarSesion();
 		 					<td>
 		 						<input type="radio" value="1" name="lentes" id="lentes1" ><label for="lentes1">Si</label>
 		 						<input type="radio" value="2" name="lentes" id="lentes2" ><label for="lentes2">No</label>
-		 						<input type="radio" value="0" name="lentes" id="lentes3" ><label for="lentes3">Sin especificar</label>
+		 						<input type="radio" value="0" checked name="lentes" id="lentes3" ><label for="lentes3">Sin especificar</label>
 		 					</td>
 		 				</tr>
 		 				<tr>
@@ -261,7 +261,7 @@ $UsuarioValidar->verificarSesion();
 		 					<td>
 		 						<input type="radio" value="1" name="pecas" id="pecas1" ><label for="pecas1">Si</label>
 		 						<input type="radio" value="2" name="pecas" id="pecas2" ><label for="pecas2">No</label>
-		 						<input type="radio" value="0" name="pecas" id="pecas3" ><label for="pecas3">Sin especificar</label>
+		 						<input type="radio" value="0" checked name="pecas" id="pecas3" ><label for="pecas3">Sin especificar</label>
 		 					</td>
 		 				</tr>
 						<tr>
@@ -269,7 +269,7 @@ $UsuarioValidar->verificarSesion();
 		 					<td>
 		 						<input type="radio" value="1" name="antecedentes" id="antecedentes1" ><label for="antecedentes1">Si</label>
 		 						<input type="radio" value="2" name="antecedentes" id="antecedentes2" ><label for="antecedentes2">No</label>
-		 						<input type="radio" value="0" name="antecedentes" id="antecedentes3" ><label for="antecedentes3">Sin especificar</label>
+		 						<input type="radio" value="0" checked name="antecedentes" id="antecedentes3" ><label for="antecedentes3">Sin especificar</label>
 		 					</td>
 		 				</tr>
 
@@ -478,7 +478,7 @@ $UsuarioValidar->verificarSesion();
 
 				 	<div class="col-xs-12 col-sm-6 col-md-12 col-lg-3" id="divBotonGuardar">
 						<td>
-							<button class="btn btn-primary botonGrabarSospechoso" type="submit"><h4>GUARDAR</h4></button>
+							<button id="botonIngresarSospechoso" class="btn btn-primary botonGrabarSospechoso" type="submit"><h4>GUARDAR</h4></button>
 						</td>
 				 	</div>
 
@@ -493,8 +493,8 @@ $UsuarioValidar->verificarSesion();
 
 												      var formData = new FormData(document.getElementById("formularioIngresarSospechoso"));
                               if(verificarPrincipal()){//verifica que se seleccione imagen principal
-																var usuario= $("#run").val();
-																if(validaRutt(usuario)){
+
+
 													            $.ajax({
 													              url: "controladorMantenedores.php?mant=7&func=1",
 													              dataType: "html",
@@ -528,9 +528,7 @@ $UsuarioValidar->verificarSesion();
 													                    }
 													              }
 													            });
-																		}else{
-																			$("#run").focus();
-																		}
+
 																}else{
 																	    sweetAlert("Seleccione un imagen principal.", "", "error");
 																}
@@ -581,17 +579,34 @@ $UsuarioValidar->verificarSesion();
 
 						 return comprobarSeleccion;
 					}
+
 					function validaRutt(str)
 		      {
 		          if (validaRut(str)){
 
-		                  return true;
+								$.ajax({
+									url:"../mantenedores/controladorMantenedores.php?mant=7&func=8&rut="+str,
+									success:function(respuesta){
+                      //alert(respuesta);
+														if(respuesta==1){
+																sweetAlert("USUARIO YA EXISTE", "Este Rut ya está ingresado en nuestra base de datos.", "warning");
+																$("#run").focus();
+																$("#run").select();
+																$("#botonIngresarSospechoso").hide();
+			                      //   return false;
+													}else{
+															$("#botonIngresarSospechoso").show();
+													}
+
+										}
+									});
 
 		          }else{
 
 		            sweetAlert("ATENCION", "El rut ingresado no es valido", "warning");
-
-		              return false;
+								$("#run").focus();
+								$("#run").select();
+								$("#botonIngresarSospechoso").hide();
 		          }
 
 		      }
