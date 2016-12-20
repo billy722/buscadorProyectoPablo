@@ -58,11 +58,11 @@ public function __construct(){
     $consulta="insert into tb_poblacionzonas(id_poblacion,id_zona)
           values(".$arg_poblacion.",".$this->_idZona.");";
 
-     if($this->insertar($consulta)){
-       return true;
-     }else{
-       return false;
-     }
+           if($this->insertar($consulta)){
+             return true;
+           }else{
+             return false;
+           }
   }
 
   public function eliminarPoblacionesDeZona(){

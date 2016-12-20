@@ -1555,55 +1555,63 @@ case "7": //mantenedor sospechosos
                                    			}
 
 
-                                        $numeroRandom= rand(5,1000).date("d").date("m").date("Y");
-                                        $nombreImagenActual=$numeroRandom.basename( $_FILES[$campo]['name']);
-                                        echo "nuevo nombre imagen: ".$nombreImagenActual;
+                                                    $numeroRandom= rand(5,1000).date("d").date("m").date("Y");
+                                                    $nombreImagenActual=$numeroRandom.basename( $_FILES[$campo]['name']);
+                                                    echo "nuevo nombre imagen: ".$nombreImagenActual;
 
-                                   				$target_path = "../imagenes/";
-                                   				$target_path = $target_path . $nombreImagenActual;
+                                                        $target_path = "../imagenes/";
+                                                        $target_path = $target_path.$nombreImagenActual;
 
-                                   			str_replace("�","ñ",$target_path);
+                                                    	  str_replace("�","ñ",$target_path);
 
-                                        //--------------cambia a jpg---------------
-                                              $imagen=getimagesize($_FILES[$campo]['tmp_name']);//obtenemos el tipo
-                                              $extencion=image_type_to_extension($imagen[2],false);//aqui obtenemos la extencion de la imagen
-                                              $imagecreate=$Sospechoso->gen_fun_create($extencion);//generamos el nombre de la funcion a la que hay que llamar
-                                              $nimagent=$imagecreate($_FILES[$campo]['tmp_name']);//creamos la imagen con la funcion creada
-                                              $archivo='nuevo';
-                                              imagejpeg($nimagent,$archivo.'.jpg');//escribimos la imagen nueva como jpg
+                                                                //--------------cambia a jpg---------------
+                                                                      $imagen=getimagesize($_FILES[$campo]['tmp_name']);//obtenemos el tipo
+                                                                      $extencion=image_type_to_extension($imagen[2],false);//aqui obtenemos la extencion de la imagen
+                                                                      $imagecreate=$Sospechoso->gen_fun_create($extencion);//generamos el nombre de la funcion a la que hay que llamar
+                                                                      $nimagent=$imagecreate($_FILES[$campo]['tmp_name']);//creamos la imagen con la funcion creada
+                                                                          $archivo=$target_path;
+                                                                          if(imagejpeg($nimagent,$target_path.'.jpg')){
 
+                                                                            // $origen=$target_path;
+                                                                            // $destino="../imagenes/nuevaimagen.jpg";
+                                                                            // $destino_temporal=tempnam("./","tmp");
+                                                                            // $Sospechoso->redimensionar_jpeg($origen, $destino_temporal, 300, 350, 100);
+                                                                            //
+                                                                            // // guardamos la imagen
+                                                                            // $fp=fopen($destino,"w");
+                                                                            // fputs($fp,fread(fopen($destino_temporal,"r"),filesize($destino_temporal)));
+                                                                            //fclose($fp);
 
-                                         				if(move_uploaded_file($_FILES[$campo]['tmp_name'], $target_path)) {
-                                         				   //echo "El archivo ". $nombreImagenActual. " ha sido subido";
-                                                 //echo "tipo foto es: ".$tipoFoto;
-                                         				  $consultaFotos="call guardarImagen('".$nombreImagenActual."','".$_REQUEST[$fechaFoto]."',".$tipoFoto.",".$soloRun.");";
-                                         				          //echo $consultaFotos;
-                                         				          $Sospechoso->insertar($consultaFotos);
-
-
-
-                                                          //-------------comprime-----------------
-                                                          //
-                                                          // $origen=$target_path;
-                                                          // $destino="../imagenes/nuevaimagen.jpg";
-                                                          // $destino_temporal=tempnam("tmp/","tmp");
-                                                          // $Sospechoso->redimensionar_jpeg($origen, $destino_temporal, 300, 350, 100);
-                                                          //
-                                                          // // guardamos la imagen
-                                                          // $fp=fopen($destino,"w");
-                                                          // fputs($fp,fread(fopen($destino_temporal,"r"),filesize($destino_temporal)));
-                                                          // fclose($fp);
-                                                          //
-                                                          // // mostramos la imagen
-                                                          // echo "<img src='../imagenes/nuevaimagen.jpg'>";
+                                                                              $consultaFotos="call guardarImagen('".$nombreImagenActual.".jpg','".$_REQUEST[$fechaFoto]."',".$tipoFoto.",".$soloRun.");";
+                                                                              //echo $consultaFotos;
+                                                                              $Sospechoso->insertar($consultaFotos);
+                                                                          }//escribimos la imagen nueva como jpg
 
 
+                                                                //  if(move_uploaded_file($_FILES[$campo]['tmp_name'], $target_path)){
+                                                                    //echo "El archivo ". $nombreImagenActual. " ha sido subido";
+                                                                   //echo "tipo foto es: ".$tipoFoto;
 
 
-                                         				}else{
-                                         				  echo "Ha ocurrido un error al guardar imagen, trate de nuevo!";
-                                         				}
-                               		  }
+                                                                  //-------------comprime-----------------
+                                                                  //
+                                                                  // $origen=$target_path;
+                                                                  // $destino="../imagenes/nuevaimagen.jpg";
+                                                                  // $destino_temporal=tempnam("tmp/","tmp");
+                                                                  // $Sospechoso->redimensionar_jpeg($origen, $destino_temporal, 300, 350, 100);
+                                                                  //
+                                                                  // // guardamos la imagen
+                                                                  // $fp=fopen($destino,"w");
+                                                                  // fputs($fp,fread(fopen($destino_temporal,"r"),filesize($destino_temporal)));
+                                                                  // fclose($fp);
+                                                                  //
+                                                                  // // mostramos la imagen
+                                                                  // echo "<img src='../imagenes/nuevaimagen.jpg'>";
+
+                                                                  // }else{
+                                                           			 //    	echo "Ha ocurrido un error al guardar imagen, trate de nuevo!";
+                                                           			// 	}
+                                   		  }
 
                                   echo "1";
                                   $UsuarioHistorial= new Usuario();
@@ -1770,6 +1778,7 @@ $privilegioModificar=false;
 
             case '5'://ELIMINAR IMAGEN SOSPECHOSO
             $idFoto=$Sospechoso->limpiarNumeroEntero($_REQUEST['idFoto']);
+            $nombreImagen=$Sospechoso->registros("select nombre_imagen from tb_imagen where id_imagen=".$idFoto);//para borrar imagen del servidor
 
             $run=$_SESSION['sospechosoModificando'];
             $posicionGuion = strpos($run,'-');
@@ -1784,6 +1793,15 @@ $privilegioModificar=false;
                       $consultaE2= "delete from tb_imagen where id_imagen=".$idFoto;
                       if($Sospechoso->insertar($consultaE2)){
                         echo "1";//eliminada
+
+                         if($nombreImagen){
+
+                             $file = "../imagenes/".$nombreImagen[0]['nombre_imagen'];
+                              $do = unlink($file);
+                              // if($do != true){
+                              //  echo "There was an error trying to delete the file" . $f->foto . "<br />";
+                              //  }
+                            }
                       }else{
                         echo "3";//error
                       }
