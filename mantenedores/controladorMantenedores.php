@@ -81,7 +81,7 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                                $Grupos= new Grupos();
                                $Grupos->setIdGrupo($tipoUsuario);
                                $Usuario->setEstado("1");
-                              // if($Grupos->comprobarGrupo()){
+                              if($Grupos->comprobarGrupo()){
                                 if($Usuario->insertarModificarUsuario()){
                                   echo "1";
                                    $UsuarioHistorial= new Usuario();
@@ -89,9 +89,9 @@ switch($_REQUEST['mant']){//SELECCIONAR MANTENEDOR
                                 }else{
                                   echo "3";//error
                                 }
-                            //  }else{
-                              //  echo "3";
-                              //}
+                              }else{
+                                echo "3";
+                              }
                            }
                       }
 
@@ -1345,7 +1345,7 @@ case "7": //mantenedor sospechosos
 
                   if($soloRun=="" || $digitoVerificador=="" || $nombre=="" || $apellidoP=="" || $apellidoM=="" || $fechaNacimiento=="" || $estatura==""
                   || $colorPelo=="" || $contextura=="" || $estadoCivil=="" || $sexo=="" || $tezPiel=="" || $tipoOjos=="" || $tipoPelo==""
-                  || $acne=="" || $barba=="" || $bigote=="" || $manchas=="" || $lentes=="" || $pecas=="" || $antecedentes=="" ){
+                  || $acne=="" || $barba=="" || $bigote=="" || $manchas=="" || $lentes=="" || $pecas=="" || $antecedentes==""){
 
                         echo "2";
                   }else{//ENTRA SINO HAY CAMPOS VACIOS
@@ -1376,7 +1376,10 @@ case "7": //mantenedor sospechosos
                     $Sospechoso->setManchas($manchas);
                     $Sospechoso->setEstatura($estatura);
                     $Sospechoso->setFechaNacimiento($fechaNacimiento);
-
+                    require_once '../clases/ColorPelo.php';
+                    $ColorPelo= new ColorPelo();
+                    $ColorPelo->setIdColorPelo($colorPelo);
+if($ColorPelo->comprobarColorPelo()){
                        if($Sospechoso->insertarModificarSospechosos()){
 
                            if($Sospechoso->eliminarCaracteristicasSospechosos()){
@@ -1632,6 +1635,9 @@ case "7": //mantenedor sospechosos
                        }else{
                             echo "3";
                        }//cierre de if que indica que se ingreso el sospechoso
+                     }else {
+                       echo "3";
+                     }
 
                      }//cierre de else de campos vacios
 

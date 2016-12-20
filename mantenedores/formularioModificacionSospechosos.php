@@ -740,7 +740,7 @@ $UsuarioValidar->verificarSesion();
 													              contentType: false,
 													              processData:false,
 													              success:function(resultado){
-																					alert(resultado);
+																				//	alert(resultado);
 													                  if(resultado==0){
 													                         swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
 													                         setTimeout(function(){
@@ -753,7 +753,7 @@ $UsuarioValidar->verificarSesion();
 																								cargarImagenesActuales(<?php echo $filasPrincipal['run']; ?>);
 																								$("#tablaFotosIngreso").html('<input type="hidden" id="contadorFotos" name="contadorFotos" value="0"><caption>IMAGENES</caption><thead><th>Archivo</th><th>Fecha</th><th>Principal</th></thead><tbody></tbody></table>');
 													                    }else if(resultado=="2"){
-													                      sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
+													                      sweetAlert("No permitido.", "Falta informacion por completar.", "warning");
 
 													                    }else{
 

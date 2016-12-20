@@ -176,6 +176,11 @@ class Sospechoso extends Persona{
     ImageJPEG($thumb,$img_nueva,$img_nueva_calidad);
     ImageDestroy($img);
   }
+  public function identificarSospechoso(){
+    $consulta="update tb_sospechoso set veces_identificado=(veces_identificado+1) where run=".$this->run;
+    $resultado= $this->insertar($consulta);
+    return $resultado;
+  }
 
   function gen_fun_create($ext){
     return "imagecreatefrom".$ext;

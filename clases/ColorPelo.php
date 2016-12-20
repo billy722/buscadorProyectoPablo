@@ -10,6 +10,12 @@ class ColorPelo extends Conexion{
 
     parent::__construct();
   }
+  public function setIdColorPelo($arg_idColorPelo){
+     $this->id_colorPelo=$arg_idColorPelo;
+  }
+  public function getIdGrupo(){
+    return $this->id_colorPelo;
+  }
 
   public function listarColorPelo(){
     $estados= $this->registros("select * from tb_colorpelo");

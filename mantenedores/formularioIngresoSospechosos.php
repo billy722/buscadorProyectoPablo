@@ -55,35 +55,35 @@ $UsuarioValidar->verificarSesion();
 			<tbody>
 
 				<tr>
-					<td><strong>Run</strong></td>
+					<td><strong>Run(*)</strong></td>
 					<td><input required class="form-control" name="run" id="run" placeholder="12345678-1" type="text" maxlength="10" minlength="9" onkeypress="return soloNumerosyKsinpuntos(event);" onblur="validaRutt(this.value)"
 					    <?php if(isset($_REQUEST['id'])){ echo' value="'.$filasPrincipal['run'].'"'; } ?>
 					    >
 					</td>
 				</tr>
 				<tr>
-					<td><strong>Nombre</strong></td>
+					<td><strong>Nombre(*)</strong></td>
 					<td><input required class="form-control text-uppercase" name="nombre" type="text" onkeypress="return soloLetras(event);"
 					     <?php if(isset($_REQUEST['id'])){ echo' value="'.$filasPrincipal['nombres'].'"'; } ?>
 					>
 					</td>
 				</tr>
 				<tr>
-					<td><strong>Apellido Paterno</strong></td>
+					<td><strong>Apellido Paterno(*)</strong></td>
 					<td><input required class="form-control text-uppercase" onkeypress="return soloLetras(event);" name="apellidoPaterno" type="text"
 					     <?php if(isset($_REQUEST['id'])){ echo' value="'.$filasPrincipal['apellido_paterno'].'"'; } ?>
 					>
 					</td>
 				</tr>
 				<tr>
-					<td><strong>Apellido Materno</strong></td>
+					<td><strong>Apellido Materno(*)</strong></td>
 					<td><input required class="form-control text-uppercase" onkeypress="return soloLetras(event);" name="apellidoMaterno" type="text"
 					     <?php if(isset($_REQUEST['id'])){ echo' value="'.$filasPrincipal['apellido_materno'].'"'; } ?>
 					>
 					</td>
 				</tr>
 				<tr>
-					<td><strong>Fecha Nacimiento</strong></td>
+					<td><strong>Fecha Nacimiento(*)</strong></td>
 					<td><input required class="form-control" name="edad" type="date"
 					     <?php if(isset($_REQUEST['id'])){ echo' value="'.$filasPrincipal['fecha_nacimiento'].'"'; } ?>
 					>
@@ -104,7 +104,7 @@ $UsuarioValidar->verificarSesion();
 					</td>
 				</tr>
 				<tr>
-					<td><strong>Estatura(cm)</strong></td>
+					<td><strong>Estatura(cm)(*)</strong></td>
 					<td><input required class="form-control" name="estatura" type="number" min="80" max="210"
 					     <?php if(isset($_REQUEST['id'])){ echo' value="'.$filasPrincipal['estatura'].'"'; } ?>
 					>
@@ -517,7 +517,7 @@ $UsuarioValidar->verificarSesion();
 																								$("#formularioIngresarSospechoso")[0].reset();
 
 													                    }else if(resultado=="2"){
-													                      sweetAlert("No permitido.", "No puede ingresar campos vacios.", "warning");
+													                      sweetAlert("No permitido.", "Falta informacion por completar.", "warning");
 
 													                    }else if(resultado=="1062"){
 																							swal("Error!", "El Rut ya existe.", "error");
@@ -581,35 +581,20 @@ $UsuarioValidar->verificarSesion();
 					}
 
 					function validaRutt(str)
-		      {
-		          if (validaRut(str)){
+					{
+							if (validaRut(str)){
 
-								$.ajax({
-									url:"../mantenedores/controladorMantenedores.php?mant=7&func=8&rut="+str,
-									success:function(respuesta){
-                      //alert(respuesta);
-														if(respuesta==1){
-																sweetAlert("USUARIO YA EXISTE", "Este Rut ya está ingresado en nuestra base de datos.", "warning");
-																$("#run").focus();
-																$("#run").select();
-																$("#botonIngresarSospechoso").hide();
-			                      //   return false;
-													}else{
-															$("#botonIngresarSospechoso").show();
-													}
+											return true;
 
-										}
-									});
+							}else{
 
-		          }else{
+								sweetAlert("ATENCION", "El rut ingresado no es valido", "warning");
 
-		            sweetAlert("ATENCION", "El rut ingresado no es valido", "warning");
-								$("#run").focus();
-								$("#run").select();
-								$("#botonIngresarSospechoso").hide();
-		          }
+									return false;
+							}
 
-		      }
+					}
+
 
 		</script>
 <?php

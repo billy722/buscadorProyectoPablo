@@ -59,7 +59,7 @@ $UsuarioValidar->verificarSesion();
             type: 'column'
         },
         title: {
-            text: 'Cantidad de Sospechos Operando por Zonas'
+            text: 'Cantidad de delincuentes Operando por Zonas'
         },
         subtitle: {
             text: 'Haga click sobre las zonas para ver la cantidad de delincuentes por cada población.'

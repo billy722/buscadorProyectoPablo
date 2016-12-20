@@ -32,7 +32,7 @@ if(isset($_REQUEST['run'])){
 		          if($privilegio['id']==4){//privilegio modificar sospechosos
 		              $privilegioModificar=true;
 		          }
-		          if($privilegio['id']==13){//privilegio modificar sospechosos
+		          if($privilegio['id']==13){//privilegio identificar sospechosos
 		              $privilegioIdentificar=true;
 		          }
 		       }
