@@ -478,7 +478,7 @@ $UsuarioValidar->verificarSesion();
 
 				 	<div class="col-xs-12 col-sm-6 col-md-12 col-lg-3" id="divBotonGuardar">
 						<td>
-							<button class="btn btn-primary botonGrabarSospechoso" type="submit"><h4>GUARDAR</h4></button>
+							<button id="botonIngresarSospechoso" class="btn btn-primary botonGrabarSospechoso" type="submit"><h4>GUARDAR</h4></button>
 						</td>
 				 	</div>
 
@@ -494,7 +494,7 @@ $UsuarioValidar->verificarSesion();
 												      var formData = new FormData(document.getElementById("formularioIngresarSospechoso"));
                               if(verificarPrincipal()){//verifica que se seleccione imagen principal
 																var usuario= $("#run").val();
-																if(validaRutt(usuario)){
+
 													            $.ajax({
 													              url: "controladorMantenedores.php?mant=7&func=1",
 													              dataType: "html",
@@ -504,7 +504,7 @@ $UsuarioValidar->verificarSesion();
 													              contentType: false,
 													              processData:false,
 													              success:function(resultado){
-																					//alert(resultado);
+																					alert(resultado);
 													                  if(resultado==0){
 													                         swal("No permitido", "Ya no tiene privilegios para realizar esta accion. La página se cerrará", "error");
 													                         setTimeout(function(){
@@ -528,9 +528,7 @@ $UsuarioValidar->verificarSesion();
 													                    }
 													              }
 													            });
-																		}else{
-																			$("#run").focus();
-																		}
+
 																}else{
 																	    sweetAlert("Seleccione un imagen principal.", "", "error");
 																}
@@ -581,17 +579,34 @@ $UsuarioValidar->verificarSesion();
 
 						 return comprobarSeleccion;
 					}
+
 					function validaRutt(str)
 		      {
 		          if (validaRut(str)){
 
-		                  return true;
+								$.ajax({
+									url:"../mantenedores/controladorMantenedores.php?mant=7&func=8&rut="+str,
+									success:function(respuesta){
+                      //alert(respuesta);
+											if(respuesta==1){
+													sweetAlert("USUARIO YA EXISTE", "Este Rut ya está ingresado en nuestra base de datos.", "warning");
+													$("#run").focus();
+													$("#run").select();
+													$("#botonIngresarSospechoso").hide();
+                      //   return false;
+										}else{
+												$("#botonIngresarSospechoso").show();
+										}
+
+										}
+									});
 
 		          }else{
 
 		            sweetAlert("ATENCION", "El rut ingresado no es valido", "warning");
-
-		              return false;
+								$("#run").focus();
+								$("#run").select();
+								$("#botonIngresarSospechoso").hide();
 		          }
 
 		      }

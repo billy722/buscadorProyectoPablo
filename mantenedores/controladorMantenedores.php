@@ -1558,7 +1558,7 @@ case "7": //mantenedor sospechosos
                                                     $numeroRandom= rand(5,1000).date("d").date("m").date("Y");
                                                     $nombreImagenActual=$numeroRandom.basename( $_FILES[$campo]['name']);
                                                     $nombreImagenActual=str_replace("ñ","n",$nombreImagenActual);
-                                                    echo "nuevo nombre imagen: ".$nombreImagenActual;
+                                                    //echo "nuevo nombre imagen: ".$nombreImagenActual;
 
                                                         $target_path = "../imagenes/";
                                                         $target_path = $target_path.$nombreImagenActual;
@@ -1837,12 +1837,25 @@ $privilegioModificar=false;
             }
             break;
 
-            case '7':
+            case '7'://identifica sospechosos, aumenta contador veces identificado
 
             $rut=$Sospechoso->limpiarNumeroEntero($_REQUEST['rut']);
             $Sospechoso->setRun($rut);
 
             if($Sospechoso->identificarSospechoso()){
+              echo "1";//cambiada
+            }else{
+              echo "2";
+            }
+              break;
+
+
+            case '8'://verifica si rut existe
+
+            $rut=$Sospechoso->limpiarNumeroEntero($_REQUEST['rut']);
+            $Sospechoso->setRun($rut);
+
+            if($Sospechoso->consultarExisteSospechoso()){
               echo "1";//cambiada
             }else{
               echo "2";
