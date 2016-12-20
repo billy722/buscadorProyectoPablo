@@ -515,6 +515,42 @@ function cargarImagenesActuales(run){
         });
 }
 
+
+function identificarSospechoso(rut){
+
+		 if(rut!=""){//verifica rut vacio
+
+          $.ajax({
+						url:"../mantenedores/controladorMantenedores.php?mant=7&func=7&rut="+rut,
+						success:function(respuesta){
+
+							swal({
+							  title: "Esta seguro?",
+							  text: "Esta operacion no se podrá revertir.",
+							  type: "warning",
+							  showCancelButton: true,
+							  confirmButtonClass: "btn-danger",
+							  confirmButtonText: "Sí, Identificar.",
+							  closeOnConfirm: false
+							},
+							function(){
+								if(respuesta==1){
+									mostrarInformacionSospechoso(rut);
+									swal("Correcto","Se identificó el sospechoso.","success");
+
+								}else{
+									swal("No permitido","No se pudo concretar la operacion, recargue la página.","warning");
+								}
+							});
+
+						}
+					});
+
+		 }else{
+        swal("No permitido","No se pudo concretar la operacion, recargue la página.","warning");
+		 }
+}
+
 </script>
 
 <?php

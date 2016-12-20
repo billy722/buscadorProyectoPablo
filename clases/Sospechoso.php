@@ -107,6 +107,11 @@ class Sospechoso extends Persona{
     $this->cantidad_identificaciones= $arg_variable;
   }
 
+  public function identificarSospechoso(){
+    $consulta="update tb_sospechoso set veces_identificado=(veces_identificado+1) where run=".$this->run;
+    $resultado= $this->insertar($consulta);
+    return $resultado;
+  }
   public function vistasospechoso(){
     $consulta="select * from vistasospechoso where solorrun=".$this->run;
 
@@ -158,7 +163,9 @@ class Sospechoso extends Persona{
       return $resultado;
   }
 
-
+  function gen_fun_create($ext){
+     return "imagecreatefrom".$ext;
+   }
 }
 
 ?>

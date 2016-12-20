@@ -10,6 +10,7 @@ if(isset($_REQUEST['run'])){
 
 			$privilegioFiltrar=false;
 			$privilegioModificar=false;
+			$privilegioIdentificar=false;
 
 		  @session_start();
 		  require_once '../clases/Usuario.php';
@@ -30,6 +31,9 @@ if(isset($_REQUEST['run'])){
 		          }
 		          if($privilegio['id']==4){//privilegio modificar sospechosos
 		              $privilegioModificar=true;
+		          }
+		          if($privilegio['id']==13){//privilegio modificar sospechosos
+		              $privilegioIdentificar=true;
 		          }
 		       }
 
@@ -90,10 +94,17 @@ if(isset($_REQUEST['run'])){
 												foreach ($resultado as $filasD) {
 														echo "-".$filasD['descripcion_delito']." \n";
 												}
-							 				echo'</textarea>';
+							 				echo'</textarea>
+											<strong>Ha sido identificado:</strong>
+							 				<input class="form-control" type="text" readonly value="'.$filas['veces_identificado'].' veces." >
+											';
+
 
 									if($privilegioModificar==true){
-												echo'<a href="../mantenedores/formularioModificacionSospechosos.php?id='.$run.'" class="btn btn-warning col-xs-12">Editar</a>';
+												echo'<a href="../mantenedores/formularioModificacionSospechosos.php?id='.$run.'" class="btn btn-info col-xs-12">Editar</a>';
+                  }
+									if($privilegioIdentificar==true){
+												echo'<a href="javascript:identificarSospechoso('.$run.')" class="btn btn-danger col-xs-12">Identificar Sospechoso</a>';
                   }
 
 				 echo'</div>
