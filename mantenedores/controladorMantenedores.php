@@ -1853,7 +1853,14 @@ $privilegioModificar=false;
             case '8'://verifica si rut existe
 
             $rut=$Sospechoso->limpiarNumeroEntero($_REQUEST['rut']);
+
+            $posicionGuion= strpos($rut,"-");
+            $rut= substr($rut,0,$posicionGuion);
+
+            $Sospechoso->setRun($Sospechoso->limpiarNumeroEntero($rut));
+
             $Sospechoso->setRun($rut);
+            //echo $rut;
 
             if($Sospechoso->consultarExisteSospechoso()){
               echo "1";//cambiada
