@@ -25,7 +25,7 @@ function cargarEncabezado(){
 		<link rel="stylesheet" href="../sweetalert/sweet-alert.css">
 		<script src="../sweetalert/sweet-alert.min.js"></script>
 
-		<script language="JavaScript">
+		<!-- <script language="JavaScript">
 		//Disable right click script III- By Renigade (renigade@mediaone.net)
 		//For full source code, visit http://www.dynamicdrive.com
 		var message = "";
@@ -54,7 +54,7 @@ function cargarEncabezado(){
 		document.oncontextmenu = clickIE;
 		}
 		document.oncontextmenu = new Function("return false");
-		</script>
+		</script> -->
 	</head>
 	<body>
 	<header class="fixed-nav">
