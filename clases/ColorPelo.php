@@ -24,7 +24,7 @@ class ColorPelo extends Conexion{
     {
       $resultarray[] = $row['id_colorPelo'];
     }
-    if(in_array($this->_idEstado,$resultarray)){
+    if(in_array($this->id_colorPelo,$resultarray)){
       return true;
     }else{
       return false;

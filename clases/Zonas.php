@@ -55,6 +55,7 @@ public function __construct(){
   }
 
   public function asignarPoblacionAZona($arg_poblacion){
+
     $consulta="insert into tb_poblacionzonas(id_poblacion,id_zona)
           values(".$arg_poblacion.",".$this->_idZona.");";
 
@@ -63,6 +64,7 @@ public function __construct(){
      }else{
        return false;
      }
+
   }
 
   public function eliminarPoblacionesDeZona(){
@@ -101,6 +103,21 @@ public function __construct(){
 
      $resultado= $this->consultaExistencia($consulta);
      return $resultado;
+  }
+  public function comprobarPoblacion($arg_poblacion){
+    //$estados= $this->registros("select * from tb_estados where id_estado <> 3");
+    $comprobar = $this->consultarBdR("select id_poblacion from tb_poblacion");
+    $resultarray = array();
+    while ($row = mysqli_fetch_array($comprobar))
+    {
+      $resultarray[] = $row['id_poblacion'];
+    }
+    if(in_array($arg_poblacion,$resultarray)){
+      return true;
+    }else{
+      return false;
+    }
+
   }
 }
 ?>

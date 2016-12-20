@@ -25,7 +25,7 @@ class Imagen extends Conexion{
     {
       $resultarray[] = $row['id_imagen'];
     }
-    if(in_array($this->_idEstado,$resultarray)){
+    if(in_array($this->id_imagen,$resultarray)){
       return true;
     }else{
       return false;

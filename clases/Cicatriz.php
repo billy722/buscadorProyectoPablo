@@ -24,7 +24,7 @@ class Cicatriz extends Conexion{
     {
       $resultarray[] = $row['id_lugarCicatriz'];
     }
-    if(in_array($this->_idEstado,$resultarray)){
+    if(in_array($this->id_lugarCicatriz,$resultarray)){
       return true;
     }else{
       return false;

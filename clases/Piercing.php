@@ -24,7 +24,7 @@ class Piercing extends Conexion{
     {
       $resultarray[] = $row['id_lugarPiercing'];
     }
-    if(in_array($this->_idEstado,$resultarray)){
+    if(in_array($this->$id_lugarPiercing,$resultarray)){
       return true;
     }else{
       return false;

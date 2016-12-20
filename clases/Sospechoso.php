@@ -180,6 +180,21 @@ class Sospechoso extends Persona{
   function gen_fun_create($ext){
     return "imagecreatefrom".$ext;
   }
+  public function comprobarColorPelo(){
+    //$estados= $this->registros("select * from tb_estados where id_estado <> 3");
+    $comprobar = $this->consultarBdR("select id_colorPelo from tb_colorpelo");
+    $resultarray = array();
+    while ($row = mysqli_fetch_array($comprobar))
+    {
+      $resultarray[] = $row['id_colorPelo'];
+    }
+    if(in_array($this->$id_color_pelo,$resultarray)){
+      return true;
+    }else{
+      return false;
+    }
+
+  }
 
 
 

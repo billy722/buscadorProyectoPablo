@@ -85,5 +85,20 @@ public function getEstadoEquipo(){
      $resultado= $this->consultaExistencia($consulta);
      return $resultado;
   }
+  public function comprobarDelitos(){
+    //$estados= $this->registros("select * from tb_estados where id_estado <> 3");
+    $comprobar = $this->consultarBdR("select id_equipo from tb_equipofutbol");
+    $resultarray = array();
+    while ($row = mysqli_fetch_array($comprobar))
+    {
+      $resultarray[] = $row['id_equipo'];
+    }
+    if(in_array($this->_idEquipo,$resultarray)){
+      return true;
+    }else{
+      return false;
+    }
+
+  }
 }
 ?>

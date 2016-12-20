@@ -84,5 +84,20 @@ public function getEstadoPoblacion(){
      $resultado= $this->consultaExistencia($consulta);
      return $resultado;
   }
+  public function comprobarPoblacion(){
+    //$estados= $this->registros("select * from tb_estados where id_estado <> 3");
+    $comprobar = $this->consultarBdR("select id_poblacion from tb_poblacion");
+    $resultarray = array();
+    while ($row = mysqli_fetch_array($comprobar))
+    {
+      $resultarray[] = $row['id_poblacion'];
+    }
+    if(in_array($this->_idPoblacion,$resultarray)){
+      return true;
+    }else{
+      return false;
+    }
+
+  }
 }
 ?>

@@ -60,6 +60,7 @@ public function __construct(){
   }
 
   public function asignarPrivilegioAlGrupo($arg_idPrivilegio){
+    
     $consulta="insert into tb_grupoprivilegio(id_privilegio,id_grupoUsuario)
           values(".$arg_idPrivilegio.",".$this->_idGrupo.");";
 

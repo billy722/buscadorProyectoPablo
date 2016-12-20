@@ -24,7 +24,7 @@ class Contextura extends Conexion{
     {
       $resultarray[] = $row['id_contextura'];
     }
-    if(in_array($this->_idEstado,$resultarray)){
+    if(in_array($this->id_contextura,$resultarray)){
       return true;
     }else{
       return false;

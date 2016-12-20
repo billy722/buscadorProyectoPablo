@@ -364,6 +364,9 @@ var pagina;
         var clave2= $("#txt_clave2Crear").val();
 swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowOutsideClick:false,showCancelButton: false,closeOnConfirm: false});
         if(clave1==clave2){
+          var error_encontrado="";
+   if (validar_clave(clave1, error_encontrado)){
+
           var usuario= $("#txt_runCrear").val();
           if(validaRutt(usuario)){
             $.ajax({
@@ -389,15 +392,14 @@ swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowO
                       $("#txt_runCrear").focus();
                       sweetAlert("No permitido.", "El rut que intente ingresar ya existe.", "warning");
                     }
-                    else{
-                      sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
-                    }
-
                 }
             });
           }else{
             $("#txt_runCrear").focus();
           }
+        }else{
+          sweetAlert("Ocurrió un error", "No se pudo concretar la operacion", "error");
+        }
           }else{
             //alert("claves no coinciden");
           sweetAlert("Ocurrió un error", "No se pudo concretar la operacion, claves no coinciden!", "error");
@@ -498,6 +500,7 @@ swal({title:"Cargando", text:"Espere un momento.", showConfirmButton:true,allowO
           }
 
       }
+
 
   </script>
 <?php

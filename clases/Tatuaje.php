@@ -24,7 +24,7 @@ class Tatuaje extends Conexion{
     {
       $resultarray[] = $row['id_lugarTatuaje'];
     }
-    if(in_array($this->_idEstado,$resultarray)){
+    if(in_array($this->$id_lugarTatuaje,$resultarray)){
       return true;
     }else{
       return false;

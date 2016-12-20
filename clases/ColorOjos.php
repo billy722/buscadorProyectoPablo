@@ -24,7 +24,7 @@ class ColorOjos extends Conexion{
     {
       $resultarray[] = $row['id_colorOjos'];
     }
-    if(in_array($this->_idEstado,$resultarray)){
+    if(in_array($this->id_colorOjos,$resultarray)){
       return true;
     }else{
       return false;

@@ -24,7 +24,7 @@ class EstadoCivil extends Conexion{
     {
       $resultarray[] = $row['id_estadoCivil'];
     }
-    if(in_array($this->_idEstado,$resultarray)){
+    if(in_array($this->id_estadoCivil,$resultarray)){
       return true;
     }else{
       return false;

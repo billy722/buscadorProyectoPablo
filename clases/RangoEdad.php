@@ -25,7 +25,7 @@ class RangoEdad extends Conexion{
     {
       $resultarray[] = $row['id_rangoEdad'];
     }
-    if(in_array($this->_idEstado,$resultarray)){
+    if(in_array($this->id_rangoEdad,$resultarray)){
       return true;
     }else{
       return false;

@@ -24,7 +24,7 @@ class TezPiel extends Conexion{
     {
       $resultarray[] = $row['id_tezPiel'];
     }
-    if(in_array($this->_idEstado,$resultarray)){
+    if(in_array($this->$id_tezPiel,$resultarray)){
       return true;
     }else{
       return false;

@@ -24,7 +24,7 @@ class TipoPelo extends Conexion{
     {
       $resultarray[] = $row['id_tipoPelo'];
     }
-    if(in_array($this->_idEstado,$resultarray)){
+    if(in_array($this->id_tipoPelo,$resultarray)){
       return true;
     }else{
       return false;
